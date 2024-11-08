@@ -477,6 +477,7 @@ const MemberDetails = () => {
                 <span>{formData.sponsorName || 'N/A'}</span>
               )}
             </div>
+            
             <div className="detail-row">
               <SportsMartialArts />
               <strong>GT:</strong>
@@ -509,6 +510,8 @@ const MemberDetails = () => {
                 <span>{formData.mww || 'N/A'}</span>
               )}
             </div>
+
+            
             <div className="detail-row">
               <ContactEmergency />
               <strong>Alexis Name:</strong>
