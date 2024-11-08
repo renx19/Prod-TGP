@@ -477,13 +477,13 @@ const MemberDetails = () => {
                 <span>{formData.sponsorName || 'N/A'}</span>
               )}
             </div>
-            
+
             <div className="detail-row">
               <SportsMartialArts />
               <strong>GT:</strong>
               {isEditing ? (
                 <TextField
-                  name="GT"
+                  name="gt"
                   value={editData.gt || ''}
                   onChange={handleInputChange}
                   variant="outlined"
