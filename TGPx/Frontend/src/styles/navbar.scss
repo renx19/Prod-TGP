@@ -1,115 +1,145 @@
-    .css-dip3t8 {
-        background-color: transparent !important;
-    }
-    
-    .css-8i0j0q {
-        background-color: transparent !important;
-    }
-    
-    .css-1t8x7v1>.ps-menu-button:hover {
-        background-color: #242424 !important;
-    }
-    
-    .layout-container {
-        height: 100vh;
-        overflow: hidden;
-        background-color: #fff;
-    }
-    
-    .layout-navbar {
-        position: fixed;
-        top: 0;
-        height: 55px;
-        transition: left 0.3s ease;
-        z-index: 3; // Ensures Navbar is always above Sidebar
-        background-color: #89CFF0; // Example color
-    }
-    
-    .layout-sidebar {
-        position: fixed;
-        top: 55px; // Adjust for Navbar height
-        left: 0;
-        height: calc(100% - 55px);
-        transition: width 0.3s ease;
-        background-color: #3F729B; // Example color
-        z-index: 2; // Ensures Sidebar is below Navbar
-    }
-    
-    .layout-main {
-        padding: 10px;
-        padding-top: 55px; // Adjust for Navbar height
-        transition: margin-left 0.3s ease;
-        color: #000;
-    }
-    
+.css-dip3t8 {
+    background-color: transparent !important;
+}
 
+.css-8i0j0q {
+    background-color: transparent !important;
+}
 
+.css-1t8x7v1>.ps-menu-button:hover {
+    background-color: #242424 !important;
+}
 
+.layout-container {
+    height: 100vh;
+    overflow: hidden;
+    background-color: #fff;
+}
 
+.layout-navbar {
+    position: fixed;
+    top: 0;
+    height: 55px;
+    transition: left 0.3s ease;
+    z-index: 3; // Ensures Navbar is always above Sidebar
+    background-color: #89CFF0; // Example color
+}
 
+.layout-sidebar {
+    position: fixed;
+    top: 55px; // Adjust for Navbar height
+    left: 0;
+    height: calc(100% - 55px);
+    transition: width 0.3s ease;
+    background-color: #3F729B; // Example color
+    z-index: 2; // Ensures Sidebar is below Navbar
+}
 
-    .navbar-container {
-        width: 100%;
-        padding: 26px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center; /* Center the navbar contents */
-        position: fixed;
-        top: 0;
-        z-index: 4;
-        background: #242424;
-        color: #ffcc00;
-    
-        /* Position Sidebar Toggle Icon outside of the flex flow */
-        .sidebar-toggle-icon {
-            position: absolute;
-            left: 20px; /* Position icon 20px from the left edge */
-            cursor: pointer;
-            svg {
-                color: white;
-                font-size: 40px;
-            }
-        }
-    }
-    
-    /* Adjusted Desktop Nav List Styling (Align to center) */
-    .nav-links {
-        display: flex; /* Ensures the items are in a row */
-        list-style-type: none;
-        padding-left: 0;
-        margin-left: 0;
-        justify-content: center; /* Center the nav links */
-    
-        .nav-link {
-            text-decoration: none;
+.layout-main {
+    padding: 10px;
+    padding-top: 55px; // Adjust for Navbar height
+    transition: margin-left 0.3s ease;
+    color: #000;
+}
+
+.navbar-container {
+    width: 100%;
+    padding: 26px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    z-index: 4;
+    background: #242424;
+    color: #ffcc00;
+    // Sidebar Toggle Icon
+    .sidebar-toggle-icon {
+        position: absolute;
+        left: 20px; // Position icon 20px from the left edge
+        cursor: pointer;
+        svg {
             color: white;
-            margin-right: 20px; /* Space between links */
-            &:hover {
-                color: #ffcc00;
-            }
-    
-            &.active {
-                color: #ffcc00;
-            }
+            font-size: 40px;
         }
     }
-    
-    /* Mobile Navigation Menu - Center the menu */
-    .basic-menu-container {
-        display: flex;
-        justify-content: center; /* Center the menu */
-        width: 100%;
-        padding: 10px;
-    }
-    
-    /* Style the Menu Links for mobile */
-    .MuiMenu-list li a {
-        text-decoration: none;
-        color: #ffcc00;
-        display: block;
+    // Floating Button Icon (on the right side)
+    .floating-button {
+        position: absolute;
+        right: 20px;
+        /* Position button 20px from the right edge */
+        top: 50%;
+        /* Align vertically to the middle */
+        transform: translateY(-50%);
+        background-color: #4CAF50;
+        /* Button background color */
+        color: white;
         padding: 10px 20px;
+        /* Add padding for a rectangular shape */
+        border: none;
+        /* Remove border */
+        border-radius: 5px;
+        /* Slightly rounded corners */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        font-size: 16px;
+        /* Set font size for button text */
+        font-weight: bold;
+        /* Make the text bold */
+        &:hover {
+            background-color: #45a049;
+        }
+        &:focus {
+            outline: none;
+            /* Remove focus outline */
+        }
+        svg {
+            font-size: 20px;
+            /* Adjust icon size if needed */
+            margin-right: 8px;
+            /* Space between icon and text */
+            vertical-align: middle;
+            /* Center icon with text */
+        }
     }
-    
-    .MuiMenu-list li a:hover {
-        color: #242424;
+}
+
+// Desktop Nav Links Styling (Aligned to Center)
+.nav-links {
+    display: flex;
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+    justify-content: center;
+    .nav-link {
+        text-decoration: none;
+        color: white;
+        margin-right: 20px;
+        &:hover {
+            color: #ffcc00;
+        }
+        &.active {
+            color: #ffcc00;
+        }
     }
+}
+
+// Mobile Navigation Menu - Centered
+.basic-menu-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+}
+
+// Mobile Menu Links
+.MuiMenu-list li a {
+    text-decoration: none;
+    color: #ffcc00;
+    display: block;
+    padding: 10px 20px;
+}
+
+.MuiMenu-list li a:hover {
+    color: #242424;
+}

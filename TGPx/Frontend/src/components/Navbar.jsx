@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { MenuOpen } from '@mui/icons-material';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { MenuOpen, Login } from '@mui/icons-material';
 import useAuthStore from '../store/authStore';
-import { useMediaQuery } from '@mui/material';
-import BasicMenu from '../utils/Menu'; // Import the BasicMenu component
+import { useMediaQuery, IconButton } from '@mui/material';
+import BasicMenu from '../utils/Menu';
 import '../styles/navbar.scss';
 
 const Navbar = ({ onToggleSidebar }) => {
@@ -28,7 +28,7 @@ const Navbar = ({ onToggleSidebar }) => {
 
       {/* Navigation Links (Mobile: BasicMenu, Desktop: Regular Links) */}
       {isMobile ? (
-        <BasicMenu />  // Use BasicMenu in mobile view
+        <BasicMenu />
       ) : (
         <div className="nav-links">
           <NavLink to="/home" className="nav-link">Home</NavLink>
@@ -37,6 +37,16 @@ const Navbar = ({ onToggleSidebar }) => {
           <NavLink to="/events" className="nav-link">Events</NavLink>
         </div>
       )}
+
+      {/* Floating Login Button wrapped with NavLink */}
+      <NavLink to="/login">
+        <IconButton
+          className="floating-button"
+          style={{ position: 'absolute', right: '20px', color: 'white' }}
+        >
+          <Login style={{ fontSize: '30px' }} />
+        </IconButton>
+      </NavLink>
     </nav>
   );
 };
