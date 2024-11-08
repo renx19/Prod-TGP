@@ -483,19 +483,19 @@ const MemberDetails = () => {
               {isEditing ? (
                 <TextField
                   name="GT"
-                  value={editData.GT || ''}
+                  value={editData.gt || ''}
                   onChange={handleInputChange}
                   variant="outlined"
                   fullWidth
                   sx={{width: '50%'}}
                 />
               ) : (
-                <span>{formData.GT || 'N/A'}</span>
+                <span>{formData.gt || 'N/A'}</span>
               )}
             </div>
             <div className="detail-row">
               <Rowing />
-              <strong>MW:</strong>
+              <strong>MWw:</strong>
               {isEditing ? (
                 <TextField
                   name="mww"
