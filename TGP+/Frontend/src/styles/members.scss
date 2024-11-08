@@ -1,0 +1,571 @@
+/* General Styles */
+
+.css-19qnlrw-MuiFormLabel-root-MuiInputLabel-root {
+    z-index: 0 !important;
+}
+
+
+/* Profile Container */
+
+.profile-container {
+    padding: 20px;
+    max-width: 1200px;
+    /* Adjusted max-width for a wider layout */
+    margin: auto;
+    border-radius: 8px;
+    /* Profile Title */
+    .profile-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    /* Profile Content */
+    .profile-content {
+        display: flex;
+        /* Use flexbox to arrange cards side by side */
+        justify-content: space-between;
+        /* Space between cards */
+        gap: 20px;
+        /* Gap between cards */
+        /* User Info Card */
+        .user-info-card {
+            flex: 0 1 35%;
+            /* Allow user info card to be smaller */
+            padding: 15px;
+            text-align: center;
+            background-color: #fff;
+            /* White background for cards */
+            border: 1px solid #e0e0e0;
+            /* Light border */
+            border-radius: 8px;
+            /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+            transition: box-shadow 0.3s ease;
+            /* Smooth shadow transition on hover */
+            &:hover {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                /* Darker shadow on hover */
+            }
+            .card-title {
+                font-size: 1.5rem;
+                /* Font size for the title */
+                margin-bottom: 15px;
+                /* Space below title */
+            }
+            .card-body {
+                font-size: 1rem;
+                /* Font size for the body text */
+                line-height: 1.5;
+                /* Line height for readability */
+                color: #333;
+                /* Text color */
+            }
+        }
+        /* Personal Info Card */
+        .personal-info-card {
+            flex: 1;
+            /* Allow personal info card to take remaining space */
+            padding: 15px;
+            background-color: #fff;
+            /* White background for cards */
+            border: 1px solid #e0e0e0;
+            /* Light border */
+            border-radius: 8px;
+            /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+            transition: box-shadow 0.3s ease;
+            /* Smooth shadow transition on hover */
+            &:hover {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                /* Darker shadow on hover */
+            }
+            .card-title {
+                font-size: 1.5rem;
+                /* Font size for the title */
+                margin-bottom: 15px;
+                /* Space below title */
+            }
+            .card-body {
+                font-size: 1rem;
+                /* Font size for the body text */
+                line-height: 1.5;
+                /* Line height for readability */
+                color: #333;
+                /* Text color */
+            }
+        }
+    }
+    /* Image Container */
+    .image-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Center items horizontally */
+        margin: 25px 0;
+        /* Space above and below the image */
+        position: relative; // Enable positioning for children
+        .profile-image-wrapper {
+            position: relative; // Reference point for the icon
+            display: inline-block; // Shrink-wrap the image size  }
+        }
+        .profile-image {
+            width: 200px;
+            /* Reduced size for user image */
+            height: 200px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 1px solid #0056b3;
+        }
+        .upload-icon-label {
+            position: absolute; // Positioning the icon relative to the wrapper
+            bottom: 40px; // Distance from the bottom of the image
+            right: -20px; // Distance from the right of the image
+            cursor: pointer; // Indicate it's clickable
+            background-color: #007bff; // Customize button color
+            border-radius: 50%; // Make it circular
+            width: 40px; // Adjust size for better click area
+            height: 40px; // Adjust size for better click area
+            display: flex; // Use flexbox for centering
+            align-items: center; // Center vertically
+            justify-content: center; // Center horizontally
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // Shadow for depth
+            transition: background-color 0.3s ease; // Smooth transition on hover
+            &:hover {
+                background-color: #0056b3; // Darker shade on hover
+            }
+            .upload-icon {
+                font-size: 1.5rem; // Adjust the icon size as needed
+                color: #ffffff; // Customize the icon color
+            }
+        }
+        .upload-button {
+            padding: 10px 8px; // Button padding
+            margin: 0 -30px;
+            cursor: pointer; // Change cursor to pointer
+            border: none; // Remove border
+            background-color: #007bff; // Button color
+            color: white; // Text color
+            border-radius: 5px; // Rounded corners
+            width: 100%; // Ensure full width in mobile view
+            &:hover {
+                background-color: #0056b3; // Darken button on hover
+            }
+        }
+    }
+    /* Input Container */
+    .input-container {
+        margin: 25px 0;
+        /* Space above and below the input container */
+        display: flex;
+        /* Display children in a row */
+        width: 100%;
+        /* Full width for the container */
+        gap: 10px;
+        /* Space between input and button */
+        position: relative;
+        /* Media query for mobile responsiveness */
+        @media (max-width: 768px) {
+            flex-direction: column;
+            /* Stack input and button vertically */
+            gap: 5px;
+            /* Reduced gap for vertical layout */
+        }
+    }
+    /* User Info */
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        .info-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            .info-icon-wrapper {
+                width: 40px;
+                /* Fixed width to ensure icons align properly */
+                display: flex;
+                justify-content: center;
+            }
+            .info-label-wrapper {
+                width: 120px;
+                /* Fixed width to align labels */
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                font-weight: bold;
+                text-align: left;
+            }
+            .info-data-wrapper {
+                flex: 1;
+                /* Takes up remaining space to align data consistently */
+                display: flex;
+                justify-content: flex-end;
+                /* Aligns data to the right */
+                align-items: center;
+            }
+        }
+    }
+    /* Button Container */
+    .button-container {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        align-self: center;
+        .profile-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            /* Adjusted padding for smaller button */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            /* Smaller font size for the button */
+            margin: 40px 0;
+        }
+    }
+    /* Personal Info Container */
+    .personal-info-container,
+    .other-details-container {
+        margin-top: 10px;
+        padding: 10px;
+        .detail-row {
+            display: flex;
+            /* Use flexbox for detail rows */
+            align-items: center;
+            margin: 8px 0;
+            padding: 5px;
+            strong {
+                margin: 0 10px;
+                /* Space between icon and label */
+                flex: 1;
+                /* Allow strong element to take space */
+            }
+        }
+    }
+    /* Other Details Container */
+    .other-details-container {
+        margin-top: 10px;
+    }
+    h4 {
+        margin-top: 15px;
+    }
+    /* User Details Input Styles */
+    .user-details-input {
+        padding: 10px;
+        /* Padding for input */
+        border-radius: 5px;
+        /* Rounded corners */
+        width: 100%;
+        /* Full width */
+        box-sizing: border-box;
+        /* Include padding in total width */
+        font-size: 1rem;
+        /* Font size */
+        margin: auto;
+        &:focus {
+            border-color: #007bff;
+            /* Change border color on focus */
+            outline: none;
+            /* Remove default outline */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            /* Shadow effect on focus */
+        }
+    }
+    .info-wrapper {
+        flex-direction: row;
+        /* Hide info wrapper */
+        display: flex;
+    }
+}
+
+@media (max-width: 500px) {
+    .profile-container {
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        box-sizing: border-box;
+        /* Corrected box-sizing usage */
+        .info-wrapper {
+            display: none;
+            /* Hide info wrapper */
+        }
+        .info-data-wrapper {
+            align-self: center;
+            /* Center align the data */
+            text-align: center;
+            /* Center text */
+            justify-content: center !important;
+            /* Force center justification */
+            display: flex;
+            /* Enable flexbox for additional alignment */
+        }
+        .user-info-card,
+        .personal-info-card {
+            margin: 0 0;
+        }
+    }
+    .admin-member {
+        margin: 0 10px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-content {
+        flex-direction: column;
+    }
+    .user-info-card,
+    .personal-info-card {
+        margin: 0 5em;
+    }
+}
+
+.admin-member {
+    margin: 50px 100px;
+}
+
+// CreateMemberForm.scss
+.create-member-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ced4da; // Add gray border
+    border-radius: 8px; // Optional: Add rounded corners for a smoother look
+    padding: 2rem; // Add padding inside the container
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Optional: Add a subtle shadow for depth
+    background-color: #fff; // Optional: Set a background color for contrast
+    max-width: 800px; // Limit the width of the form
+    width: 100%; // Ensure the form takes the full width of the container
+    margin: 5rem auto; // Center horizontally and add more vertical spacing
+    h1 {
+        margin-bottom: 20px;
+    }
+    .cm-container {
+        display: flex; // Use flexbox for side-by-side layout
+        justify-content: space-between;
+        width: 100%;
+        max-width: 800px; // Adjust max width as needed
+        .image-section {
+            flex: 1; // Allows the image section to grow
+            display: flex; // Set to flex to center the content
+            flex-direction: column; // Arrange elements in a column
+            align-items: center; // Center horizontally
+            justify-content: center;
+            margin-right: 20px;
+            .image-container {
+                width: 220px;
+                height: 200px; // Set fixed height for image container
+                border: 1px dashed #ccc;
+                display: flex; // Flex to align image and placeholder
+                align-items: center; // Center content vertically
+                justify-content: center; // Center content horizontally
+                position: relative;
+                .preview-image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover; // Cover the container without stretching
+                }
+                .placeholder {
+                    width: 200px;
+                    height: 200px;
+                    background-color: #f0f0f0; // Placeholder background
+                    border-radius: 5px;
+                }
+            }
+            .input-group {
+                margin-top: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 20px;
+                .input-file {
+                    margin-right: 10px; // Space between file input and button
+                    align-items: center;
+                    width: 80%; // Adjust width as needed (e.g., 80%)
+                    padding: 10px; // Increase padding for size
+                    border: 1px solid #ced4da; // Add a border
+                    border-radius: 4px; // Rounded corners
+                    font-size: 16px; // Increase font size
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Optional shadow for better appearance
+                    display: block; // Ensure the input is a block element for centering
+                    margin-left: auto; // Center horizontally
+                    margin-right: auto; // Center horizontally
+                }
+                .upload-button {
+                    background-color: #007bff;
+                    /* Primary color */
+                    color: white;
+                    /* Text color */
+                    border: none;
+                    /* Remove default border */
+                    border-radius: 4px;
+                    /* Rounded corners */
+                    padding: 10px 15px;
+                    /* Padding for size */
+                    font-size: 16px;
+                    /* Font size */
+                    cursor: pointer;
+                    /* Pointer cursor on hover */
+                    transition: background-color 0.3s ease;
+                    /* Smooth background transition */
+                    &:hover {
+                        background-color: #0056b3;
+                        /* Darker color on hover */
+                    }
+                    &:disabled {
+                        background-color: #cccccc;
+                        /* Greyed out color when disabled */
+                        cursor: not-allowed;
+                        /* Not-allowed cursor */
+                    }
+                }
+            }
+        }
+        .input-section {
+            flex: 2; // Allows the input section to grow more than image section
+            .input-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); // Two-column layout for inputs
+                gap: 10px; // Space between input fields
+                .select-cm {
+                    display: flex;
+                    /* Use flexbox for alignment */
+                    justify-content: space-between;
+                    /* Space items evenly */
+                    width: 100%;
+                    /* Make the select component full width */
+                    margin-bottom: 20px;
+                    /* Add space below the select components */
+                }
+            }
+        }
+    }
+    .button-container {
+        display: flex;
+        /* Use flexbox for side-by-side alignment */
+        gap: 10px;
+        /* Space between buttons */
+        margin-top: 20px;
+        /* Space above the button container */
+        justify-content: flex-start;
+        /* Align buttons to the left */
+    }
+    .button {
+        background-color: #28a745;
+        /* Success color for create member button */
+        color: white;
+        /* Text color */
+        border: none;
+        /* Remove default border */
+        border-radius: 4px;
+        /* Rounded corners */
+        padding: 10px 15px;
+        /* Padding for size */
+        font-size: 16px;
+        /* Font size */
+        cursor: pointer;
+        /* Pointer cursor on hover */
+        transition: background-color 0.3s ease;
+        /* Smooth background transition */
+        &:hover {
+            background-color: #218838;
+            /* Darker color on hover */
+        }
+        &:disabled {
+            background-color: #cccccc;
+            /* Greyed out color when disabled */
+            cursor: not-allowed;
+            /* Not-allowed cursor */
+        }
+    }
+    .next-button {
+        background-color: blue;
+        /* Blue background for Next button */
+        color: white;
+        /* White text color */
+        &:hover {
+            background-color: darkblue;
+            /* Darker blue on hover */
+        }
+        &:disabled {
+            background-color: #cccccc;
+            /* Greyed out color when disabled */
+            cursor: not-allowed;
+            /* Not-allowed cursor */
+        }
+    }
+    .error {
+        color: red;
+        margin-bottom: 10px;
+    }
+    .spacing {
+        height: 20px; // Add spacing as needed
+    }
+}
+
+@media (max-width: 768px) {
+    .create-member-form {
+        width: 78%;
+        .cm-container {
+            flex-direction: column; // Stack the sections vertically
+            align-items: stretch; // Make the children take full width
+            .image-section {
+                margin-right: 0; // Remove right margin for mobile view
+                margin-bottom: 20px; // Add some space below the image section
+            }
+            .input-section {
+                .input-grid {
+                    grid-template-columns: 1fr; // Change to single-column layout for inputs
+                }
+            }
+        }
+        .input-group {
+            width: 100%; // Ensure input group takes full width
+        }
+        .input-file {
+            width: 100%; // Make file input full width
+        }
+        .upload-button {
+            width: 100%; // Make upload button full width
+        }
+        .button {
+            width: 100%; // Make create member button full width
+        }
+    }
+}
+
+$table-padding: 10px;
+$table-border-color: #ddd;
+$header-bg-color: #f2f2f2;
+$error-color: red;
+.error-message {
+    color: $error-color; // Style for error message
+    margin-top: 20px; // Add margin for spacing
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center items horizontally */
+    margin: 25px 0;
+    /* Space above and below the image */
+    position: relative; // Enable positioning for children
+    .profile-image-wrapper {
+        position: relative; // Reference point for the icon
+        display: inline-block; // Shrink-wrap the image size  }
+    }
+    .card-profile-image {
+        width: 60px;
+        /* Reduced size for user image */
+        height: 60;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 1px solid #0056b3;
+    }
+}

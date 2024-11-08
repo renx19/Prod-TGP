@@ -1,0 +1,159 @@
+$first-color: #faf6e9;
+$second-color: #ece8d9;
+$third-color: #fffdf6;
+$fourth-color: #494949;
+$dark-background: #303841;
+$dark-second-color: #3a4750;
+$dark-third-color: #00adb5;
+$dark-fourth-color: #eeeeee;
+.about-con {
+    height: 100%;
+    background: $first-color;
+    &.dark {
+        background: $dark-background;
+    }
+    .about-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; // Allow wrapping for smaller screens
+        margin: 2rem 0;
+        .text {
+            width: 70%;
+            padding: 3rem; // Adjust padding as needed
+            h2 {
+                font-size: 1em;
+                text-align: justify;
+            }
+        }
+        .about-image {
+            width: 30%;
+            padding: 3em; // Adjust padding as needed
+            img {
+                width: 100%;
+                height: auto;
+                max-width: 100%; // Adjust as needed
+                max-height: 400px; // Adjust as needed
+                object-fit: cover; // Maintain aspect ratio while covering the container
+            }
+        }
+        .about-video {
+            width: 100%;
+            padding: 3em; // Adjust padding as needed
+            display: flex;
+            justify-content: center; // Center the video horizontally
+            align-items: center; // Center the video vertically
+            video {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+                max-height: 100%; // Adjust as needed
+                object-fit: contain; // Maintain aspect ratio while fitting the container
+            }
+        }
+    }
+    .first-color {
+        background: $first-color;
+    }
+    .second-color {
+        background: $second-color;
+    }
+    .third-color {
+        background: $third-color;
+    }
+    .fourth-color {
+        background: $fourth-color;
+    }
+    .dark {
+        .first-color {
+            background: $dark-background;
+        }
+        .second-color {
+            background: $dark-second-color;
+        }
+        .third-color {
+            background: $dark-third-color;
+        }
+        .fourth-color {
+            background: $dark-fourth-color;
+        }
+        .about-content {
+            color: #fff; // White text on dark background
+        }
+    }
+    .about-h1 {
+        text-align: center;
+        padding-top: 3rem;
+        color: #ffd700;
+        font-size: 3em;
+    }
+    #text-org {
+        color: #ffd700;
+    }
+    #text-spacing {
+        padding: 2rem;
+    }
+    .text-org {
+        text-align: center;
+    }
+    .text-founder {
+        justify-content: center;
+        align-items: center;
+        width: 100%; // Ensure it takes full width
+        margin: 2rem 0;
+        &.dark {
+            color: #fff; // Change to white in dark mode
+        }
+    }
+    .text-con {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); // 3 columns grid
+        justify-items: center; // Center the grid items
+        gap: 1rem; // Optional: Add some space between items
+        p {
+            text-align: left; // Align text to the left
+            margin: 0; // Remove any default margins if needed
+        }
+    }
+}
+
+// Media Queries
+@media screen and (max-width: 1024px) {
+    .about-content {
+        flex-direction: column;
+        align-items: center;
+        .about-image,
+        .text {
+            width: 100%;
+            padding: 3rem; // Adjust padding as needed
+        }
+    }
+}
+
+@media screen and (max-width: 1023px) and (min-width: 601px) {
+    #reverse-on-mobile {
+        flex-direction: column-reverse;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .about-content .text h2 {
+        font-size: 0.8em;
+    }
+    .about-content .about-image img {
+        max-height: 300px; // Adjust as needed
+    }
+    #reverse-on-mobile {
+        flex-direction: column-reverse;
+    }
+    .about-con .about-content .text {
+        width: 100%;
+        padding: 3rem; // Adjust padding as needed
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .text-con {
+        grid-template-columns: repeat(1, 1fr); // 1 column grid
+    }
+}

@@ -1,0 +1,81 @@
+.dynamic-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  
+    input {
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  
+    .sub-header-section {
+      margin-bottom: 15px;
+  
+      .item-inputs {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5px;
+  
+        input {
+          margin-bottom: 5px;
+        }
+  
+        button {
+          margin-top: 5px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: #0056b3;
+          }
+  
+          &:first-child {
+            background-color: red;
+          }
+  
+          &:first-child:hover {
+            background-color: darkred;
+          }
+        }
+      }
+    }
+  
+    button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+  
+
+  // DynamicTable.scss
+// budget.scss
+
+/* budget.scss */
+/* budget.scss */
+
+.dynamic-table {
+    max-width: 100%; // Set max width for the table
+    margin: 20px auto; // Center the table
+  
+    .subheader-section {
+      margin-top: 10px; // Space between subheader sections
+    }
+  
+    hr {
+      margin: 10px 0; // Space for horizontal line
+    }
+  }
+  

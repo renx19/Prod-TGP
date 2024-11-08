@@ -1,0 +1,40 @@
+// SuccessMessage.scss
+
+$success-bg: #e0f7e9; // Light green background
+$success-border: #4caf50; // Green border
+$success-text-color: #4caf50; // Dark green text
+$success-text: #333; // Dark gray text
+
+.success-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $success-bg;
+  border: 2px solid $success-border;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  h2 {
+    color: $success-text-color;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: $success-text;
+    text-align: center;
+  }
+}
+
+/* Loading.scss */
+
+.loading-container {
+  display: flex;                // Use flexbox for alignment
+  justify-content: center;      // Center horizontally
+  align-items: center;          // Center vertically
+  height: 100vh;               // Full height of the viewport
+  background-color: #f9f9f9;   // Optional: Add a background color
+}
