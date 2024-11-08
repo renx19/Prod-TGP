@@ -26,8 +26,8 @@ app.use(cookieParser());
 app.use(cors({
     origin: [
         'http://localhost:5173',
-        'https://prod-tgp-vercel.app',
-        'https://prod-tgp-renx19s-projects.vercel.app'
+        'https://prod-tgp-vercel.app', ,
+        'https://prod-k32smv5iq-renx19s-projects.vercel.app' // Add this origin
     ],
     credentials: true
 }));
