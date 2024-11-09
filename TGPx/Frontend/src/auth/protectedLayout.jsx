@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
       {/* Main content area */}
       <div style={{
         flex: 1,
-        marginTop: '80px', // Ensures space for the Navbar height
+        marginTop: '120px', // Ensures space for the Navbar height
         marginLeft: 'auto', // Center the content
         marginRight: 'auto', // Center the content
         overflowY: 'auto', // Allow vertical scrolling
