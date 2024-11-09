@@ -162,7 +162,7 @@ const MemberDetails = () => {
 
       <div className="profile-content">
         <div className="user-info-card card">
-        <div className="image-container">
+        <div className="member-image-container">
                 {isEditing ? (
                   <>
                     {editData.imageUrl && (

@@ -120,7 +120,7 @@ const CreateMemberForm = () => {
 
       <div className="cm-container">
         <div className="image-section">
-          <div className="image-container">
+          <div className="member-image-container">
             {imagePreview ? (
               <img src={imagePreview} alt="Preview" className="preview-image" />
             ) : (
