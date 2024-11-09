@@ -18,22 +18,22 @@ const Events = () => {
   const settings = {
     lazyLoad: true,
     dots: true,
-    infinite: true,
+    infinite: events.length > 5, // Disable infinite if there are fewer than 4 items
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: events.length >= 4 ? 4 : events.length, // Show only available items if less than 4
     slidesToScroll: 1,
     arrows: false,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3
+          slidesToShow: events.length >= 3 ? 3 : events.length,
         }
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 1
+          slidesToShow: 1,
         }
       }
     ],
@@ -41,7 +41,7 @@ const Events = () => {
       setIndex(current);
     }
   };
-
+  
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"

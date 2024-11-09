@@ -34,7 +34,7 @@ const EventDetails = () => {
   const settings = {
     lazyLoad: true,
     dots: true,
-    infinite: imageUrls.length > 4, // Only enable infinite scrolling if there are more than 4 images
+    infinite: imageUrls.length > 5, // Only enable infinite scrolling if there are more than 4 images
     speed: 500,
     slidesToShow: Math.min(imageUrls.length, 4), // Dynamically adjust the number of slides shown
     slidesToScroll: 1,
