@@ -286,14 +286,11 @@ const filteredMembers = members.filter((member) => {
               </CardContent>
 
               {/* View Profile Button */}
+              <Link to={`/member/${member._id}`}>
               <Button variant="contained" style={{ marginTop: '10px' }}>
-                
-                <Link to={`/member/${member._id}`}>
-                <Button>
                 View Profile
-                </Button>
-                </Link>
               </Button>
+              </Link>
 
               {/* Dropdown Menu */}
               <Menu
