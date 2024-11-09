@@ -42,6 +42,12 @@
     }
 }
 
+@media screen and (max-width: 820px) and (min-width: 600px) {
+    .image-container {
+        height: 500px;
+    }
+}
+
 @media screen and (max-width: 820px) {
     .card-con {
         min-height: 500px;
