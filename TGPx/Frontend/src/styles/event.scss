@@ -44,7 +44,7 @@
 
 @media screen and (max-width: 820px) and (min-width: 600px) {
     .image-container {
-        height: 500px;
+        height: 500px !important;
     }
 }
 
@@ -116,7 +116,7 @@
     margin: 0;
 }
 
-title-container {
+.title-container {
     padding-top: 10px;
     max-height: 20px;
     overflow: hidden;
