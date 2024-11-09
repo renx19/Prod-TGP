@@ -11,8 +11,10 @@
 }
 
 .layout-container {
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    /* Allows the container to grow beyond viewport height if needed */
+    overflow: auto;
+    /* Enables vertical scrolling if content exceeds the container */
     background-color: #fff;
 }
 

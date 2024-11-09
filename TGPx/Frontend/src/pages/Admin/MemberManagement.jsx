@@ -287,7 +287,12 @@ const filteredMembers = members.filter((member) => {
 
               {/* View Profile Button */}
               <Button variant="contained" style={{ marginTop: '10px' }}>
+                
+                <Link to={`/member/${member._id}`}>
+                <Button>
                 View Profile
+                </Button>
+                </Link>
               </Button>
 
               {/* Dropdown Menu */}
