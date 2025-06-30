@@ -26,8 +26,8 @@ const SidebarComponent = ({ toggled, onBackdropClick }) => {
         width: '250px',
         height: 'calc(100% - 65px)',
         transition: 'left 0.3s ease',
-        backgroundColor: '#1b2a49',
-        borderRight: '1px solid #0e1a35',
+        backgroundColor: '#242424',
+        borderRight: '1px solid #242424',
         zIndex: 5,
       }}
     >

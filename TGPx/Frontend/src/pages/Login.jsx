@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useAuthStore from '../store/authStore';
 import useMemberStore from '../store/memberStore';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation, } from 'react-router-dom';
 import { MDBInput, MDBBtn, MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { toast } from 'react-toastify';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/login.scss';
 
@@ -48,70 +49,80 @@ const LoginForm = () => {
   };
 
   return (
-    <MDBContainer className="my-5 gradient-form d-flex align-items-center justify-content-center" style={{ height: '100vh',  }}>
-      <MDBRow className="justify-content-center">
-        <MDBCol col='12' md='10' lg='10'>
-          <div className="d-flex flex-row h-100" style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)', backgroundColor: '#ffffff', borderRadius: '8px' }}>
-            <div className="gradient-custom-2 d-none d-md-flex flex-column justify-content-center text-white p-4" style={{ width: '70%', borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' }}>
+    <MDBContainer fluid className="py-5 d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <MDBRow className="w-100 justify-content-center">
+        <MDBCol xs="12" md="10" lg="8" xl="6">
+          <div className="rounded-3 shadow d-flex flex-column flex-md-row overflow-hidden bg-white">
+
+            {/* Left - Promo Section */}
+            <div className="gradient-custom-2 d-none d-md-flex flex-column justify-content-center text-white p-4" style={{ flex: 1 }}>
               <h4 className="mb-4">We are more than just a company</h4>
               <p className="small mb-0">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
 
-            <div className="d-flex flex-column justify-content-center" style={{ width: '100%', padding: '40px' }}>
+            {/* Right - Login Form */}
+            <div className="p-4 d-flex flex-column align-items-center justify-content-center w-100" style={{ flex: 1 }}>
               <div className="text-center mb-4">
-                <img src="light.jpg" style={{ width: '100px', height: '100px', borderRadius: '50%' }} alt="logo" />
-                <h4 className="mt-1 mb-4">Tau Gamma Phi Tayhi Chapter</h4>
+                <img
+                  src="light.jpg"
+                  alt="logo"
+                  className="rounded-circle"
+                  style={{ width: '100px', height: '100px' }}
+                />
+                <h4 className="mt-3 mb-2">Tau Gamma Phi Tayhi Chapter</h4>
+                <p className="mb-0">Please login to your account</p>
               </div>
-              <p>Please login to your account</p>
 
-              {error && <p className="text-danger text-center">{error}</p>}
+              {error && <p className="text-danger">{error}</p>}
 
-              <form className="login-form" onSubmit={handleLogin}>
+              <form className="w-100" style={{ maxWidth: '400px' }} onSubmit={handleLogin}>
                 <MDBInput
-                  wrapperClass='mb-4'
-                  label='Email address'
-                  id='email'
-                  type='email'
+                  wrapperClass="mb-4"
+                  label="Email address"
+                  id="email"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
                 <MDBInput
-                  wrapperClass='mb-4'
-                  label='Password'
-                  id='password'
-                  type='password'
+                  wrapperClass="mb-4"
+                  label="Password"
+                  id="password"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <MDBBtn 
-                  type="submit" 
-                  className="mb-4 gradient-custom-2" 
-                  style={{ 
-                    width: '300px', 
-                    height: '50px', 
-                    margin: '0 auto', 
-                    display: 'block', 
-                    lineHeight: '50px', // Align text vertically
-                    padding: '0' // Remove default padding to ensure lineHeight works
-                  }} 
-                  disabled={loading} // Disable button when loading
+                <MDBBtn
+                  type="submit"
+                  className="w-100 gradient-custom-2 mb-3 d-flex align-items-center justify-content-center"
+                  disabled={loading}
+                  style={{ height: '50px' }}
                 >
-                  {loading ? 'Logging in...' : 'Login'}
+                  <div style={{ width: '110px', textAlign: 'center' }}>
+                    {loading ? 'Logging in...' : 'Login'}
+                  </div>
                 </MDBBtn>
+
+
+
+
               </form>
 
-              <div className="text-center pt-1 mb-4">
-                <Link className="" to="/forgot-password">Forgot password?</Link>
+              <div>
+                <a href="/forgot-password">Forgot password?</a>
               </div>
             </div>
+
           </div>
         </MDBCol>
       </MDBRow>
     </MDBContainer>
+
+
   );
 };
 

@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

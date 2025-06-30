@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 import '../styles/login.scss'; // Import the CSS file
 

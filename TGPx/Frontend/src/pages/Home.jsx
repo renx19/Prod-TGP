@@ -1,9 +1,9 @@
-import React from 'react';
+// import React from 'react';
 
 import '../styles/home.scss'
 import { motion } from "framer-motion";
-import coverImage from "../assets/logo.png";
-import { Link } from 'react-router-dom';
+import coverImage from "../assets/logo1.png";
+// import { Link } from 'react-router-dom';
 import { TbTargetArrow } from "react-icons/tb";
 import { IoEyeSharp } from "react-icons/io5";
 import TayhiChapter from '../assets/light.jpg'

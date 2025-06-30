@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Slider from 'react-slick';
 import '../styles/event.scss';
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
-import useEventStore from '../store/EventStore'; // Adjust path to match your store's location
-import 'slick-carousel/slick/slick.css'; 
-import 'slick-carousel/slick/slick-theme.css'; 
+import useEventStore from '../store/EventStore';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const Events = () => {
-  const [index, setIndex] = useState(0);
   const { events, fetchAllEvents } = useEventStore();
 
   useEffect(() => {
@@ -18,9 +17,9 @@ const Events = () => {
   const settings = {
     lazyLoad: true,
     dots: true,
-    infinite: events.length > 5, // Disable infinite if there are fewer than 4 items
+    infinite: events.length > 5,
     speed: 500,
-    slidesToShow: events.length >= 4 ? 4 : events.length, // Show only available items if less than 4
+    slidesToShow: events.length >= 4 ? 4 : events.length,
     slidesToScroll: 1,
     arrows: false,
     responsive: [
@@ -37,11 +36,9 @@ const Events = () => {
         }
       }
     ],
-    afterChange: (current) => {
-      setIndex(current);
-    }
+    // Removed afterChange since index state is not used
   };
-  
+
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -62,8 +59,8 @@ const Events = () => {
             }}
           >
             <Slider {...settings}>
-              {events.map((event, index) => (
-                <div key={index} className="card-con">
+              {Array.isArray(events) && events.map((event, i) => (
+                <div key={i} className="card-con">
                   <div className="image-container">
                     <div className="image-content">
                       <span className="overlay"></span>
@@ -73,7 +70,7 @@ const Events = () => {
                     </div>
                   </div>
                   <div className="title-container">
-                    <h6 style={{color: "#ffd700"}} className="name">{event.title}</h6>
+                    <h6 style={{ color: "#ffd700" }} className="name">{event.title}</h6>
                   </div>
                   <div className="description-container">
                     <p className="description">{event.description}</p>

@@ -1,88 +1,64 @@
-    $primary-color: #3498db;
-    $button-hover-color: darken($primary-color, 10%);
-    $error-color: #e74c3c;
-    /* Ensure the container takes full height and centers content */
-    
+// Variables
+$primary-color: #007bff;
+$button-hover-color: #0056b3; // Manually set hover color
+$error-color: #dc3545;
+$success-color: #28a745;
+$font-stack: Arial,
+sans-serif;
+// Gradient background
+.gradient-custom-2 {
+    background: #f7ea00; // fallback
+    background: -webkit-linear-gradient(to right, #000000 40%, #f7ea00); // Chrome/Safari
+    background: linear-gradient(to right, #000000 40%, #f7ea00); // modern
+}
+
+@media (min-width: 768px) {
+    .gradient-form {
+        height: 100vh !important;
+    }
+}
+
+@media (min-width: 769px) {
     .gradient-custom-2 {
-        /* Fallback for old browsers */
-        background: #f7ea00;
-        /* solid yellow for older browsers */
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: -webkit-linear-gradient(to right, #000000 40%, #f7ea00);
-        /* More black */
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        background: linear-gradient(to right, #000000 40%, #f7ea00);
-        /* More black */
+        border-top-right-radius: 0.3rem;
+        border-bottom-right-radius: 0.3rem;
     }
-    
-    @media (min-width: 768px) {
-        .gradient-form {
-            height: 100vh !important;
-        }
+}
+
+// Unauthorized Page
+.unauthorized-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f8d7da;
+    color: #721c24;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.paragraph {
+    font-size: 1rem;
+}
+
+.back-home-button {
+    background-color: $primary-color;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+        background-color: $button-hover-color;
     }
-    
-    @media (min-width: 769px) {
-        .gradient-custom-2 {
-            border-top-right-radius: .3rem;
-            border-bottom-right-radius: .3rem;
-        }
-    }
-    
-    @media (min-width: 768px) {
-        .gradient-form {
-            height: 100vh !important;
-        }
-    }
-    
-    @media (min-width: 769px) {
-        .gradient-custom-2 {
-            border-top-right-radius: .3rem;
-            border-bottom-right-radius: .3rem;
-        }
-    }
-    
-    //unauthorized page//
-    .unauthorized-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        background-color: #f8d7da;
-        color: #721c24;
-        text-align: center;
-        padding: 20px;
-        border: 1px solid #f5c6cb;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    .heading {
-        font-size: 2rem;
-        margin-bottom: 10px;
-    }
-    
-    .paragraph {
-        font-size: 1rem;
-    }
-    
-    .back-home-button {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    .back-home-button:hover {
-        background-color: #0056b3;
-    }
-    /* Signup.scss */
-    
-    $primary-color: #007bff;
-    $error-color: #dc3545;
-    $success-color: #28a745;
-    $font-stack: Arial,
-    sans-serif;
+}

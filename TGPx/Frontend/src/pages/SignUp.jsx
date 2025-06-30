@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useAuthStore from '../store/authStore';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   MDBInput,
   MDBBtn,
@@ -9,11 +9,12 @@ import {
   MDBCol
 } from 'mdb-react-ui-kit';
 import { toast } from 'react-toastify';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/login.scss';
 
 const Signup = () => {
-  const { isAuthenticated, signup } = useAuthStore(); // Use the signup function here
+  const { isAuthenticated, signup, role } = useAuthStore(); // include role
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,10 +26,10 @@ const Signup = () => {
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && role !== 'admin') {
       navigate('/');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, role, navigate]);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -57,99 +58,92 @@ const Signup = () => {
   };
 
   return (
-    <MDBContainer className="my-5 d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
+    <MDBContainer
+      fluid
+      className="d-flex align-items-center justify-content-center py-5"
+      style={{
+        minHeight: 'calc(100vh - 100px)', // Adjust if your navbar is taller// Push below navbar
+        backgroundColor: '#f8f9fa'       // Optional background
+      }}
+    >
+
       <MDBRow className="justify-content-center">
-        <MDBCol col='12' md='10' lg='8' className="mb-5">
-          <div className="d-flex flex-row h-100" style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)', backgroundColor: '#ffffff', borderRadius: '8px', flexWrap: 'wrap' }}>
-            
+        <MDBCol size="12" md="10" lg="8" xl="10">
+          <div
+            className="mx-auto"
+            style={{
+              maxWidth: '900px',
+              backgroundColor: '#fff',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              display: 'flex',
+              minHeight: '500px',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            }}
+          >
             {/* Signup Form Section */}
-            <div className="d-flex flex-column justify-content-center" style={{ flex: 1, padding: '40px' }}>
+            <div className="d-flex flex-column justify-content-center p-4" style={{ flex: 1, minHeight: '500px' }}>
+
               <div className="text-center mb-4">
-                <img
-                  src="light.jpg"
-                  style={{ width: '100px', height: '100px', borderRadius: '50%' }}
-                  alt="logo"
-                />
+                <img src="light.jpg" alt="logo" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
                 <h4 className="mt-1 mb-4">Tau Gamma Phi Tayhi Chapter</h4>
               </div>
-              <p>Please fill in the details to create your account</p>
-    
+              <p className="text-center">Please fill in the details to create your account</p>
+
               <form className="signup-form" onSubmit={handleSignup}>
+                <MDBInput wrapperClass="mb-4 p-1" label="Username" id="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                <MDBInput wrapperClass="mb-4 p-1" label="Email address" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 <MDBInput
-                  wrapperClass='mb-4'
-                  label='Username'
-                  id='username'
-                  type='text'
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  invalid={!!error}
-                />
-                <MDBInput
-                  wrapperClass='mb-4'
-                  label='Email address'
-                  id='email'
-                  type='email'
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  invalid={!!error}
-                />
-                <MDBInput
-                  wrapperClass='mb-4'
-                  label='Password'
-                  id='password'
+                  wrapperClass="mb-4 p-1"
+                  label="Password"
+                  id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  append={<span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? 'Hide' : 'Show'}
-                  </span>}
-                  invalid={!!error}
+                  append={
+                    <span className="eye-icon" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? 'Hide' : 'Show'}
+                    </span>
+                  }
                 />
-                {error && <p className="text-danger">{error}</p>}
-                
-                {/* Centered Button Container */}
-                <div className="d-flex flex-column align-items-center" style={{ marginTop: '20px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', maxWidth: '400px' }}>
+                {error && <p className="text-danger text-center">{error}</p>}
+
+                <div className="row mt-3 gx-3">
+                  <div className="col-12 col-md-6">
                     <MDBBtn
                       type="submit"
-                      className="mb-4 gradient-custom-2"
-                      style={{
-                        height: '50px',
-                        width: '48%',
-                        lineHeight: '40px',
-                      }}
+                      className="w-100 gradient-custom-2"
                       disabled={loading}
                     >
                       {loading ? 'Signing Up...' : 'Sign Up'}
                     </MDBBtn>
+                  </div>
+                  <div className="col-12 col-md-6 mt-3 mt-md-0">
                     <MDBBtn
                       type="button"
-                      className="mb-4 gradient-custom-2"
-                      style={{
-                        height: '50px',
-                        width: '48%',
-                        lineHeight: '40px',
-                      }}
+                      className="w-100 gradient-custom-2"
                       onClick={handleNext}
-                      disabled={!isNextEnabled} // Disable Next button if not enabled
+                      disabled={!isNextEnabled}
                     >
                       Next
                     </MDBBtn>
                   </div>
                 </div>
+
+
+
               </form>
             </div>
 
-            {/* Promotional Section */}
-            <div className="gradient-custom-2 d-none d-md-flex flex-column justify-content-center text-white p-4" style={{ flex: 1, borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' }}>
+            {/* Promo Section */}
+            <div className="gradient-custom-2 d-none d-md-flex flex-column justify-content-center text-white p-4" style={{ flex: 1, minHeight: '500px' }}>
               <h4 className="mb-4">We are more than just a company</h4>
               <p className="small mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
           </div>

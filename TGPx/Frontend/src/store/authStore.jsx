@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export const useAuthStore = create(
   persist(
-    (set, get) => ({
+    (set,) => ({
       isAuthenticated: false,
       loading: false,
       role: null,
