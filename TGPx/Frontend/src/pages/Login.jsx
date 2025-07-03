@@ -49,10 +49,10 @@ const LoginForm = () => {
   };
 
   return (
-    <MDBContainer fluid className="py-5 d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-      <MDBRow className="w-100 justify-content-center">
+    <MDBContainer fluid className="py-5 d-flex align-items-center justify-content-center" style={{ minHeight: '100vh',  }}>
+      <MDBRow className="w-100 justify-content-center" >
         <MDBCol xs="12" md="10" lg="8" xl="6">
-          <div className="rounded-3 shadow d-flex flex-column flex-md-row overflow-hidden bg-white">
+          <div className="rounded-3 shadow d-flex flex-column flex-md-row overflow-hidden bg-white " >
 
             {/* Left - Promo Section */}
             <div className="gradient-custom-2 d-none d-md-flex flex-column justify-content-center text-white p-4" style={{ flex: 1 }}>

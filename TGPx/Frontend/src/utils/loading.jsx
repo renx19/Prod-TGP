@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { PacmanLoader } from 'react-spinners';
 import '../styles/success.scss'
 

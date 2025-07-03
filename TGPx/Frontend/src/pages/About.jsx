@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import '../styles/about.scss';
 
@@ -10,7 +10,7 @@ const About = () => {
   };
 
   return (
-    <div className='body-container'>
+    <>
       <div className="about-con">
         {/* First paragraph */}
         <motion.h1
@@ -193,7 +193,7 @@ const About = () => {
           </div>
         </motion.div>
       </div>
-    </div>
+    </>
   );
 };
 

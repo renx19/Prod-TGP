@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMemberStore } from '../../store/memberStore';
 import {
@@ -324,7 +324,7 @@ const filteredMembers = members.filter((member) => {
       <Dialog open={openDelete} onClose={handleDeleteClose}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
-          <p>Type "DELETE" to confirm deletion of this member:</p>
+          <p>Type DELETE to confirm deletion of this member:</p>
           <TextField
             autoFocus
             margin="dense"

@@ -17,27 +17,33 @@ const Events = () => {
   const settings = {
     lazyLoad: true,
     dots: true,
-    infinite: events.length > 5,
+    infinite: false, // removed dynamic infinite setting
     speed: 500,
-    slidesToShow: events.length >= 4 ? 4 : events.length,
+    slidesToShow: Math.min(events.length || 1, 3), // fallback to 1 to avoid 0 or Infinity
     slidesToScroll: 1,
     arrows: false,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: events.length >= 3 ? 3 : events.length,
+          slidesToShow: Math.min(events.length || 1, 3),
         }
       },
       {
-        breakpoint: 768,
+        breakpoint: 820,
+        settings: {
+          slidesToShow: Math.min(events.length || 1, 2),
+        }
+      },
+      {
+        breakpoint: 600, // 👈 switch to 1 below this
         settings: {
           slidesToShow: 1,
         }
       }
     ],
-    // Removed afterChange since index state is not used
   };
+  
 
   const monthNames = [
     "January", "February", "March", "April", "May", "June",

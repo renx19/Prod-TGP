@@ -13,6 +13,7 @@ const SidebarComponent = ({ toggled, onBackdropClick }) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const role = useAuthStore((state) => state.role);
   const logout = useAuthStore((state) => state.logout);
+  const user = useAuthStore((state) => state.user); // for member ID
 
   return (
     <Sidebar
@@ -34,46 +35,46 @@ const SidebarComponent = ({ toggled, onBackdropClick }) => {
       <Menu iconShape="square" style={{ color: '#fff' }}>
         {isAuthenticated && role === 'admin' && (
           <>
-            <MenuItem icon={<EventIcon />} style={{ color: '#cfd7e6' }}>
-              <Link to="/event-list" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Event List
-              </Link>
+            <MenuItem
+              icon={<EventIcon style={{ color: 'white' }} />}
+              component={<Link to="/event-list" style={{ color: '#fff' }} />}
+            >
+              Event List
             </MenuItem>
-            <MenuItem icon={<AttachMoneyIcon />} style={{ color: '#cfd7e6' }}>
-              <Link to="/financial-list" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Financial List
-              </Link>
+            <MenuItem
+              icon={<AttachMoneyIcon style={{ color: 'white' }} />}
+              component={<Link to="/financial-list" style={{ color: '#fff' }} />}
+            >
+              Financial List
             </MenuItem>
-            <MenuItem icon={<GroupIcon />} style={{ color: '#cfd7e6' }}>
-              <Link to="/members" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Members
-              </Link>
+            <MenuItem
+              icon={<GroupIcon style={{ color: 'white' }} />}
+              component={<Link to="/members" style={{ color: '#fff' }} />}
+            >
+              Members
             </MenuItem>
-            <MenuItem icon={<PersonAddIcon />} style={{ color: '#cfd7e6' }}>
-              <Link to="/member-creation" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Member Creation
-              </Link>
+            <MenuItem
+              icon={<PersonAddIcon style={{ color: 'white' }} />}
+              component={<Link to="/member-creation" style={{ color: '#fff' }} />}
+            >
+              Member Creation
             </MenuItem>
           </>
         )}
 
-        {isAuthenticated && role === 'member' && (
-          <MenuItem icon={<PersonIcon />} style={{ color: '#cfd7e6' }}>
-            <Link to="/member/:id" style={{ textDecoration: 'none', color: 'inherit' }}>
-              My Profile
-            </Link>
+        {isAuthenticated && role === 'member' && user && (
+          <MenuItem
+            icon={<PersonIcon style={{ color: 'white' }} />}
+            component={<Link to={`/member/${user._id}`} style={{ color: '#fff' }} />}
+          >
+            My Profile
           </MenuItem>
         )}
-
       </Menu>
 
       {isAuthenticated && (
         <Menu iconShape="square" style={{ position: 'absolute', bottom: '20px', width: '100%' }}>
-          <MenuItem 
-            icon={<LogoutIcon />} 
-            style={{ color: '#cfd7e6' }}
-            onClick={logout}
-          >
+          <MenuItem icon={<LogoutIcon style={{ color: 'white' }} />} onClick={logout}>
             Logout
           </MenuItem>
         </Menu>

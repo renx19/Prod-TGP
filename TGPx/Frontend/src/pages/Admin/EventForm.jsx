@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Dialog, DialogActions, DialogContent, DialogTitle, ImageList, ImageListItem, Box, Button, CircularProgress,
   TextField, FormControl, InputLabel, Select, MenuItem, useMediaQuery, Typography, IconButton
@@ -10,7 +10,7 @@ import '../../styles/event.scss';
 
 const EventForm = () => {
   const {
-    title, description, isImageUploaded, isUploading, isCreatingEvent,
+    title, description,  isUploading, isCreatingEvent,
     setTitle, setDescription, setMonth, setYear, handleImageUpload, handleEventSubmit,
     month, year  // Retrieve the current state of month and year from the store
   } = useEventStore();
