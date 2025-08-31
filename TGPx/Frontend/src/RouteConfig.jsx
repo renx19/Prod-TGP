@@ -16,16 +16,20 @@ import EventFinancialList from './pages/Admin/EvenFinancialList'
 import FinancialEventDetailsPage from './pages/Admin/EventFInancialDetails'
 // import MemberDetails from './scenes/membersDetails'; // Individual member details
 
-
+import FinancialList from './pages/FinancialList'
+import FinancialListDetail from './pages/FinancialListDetail';
 import { ProtectedRoute } from './auth/protectedroutes'; // Adjust import as necessary
 import Contact from './pages/Contact';
 import EventList from './pages/Admin/EventList';
+import Developer from './components/FooterUl/Developer'
+import Privacy from './components/FooterUl/Privacy'
+import FAQ from './components/FooterUl/FAQ'
 
-
-
+import TERMS from './components/FooterUl/Terms'
 
 
 export const routes = [
+
 
   { path: '/login', element: <LoginForm />, isProtected: false },
   { path: '/', element: <Home />, isProtected: true },
@@ -34,29 +38,25 @@ export const routes = [
   { path: '/contact', element: <Contact />, isProtected: true },
   { path: '/forgot-password', element: <ForgotPassword />, isProtected: false },
   { path: '/reset-password/:token', element: <ResetPassword />, isProtected: false },
-  { path: '/events',   element: <Events />, isProtected: true },
+  { path: '/events', element: <Events />, isProtected: true },
   { path: '/events/:id', element: <EventDetails />, isProtected: true },  // No protection
-  
-
+  { path: '/footer/privacy', element: <Privacy />, isProtected: true },
+  { path: '/footer/faq', element: <FAQ />, isProtected: true },
+  { path: '/footer/terms', element: <TERMS />, isProtected: true },
+  { path: '/developer', element: <Developer />, isProtected: true },
   {
     path: '/event-list',
-    element: <ProtectedRoute element={<EventList />} requiredRole={[ 'admin']} />,
+    element: <ProtectedRoute element={<EventList />} requiredRole={['admin']} />,
     isProtected: true
   },
   {
     path: '/financial-list',
-    element: <ProtectedRoute element={<EventFinancialList />} requiredRole={[ 'admin']} />,
+    element: <ProtectedRoute element={<EventFinancialList />} requiredRole={['admin']} />,
     isProtected: true
   },
-  {
-    path: '/event/:eventId',
-    element: <ProtectedRoute element={<FinancialEventDetailsPage />} requiredRole={[ 'admin']} />,
-    isProtected: true
-  },
-
   {
     path: '/signup',
-    element: <ProtectedRoute element={<SignupForm />} requiredRole={[ 'admin']} />,
+    element: <ProtectedRoute element={<SignupForm />} requiredRole={['admin']} />,
     isProtected: true
   },
 
@@ -66,10 +66,26 @@ export const routes = [
     isProtected: true,
   },
   {
+    path: '/financial/:financialId',
+    element: <ProtectedRoute element={<FinancialEventDetailsPage />} requiredRole={['admin', ]} />,
+    isProtected: true
+  },
+  {
     path: '/member/:id',
     element: <ProtectedRoute element={<MemberDetail />} requiredRole={['member', 'admin']} />,
     isProtected: true,
   },
+    {
+    path: '/financialList',
+    element: <ProtectedRoute element={<FinancialList />} requiredRole={['member', 'admin']} />,
+    isProtected: true,
+  },
+  {
+    path: '/financial-List-Details/:financialId',
+    element: <ProtectedRoute element={<FinancialListDetail />} requiredRole={['member', 'admin']} />,
+    isProtected: true,
+  },
+  
   {
     path: '/member-creation',
     element: <ProtectedRoute element={<MemberForm />} requiredRole={['admin']} />,

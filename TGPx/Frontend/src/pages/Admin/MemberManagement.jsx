@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMemberStore } from '../../store/memberStore';
 import {
@@ -17,11 +17,16 @@ import {
   Menu,
   MenuItem,
   Pagination,
+  FormControl, InputLabel, Select,
+  Box,
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Select from 'react-select';
+import FilterListIcon from '@mui/icons-material/FilterList';
+
 import "../../styles/members.scss";
 import { StatusOptions, GenderOptions, BatchOptions } from '../../utils/Options';
+import CreateMemberForm from './MemberForm';
+
 
 export const AdminMembers = () => {
   const { members, error, fetchMembers, deleteMember } = useMemberStore();
@@ -31,11 +36,13 @@ export const AdminMembers = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuMemberId, setMenuMemberId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState([]);
-  const [filterGender, setFilterGender] = useState([]);
-  const [filterBatchName, setFilterBatchName] = useState([]);
+  const [filterType, setFilterType] = useState("");
+  const [filterGender, setFilterGender] = useState("");
+  const [filterBatchName, setFilterBatchName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8; // Set to show 8 items per page
+  const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     fetchMembers(); // Fetch all members on component mount
@@ -80,19 +87,28 @@ export const AdminMembers = () => {
     handleDeleteClose();
   };
 
+  const handleApplyFilters = () => {
+    setOpen(false); // close the dialog
+  };
+
+
   // Filter members based on search term and selected status
-  // Filter members based on search term and selected status
-// Filter members based on search term and selected status
-const filteredMembers = members.filter((member) => {
-  const matchesSearchTerm = member.fullName?.toLowerCase().includes(searchTerm.toLowerCase());
-  const matchesFilterType = filterType.length === 0 || filterType.some(option => member.status === option.value);
-  const matchesFilterGender = filterGender.length === 0 || filterGender.some(option => member.gender === option.value);
-  const matchesFilterBatchName = filterBatchName.length === 0 || filterBatchName.some(option => member.batchName === option.value); // Adjust this line according to your member schema
-  return matchesSearchTerm && matchesFilterType && matchesFilterGender && matchesFilterBatchName;
-});
+  const matchesFilter = (filterValue, memberValue) => {
+    return filterValue === "" || memberValue === filterValue;
+  };
 
+  const filteredMembers = members.filter((member) => {
+    const matchesSearchTerm = member.fullName
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase());
 
-
+    return (
+      matchesSearchTerm &&
+      matchesFilter(filterType, member.status) &&
+      matchesFilter(filterGender, member.gender) &&
+      matchesFilter(filterBatchName, member.batchName)
+    );
+  });
 
   // Calculate paginated members
   const indexOfLastMember = currentPage * itemsPerPage;
@@ -101,138 +117,105 @@ const filteredMembers = members.filter((member) => {
   const totalPages = Math.ceil(filteredMembers.length / itemsPerPage);
 
   return (
-    <div className='admin-member'>
-    <Typography component="div" style={{ width: '100%' }}>
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '20px',
-        marginBottom: '40px',
-        flexWrap: 'wrap',
-        flexDirection: 'row', // Default to row layout
-        width: '100%',
-      }}
-    >
-      <TextField
-        label="Search Members"
-        variant="outlined"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ flex: 1, width: '70%', minWidth: '250px' }} // Takes full width of the parent
-        InputProps={{
-          sx: {
-            height: '48px',
-            padding: '0em',
-          },
-          classes: {
-            root: 'custom-input',
-          },
-        }}
-      />
 
-<Select
-        isMulti
-        options={StatusOptions}
-        value={filterType}
-        onChange={(selectedOptions) => setFilterType(selectedOptions)}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            height: '48px',
-            boxShadow: 'none',
-            borderColor: 'lightgray',
-            '&:hover': {
-              borderColor: 'gray',
-            },
-            flex: 1,
-            width: '100%',
-            minWidth: '250px',
-          }),
-          multiValue: (provided) => ({
-            ...provided,
-            backgroundColor: '#e0e0e0',
-          }),
-          valueContainer: (provided) => ({
-            ...provided,
-            padding: '0.5em',
-          }),
-        }}
-        placeholder="Filter By Status"
-      />
+    <div className='admin-member-con' >
+         <div className='admin-member-wrapper' >
+      <Typography component="div" className="member-toolbar">
+        <div className="member-toolbar__controls">
+          <TextField
+            label="Search Members"
+            variant="outlined"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="member-toolbar__search"
+          />
+          <Box className="member-toolbar__actions">
+            <CreateMemberForm />
+            <Button
+              variant="outlined"
+              startIcon={<FilterListIcon />}
+              onClick={() => setOpen(true)}
+              className="member-toolbar__filter-btn"
+            >
+              Filters
+            </Button>
+          </Box>
 
-      {/* Gender Filter */}
-      <Select
-        isMulti
-        options={GenderOptions}
-        value={filterGender}
-        onChange={(selectedOptions) => setFilterGender(selectedOptions)}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            height: '48px',
-            boxShadow: 'none',
-            borderColor: 'lightgray',
-            '&:hover': {
-              borderColor: 'gray',
-            },
-            flex: 1,
-            width: '100%',
-            minWidth: '250px',
-          }),
-          multiValue: (provided) => ({
-            ...provided,
-            backgroundColor: '#e0e0e0',
-          }),
-          valueContainer: (provided) => ({
-            ...provided,
-            padding: '0.5em',
-          }),
-        }}
-        placeholder="Filter By Gender"
-      />
+        </div>
+      </Typography>
+     
+     
+      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xs"   >
+        <DialogTitle>Filter Options</DialogTitle>
+        <DialogContent className='member-filter' >
 
-      {/* Batch Name Filter */}
-      <Select
-        isMulti
-        options={BatchOptions}
-        value={filterBatchName}
-        onChange={(selectedOptions) => setFilterBatchName(selectedOptions)}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            height: '48px',
-            boxShadow: 'none',
-            borderColor: 'lightgray',
-            '&:hover': {
-              borderColor: 'gray',
-            },
-            flex: 1,
-            width: '100%',
-            minWidth: '250px',
-          }),
-          multiValue: (provided) => ({
-            ...provided,
-            backgroundColor: '#e0e0e0',
-          }),
-          valueContainer: (provided) => ({
-            ...provided,
-            padding: '0.5em',
-          }),
-        }}
-        placeholder="Filter By Batch Name"
-      />
+          {/* Filter By Status */}
+          <FormControl sx={{ width: 280 }}>
+            <InputLabel>Filter By Status</InputLabel>
+            <Select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              label="Filter By Status"
+            >
+              <MenuItem value={""}>All Status</MenuItem>
+              {StatusOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-    </div>
-  </Typography>
+          <FormControl sx={{ width: 280 }}>
+            <InputLabel>Filter By Gender</InputLabel>
+            <Select
+              value={filterGender}
+              onChange={(e) => setFilterGender(e.target.value)}
+              label="Filter By Gender"
+            >
+              <MenuItem value={""}>All Genders</MenuItem>
+              {GenderOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ width: 280 }}>
+            <InputLabel>Filter By Batch Name</InputLabel>
+            <Select
+              value={filterBatchName}
+              onChange={(e) => setFilterBatchName(e.target.value)}
+              label="Filter By Batch Name"
+            >
+              <MenuItem value={""}>All Batches</MenuItem>
+              {BatchOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleApplyFilters}>
+            Apply
+          </Button>
+        </DialogActions>
+      </Dialog>
+
 
 
 
       {/* Member Cards Grid */}
-      <Grid container spacing={2}>
+      <Grid container spacing={2} >
         {currentMembers.map((member) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={member._id}>
-            <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', padding: '20px', height: '320px', backgroundColor: '#FEFEFE', color: '#242424'}}>
+            <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', padding: '20px', height: '320px', backgroundColor: '#242424', color: '#242424' }}>
               {/* Status icon on the top right */}
               <IconButton
                 aria-label="more options"
@@ -241,6 +224,7 @@ const filteredMembers = members.filter((member) => {
               >
                 <MoreHorizIcon />
               </IconButton>
+
               <Typography
                 style={{
                   position: 'absolute',
@@ -248,8 +232,8 @@ const filteredMembers = members.filter((member) => {
                   left: 8,
                   color:
                     member.status === 'Inactive' ? '#f9e79f' : // Pastel Yellow
-                    member.status === 'Suspended' ? '#f1948a' : // Pastel Red
-                    '#a3e4d7', // Pastel Green
+                      member.status === 'Suspended' ? '#f1948a' : // Pastel Red
+                        '#a3e4d7', // Pastel Green
                   textShadow: '2px 3px 4px rgba(-1, 0.2, 0.2, 0.2)',
                 }}
                 color="text.secondary"
@@ -268,28 +252,28 @@ const filteredMembers = members.filter((member) => {
                     width: '80px',
                     objectFit: 'cover',
                     marginTop: '30px',
-                  
+
                   }}
                   image={member.imageUrl}
                 />
               )}
 
               {/* Full Name */}
-              <Typography variant="h6" component="div" style={{ textAlign: 'center' }}>
+              <Typography variant="h6" component="div" style={{ textAlign: 'center', color: "#fff" }}>
                 {member.fullName || 'Unnamed Member'}
               </Typography>
 
               {/* Member Details */}
-              <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '10px', color: '#242424'}}>
-                <Typography color="#242424">{member.phoneNumber || 'N/A'}</Typography>
-                <Typography color="#242424">{member.batchName || 'N/A'}</Typography>
+              <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '10px', color: '#fff' }}>
+                <Typography color="#fff">{member.phoneNumber || 'N/A'}</Typography>
+                <Typography color="#fff">{member.batchName || 'N/A'}</Typography>
               </CardContent>
 
               {/* View Profile Button */}
               <Link to={`/member/${member._id}`}>
-              <Button variant="contained" style={{ marginTop: '10px' }}>
-                View Profile
-              </Button>
+                <Button variant="contained" style={{ marginTop: '10px' }}>
+                  View Profile
+                </Button>
               </Link>
 
               {/* Dropdown Menu */}
@@ -348,6 +332,8 @@ const filteredMembers = members.filter((member) => {
           </Button>
         </DialogActions>
       </Dialog>
+
+    </div>
     </div>
   );
 };

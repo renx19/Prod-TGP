@@ -21,7 +21,7 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isNextEnabled, setIsNextEnabled] = useState(false); // State for Next button
+
   const navigate = useNavigate();
 
   // Redirect if already authenticated
@@ -43,7 +43,6 @@ const Signup = () => {
       setUsername('');
       setEmail('');
       setPassword('');
-      setIsNextEnabled(true); // Enable the Next button after successful signup
     } catch (err) {
       console.error('Signup error:', err);
       setError('An error occurred while signing up. Please check your inputs.');
@@ -53,9 +52,6 @@ const Signup = () => {
     }
   };
 
-  const handleNext = () => {
-    navigate('/member-creation');
-  };
 
   return (
     <MDBContainer
@@ -121,16 +117,7 @@ const Signup = () => {
                       {loading ? 'Signing Up...' : 'Sign Up'}
                     </MDBBtn>
                   </div>
-                  <div className="col-12 col-md-6 mt-3 mt-md-0">
-                    <MDBBtn
-                      type="button"
-                      className="w-100 gradient-custom-2"
-                      onClick={handleNext}
-                      disabled={!isNextEnabled}
-                    >
-                      Next
-                    </MDBBtn>
-                  </div>
+                  
                 </div>
 
 
@@ -140,11 +127,10 @@ const Signup = () => {
 
             {/* Promo Section */}
             <div className="gradient-custom-2 d-none d-md-flex flex-column justify-content-center text-white p-4" style={{ flex: 1, minHeight: '500px' }}>
-              <h4 className="mb-4">We are more than just a company</h4>
-              <p className="small mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
+              <h4 className="mb-4">We are more than just a fraternity</h4>
+                <p className="small mb-0">
+                  A bond of brotherhood that goes beyond time — united by values, loyalty, and lifelong friendship. Together we grow, lead, and support one another.
+                </p>
             </div>
           </div>
         </MDBCol>

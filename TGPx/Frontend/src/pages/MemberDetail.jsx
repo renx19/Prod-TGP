@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { useMemberStore } from '../store/memberStore';
 import '../styles/members.scss';
-import { Person, Home, Phone, CalendarToday, School, AccountCircle, FormatListNumbered,  Male, MilitaryTech, Foundation, SportsEsports, SportsMartialArts, Rowing, ContactEmergency} from '@mui/icons-material';
+import { Person, Home, Phone, CalendarToday, School, AccountCircle, FormatListNumbered, Male, MilitaryTech, Foundation, SportsMartialArts, Rowing, ContactEmergency } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { toast } from 'react-toastify';
 import Select from '@mui/material/Select';
 import EmailIcon from '@mui/icons-material/Email';
-import BadgeIcon from '@mui/icons-material/Badge';
 import EditIcon from '@mui/icons-material/Edit'
 import MenuItem from '@mui/material/MenuItem';
 import { BatchOptions } from '../utils/Options';
 
 
 const MemberDetails = () => {
-  const { user, role} = useAuthStore();
+  const { user } = useAuthStore();
   const { id } = useParams();
-  const { formData, error, fetchMemberDetails, fetchMyMemberDetails, updateMember, uploadImage  } = useMemberStore();
+  const { formData, error, fetchMemberDetails, fetchMyMemberDetails, updateMember, uploadImage } = useMemberStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
   const [isImageUploaded, setIsImageUploaded] = useState(false); // Track if an image has been uploaded
@@ -41,17 +40,17 @@ const MemberDetails = () => {
       fetchMemberDetails(id);
     }
   }, [id, user, fetchMemberDetails]);
-  
+
   useEffect(() => {
     if (formData) {
       setEditData(formData);
     }
   }, [formData]);
-  
+
 
   const handleSave = async () => {
     try {
-      await updateMember(formData._id, editData); 
+      await updateMember(formData._id, editData);
       toast.success('Member updated successfully!');
 
       // Option 1: Refetch data after updating
@@ -70,21 +69,21 @@ const MemberDetails = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
-  
+
     // For date input types
     if (type === 'date') {
       setEditData((prevState) => ({
         ...prevState,
         [name]: value, // Directly store the selected date value in the state
       }));
-    } 
+    }
     // For Select input types
     else if (type === 'select-one' || e.target.tagName === 'SELECT') {
       setEditData((prevState) => ({
         ...prevState,
         [name]: value, // Use name to update the value for select
       }));
-    } 
+    }
     // For other types of input fields
     else {
       setEditData((prevState) => ({
@@ -93,7 +92,7 @@ const MemberDetails = () => {
       }));
     }
   };
-  
+
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -106,7 +105,7 @@ const MemberDetails = () => {
       reader.readAsDataURL(file);
     }
   };
-  
+
   const handleUploadImage = async () => {
     if (editData.imageFile) {
       setLoading(true); // Start the loading indicator
@@ -129,10 +128,6 @@ const MemberDetails = () => {
 
 
 
-  const handleCancel = () => {
-    setEditData(formData);
-    setIsEditing(false);
-  };
 
   if (error) {
     return <div className="error-message">{error}</div>;
@@ -145,10 +140,10 @@ const MemberDetails = () => {
   const formatDate = (dateString) => {
     return dateString
       ? new Date(dateString).toLocaleDateString('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        })
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
       : 'N/A';
   };
 
@@ -158,123 +153,98 @@ const MemberDetails = () => {
 
   return (
     <div className="profile-container">
-      <h1 className="profile-title">Member Profile</h1>
+
 
       <div className="profile-content">
-        <div className="user-info-card card">
-        <div className="member-image-container">
-                {isEditing ? (
-                  <>
-                    {editData.imageUrl && (
-                      <div className="profile-image-wrapper">
-                        <img
-                          src={editData.imageUrl}
-                          alt={`${editData.fullName || 'Profile'}'s Profile`}
-                          className="profile-image"
-                        />
-                        <label htmlFor="file-upload" className="upload-icon-label">
-                          <EditIcon className="upload-icon" />
-                        </label>
-                        {/* Hidden file input */}
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageChange}
-                          className="file-input"
-                          id="file-upload" // Assign an id to target it later
-                          style={{ display: 'none' }} // Hide the file input
-                        />
-                       <button
-                        className="upload-button"
-                        onClick={handleUploadImage}
-                        disabled={loading || isImageUploaded} // Disable if loading or image already uploaded
-                      >
-                        {loading ? 'Uploading...' : 'Upload'}
-                      </button>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  formData.imageUrl && (
+        <div className="user-info-card ">
+          <div className="member-image-container">
+            {isEditing ? (
+              <>
+                {editData.imageUrl && (
+                  <div className="profile-image-wrapper">
                     <img
-                      src={formData.imageUrl}
-                      alt={`${formData.fullName}'s Profile`}
+                      src={editData.imageUrl}
+                      alt={`${editData.fullName || 'Profile'}'s Profile`}
                       className="profile-image"
                     />
-                  )
+                    <label htmlFor="file-upload" className="upload-icon-label">
+                      <EditIcon className="upload-icon" />
+                    </label>
+                    {/* Hidden file input */}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="file-input"
+                      id="file-upload" // Assign an id to target it later
+                      style={{ display: 'none' }} // Hide the file input
+                    />
+                    <button
+                      className="upload-button"
+                      onClick={handleUploadImage}
+                      disabled={loading || isImageUploaded} // Disable if loading or image already uploaded
+                    >
+                      {loading ? 'Uploading...' : 'Upload'}
+                    </button>
+                  </div>
                 )}
-              </div>
+              </>
+            ) : (
+              formData.imageUrl && (
+                <img
+                  src={formData.imageUrl}
+                  alt={`${formData.fullName}'s Profile`}
+                  className="profile-image"
+                />
+              )
+            )}
+          </div>
 
 
 
-              <div className="user-info">
+          <div className="user-info-container">
 
-               <div className="info-row">
-                <div className="info-wrapper">
-                  <div className="info-icon-wrapper">
-                    <AccountCircle className="info-icon"/>
-                  </div>
-                  <div className="info-label-wrapper">
-                    <label className="info-label">Username:</label>
-                  </div>
-                </div>
-                <div className="info-data-wrapper">
-                  {isEditing ? (
-                    <TextField
-                      value={editData.user.username || ''}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      fullWidth
-                      className="user-details-input"
-                      sx={{ width: '100%', margin: '10px 0' }}
-                    />
-                  ) : (
-                    <p className="info-data">{formData.user.username ||user.username}</p>
-                  )}
-                </div>
-              </div>
+            <div className="detail-row">
+              <EmailIcon />
+              <span className="label"><strong>Email:</strong></span>
+              {isEditing ? (
+                <TextField
+                  name="email"
+                  value={editData.user.email || ''}
+                  onChange={handleInputChange}
+                  variant="outlined"
+                  fullWidth
+                  sx={{ width: '50%' }}
+                />
+              ) : (
+                <span className="value">{formData.user.email || user.email}</span>
+              )}
+            </div>
 
-              <div className="info-row">
-                <div className="info-wrapper">
-                  <div className="info-icon-wrapper">
-                    <EmailIcon className="info-icon" />
-                  </div>
-                  <div className="info-label-wrapper">
-                    <label className="info-label">Email:</label>
-                  </div>
-                </div>
-                <div className="info-data-wrapper">
-                  {isEditing ? (
-                    <TextField
-                      value={editData.user.email || ''}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      fullWidth
-                      className="user-details-input"
-                      sx={{ width: '100%', margin: '10px 0' }}
-                    />
-                  ) : (
-                    <p className="info-data">{formData.user.email || user.email}</p>
-                  )}
-                </div>
-              </div>
-
-              <div className="info-row">
-                <div className="info-wrapper">
-                  <div className="info-icon-wrapper">
-                    <FormatListNumbered className="info-icon" />
-                  </div>
-                  <div className="info-label-wrapper">
-                    <label className="info-label">Member #:</label>
-                  </div>
-                </div>
-                <div className="info-data-wrapper">
-                  <p className="info-data">{formData.memberNumber}</p>
-                </div>
-              </div>
+            <div className="detail-row">
+              <AccountCircle />
+              <span className="label"><strong>Username:</strong></span>
+              {isEditing ? (
+                <TextField
+                  name="username"
+                  value={editData.user.username || ''}
+                  onChange={handleInputChange}
+                  variant="outlined"
+                  fullWidth
+                  sx={{ width: '50%' }}
+                />
+              ) : (
+                <span className="value">{formData.user.username || user.username}</span>
+              )}
+            </div>
 
 
 
+            <div className="detail-row">
+              <FormatListNumbered />
+              <span className="label"><strong>Member #:</strong></span>
+              <span className="value">{formData.memberNumber || 'N/A'}</span>
+            </div>
 
             <div className="button-container">
               <button className="profile-button" onClick={() => setIsEditing(!isEditing)}>
@@ -286,11 +256,12 @@ const MemberDetails = () => {
             </div>
           </div>
 
+
         </div>
 
-        <div className="personal-info-card card">
+        <div className="personal-info-card">
           <h3>Personal Details</h3>
-           <div className="personal-info-container">
+          <div className="personal-info-container">
             <div className="detail-row">
               <Person />
               <strong>Full Name:</strong>
@@ -301,7 +272,7 @@ const MemberDetails = () => {
                   onChange={handleInputChange}
                   variant="outlined"
                   fullWidth
-                  sx={{width: '50%'}}
+                  sx={{ width: '50%' }}
                 />
               ) : (
                 <span>{formData.fullName || 'N/A'}</span>
@@ -317,7 +288,7 @@ const MemberDetails = () => {
                   onChange={handleInputChange}
                   variant="outlined"
                   fullWidth
-                  sx={{width: '50%'}}
+                  sx={{ width: '50%' }}
                 />
               ) : (
                 <span>{formData.address || 'N/A'}</span>
@@ -333,112 +304,114 @@ const MemberDetails = () => {
                   onChange={handleInputChange}
                   variant="outlined"
                   fullWidth
-                  sx={{width: '50%'}}
+                  sx={{ width: '50%' }}
                 />
               ) : (
                 <span>{formData.phoneNumber || 'N/A'}</span>
               )}
             </div>
-           
+
 
             <div className="detail-row">
-             <CalendarToday />
-            <strong>Birthday:</strong>
-            {isEditing ? (
-              <TextField
-                type="date"
-                name="birthday"
-                value={formatDateForInput(editData.birthday || '')} // Use editData for input
-                onChange={handleInputChange}
-                className="birthday-input" // Optional: for additional styling
-                variant="outlined"
-                fullWidth
-                sx={{width: '50%'}}
-              />
-            ) : (
-              <span>{formatDate(formData.birthday) || 'N/A'}</span> // Use formatDate for display
-            )}
-          </div>
-          
-          <div className="detail-row">
-            <Male/>
-            <strong>Gender:</strong>
-            {isEditing ? (
-              <Select
-                name="gender"
-                value={editData.gender || ''} // Ensure this binds correctly to your state
-                onChange={handleInputChange}
-                variant="outlined"
-                fullWidth
-                sx={{ width: '50%', margin: '10px 0', lineHeight: '0.6em' }}
-              >
-                <MenuItem value="">
-                  <em>Select Gender</em>
-                </MenuItem>
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-                <MenuItem value="Non-Binary">Non-Binary</MenuItem>
-              </Select>
-            ) : (
-              <span>{formData.gender || 'N/A'}</span>
-            )}
+              <CalendarToday />
+              <strong>Birthday:</strong>
+              {isEditing ? (
+                <TextField
+                  type="date"
+                  name="birthday"
+                  value={formatDateForInput(editData.birthday || '')} // Use editData for input
+                  onChange={handleInputChange}
+                  className="birthday-input" // Optional: for additional styling
+                  variant="outlined"
+                  fullWidth
+                  sx={{ width: '50%' }}
+                />
+              ) : (
+                <span>{formatDate(formData.birthday) || 'N/A'}</span> // Use formatDate for display
+              )}
+            </div>
+
+            <div className="detail-row">
+              <Male />
+              <strong>Gender:</strong>
+              {isEditing ? (
+                <Select
+                  name="gender"
+                  value={editData.gender || ''} // Ensure this binds correctly to your state
+                  onChange={handleInputChange}
+                  variant="outlined"
+                  fullWidth
+                  sx={{ width: '50%', margin: '10px 0', lineHeight: '0.6em' }}
+                >
+                  <MenuItem value="">
+                    <em>Select Gender</em>
+                  </MenuItem>
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Non-Binary">Non-Binary</MenuItem>
+                </Select>
+              ) : (
+                <span>{formData.gender || 'N/A'}</span>
+              )}
+            </div>
+
+
           </div>
 
 
-       </div>
           <h4>Additional Information</h4>
 
           <div className="other-details-container">
 
-          <div className="detail-row">
-            <MilitaryTech/>
-            <strong>Status:</strong>
-            {isEditing ? (
-              <Select
-                name="status"
-                value={editData.status || ''} // Ensure this binds correctly to your state
-                onChange={handleInputChange}
-                variant="outlined"
-                fullWidth
-                sx={{ width: '50%', margin: '10px 0', lineHeight: '0.6em' }}
-              >
-                <MenuItem value="">
-                  <em>Select Status</em>
-                </MenuItem>
-                <MenuItem value="Active">Active</MenuItem>
-                <MenuItem value="Inactive">Inactive</MenuItem>
-                <MenuItem value="Suspended">Suspended</MenuItem>
-              </Select>
-            ) : (
-              <span>{formData.status || 'N/A'}</span>
-            )}
-          </div>
+            <div className="detail-row">
+              <MilitaryTech />
+              <strong>Status:</strong>
+              {isEditing ? (
+                <Select
+                  name="status"
+                  value={editData.status || ''} // Ensure this binds correctly to your state
+                  onChange={handleInputChange}
+                  variant="outlined"
+                  fullWidth
+                  sx={{ width: '50%', margin: '10px 0', lineHeight: '0.6em' }}
+                >
+                  <MenuItem value="">
+                    <em>Select Status</em>
+                  </MenuItem>
+                  <MenuItem value="Active">Active</MenuItem>
+                  <MenuItem value="Inactive">Inactive</MenuItem>
+                  <MenuItem value="Suspended">Suspended</MenuItem>
+                </Select>
+              ) : (
+                <span>{formData.status || 'N/A'}</span>
+              )}
+            </div>
 
 
 
-          <div className="detail-row">
-      <School />
-      <strong>Batch Name:</strong>
-      {isEditing ? (
-        <Select
-          name="batchName"
-          value={editData.batchName || ''}
-          onChange={handleInputChange}
-          sx={{ width: '50%', margin: '10px 0', lineHeight: '0.6em' }}
-        >
-          <MenuItem value="">
-            <em>Select Batch</em>
-          </MenuItem>
-          {BatchOptions.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
-      ) : (
-        <span>{formData.batchName || 'N/A'}</span>
-      )}
-    </div>
+            <div className="detail-row">
+              <School />
+              <strong>Batch Name:</strong>
+              {isEditing ? (
+                <Select
+                  name="batchName"
+                  value={editData.batchName || ''}
+                  onChange={handleInputChange}
+                  sx={{ width: '50%', margin: '10px 0', lineHeight: '0.6em' }}
+                >
+                  <MenuItem value="">
+                    <em>Select Batch</em>
+                  </MenuItem>
+                  {BatchOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              ) : (
+                <span>{formData.batchName || 'N/A'}</span>
+              )}
+            </div>
 
             <div className="detail-row">
               <CalendarToday />
@@ -447,12 +420,12 @@ const MemberDetails = () => {
                 <TextField
                   type="date"
                   name="dateOfIR"
-                   value={formatDateForInput(editData.dateOfIR || '')}
+                  value={formatDateForInput(editData.dateOfIR || '')}
                   onChange={handleInputChange}
                   className="date-of-ir-input" // Optional: for additional styling
                   variant="outlined"
                   fullWidth
-                  sx={{width: '50%'}}
+                  sx={{ width: '50%' }}
                 />
               ) : (
                 <span>{formatDate(formData.dateOfIR)}</span>
@@ -471,7 +444,7 @@ const MemberDetails = () => {
                   onChange={handleInputChange}
                   variant="outlined"
                   fullWidth
-                  sx={{width: '50%'}}
+                  sx={{ width: '50%' }}
                 />
               ) : (
                 <span>{formData.sponsorName || 'N/A'}</span>
@@ -488,7 +461,7 @@ const MemberDetails = () => {
                   onChange={handleInputChange}
                   variant="outlined"
                   fullWidth
-                  sx={{width: '50%'}}
+                  sx={{ width: '50%' }}
                 />
               ) : (
                 <span>{formData.gt || 'N/A'}</span>
@@ -504,14 +477,14 @@ const MemberDetails = () => {
                   onChange={handleInputChange}
                   variant="outlined"
                   fullWidth
-                  sx={{width: '50%'}}
+                  sx={{ width: '50%' }}
                 />
               ) : (
                 <span>{formData.mww || 'N/A'}</span>
               )}
             </div>
 
-            
+
             <div className="detail-row">
               <ContactEmergency />
               <strong>Alexis Name:</strong>
@@ -522,7 +495,7 @@ const MemberDetails = () => {
                   onChange={handleInputChange}
                   variant="outlined"
                   fullWidth
-                  sx={{width: '50%'}}
+                  sx={{ width: '50%' }}
                 />
               ) : (
                 <span>{formData.alexisName || 'N/A'}</span>

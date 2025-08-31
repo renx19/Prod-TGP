@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -39,6 +39,9 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(''); // State for error messages
 
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
@@ -57,7 +60,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await axios.post(`http://localhost:4000/reset-password/${token}`, { newPassword });
+      const response = await axios.post(`${API_URL}/${token}`, { newPassword });
       toast.success(response.data.message);
       setTimeout(() => {
         navigate('/login'); // Redirect to login page after a brief pause
@@ -73,9 +76,9 @@ const ResetPassword = () => {
   return (
     <MDBContainer className=" gradient-form d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
       <MDBRow className="justify-content-center">
-        <MDBCol col='12' md='12' lg='12'> {/* Adjusted column sizes for better responsiveness */}
+        <MDBCol col='10' md='10' lg='10'> {/* Adjusted column sizes for better responsiveness */}
           <div className="d-flex flex-row h-100" style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)', backgroundColor: '#ffffff', borderRadius: '8px' }}>
-            
+
             {/* Left Side Promotional Section */}
             <div className="gradient-custom-2 d-none d-md-flex flex-column justify-content-center text-white p-4" style={{ width: '50%', borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' }}>
               <p>A strong password is key to keeping your account secure!</p>
@@ -83,7 +86,7 @@ const ResetPassword = () => {
             </div>
 
             {/* Right Side Input Section */}
-            <div className="d-flex flex-column justify-content-center" style={{ width: '100%', padding: '40px' }}> {/* Set width to 100% for mobile view */}
+            <div className="d-flex flex-column justify-content-center" style={{ width: '80%', padding: '40px' }}> {/* Set width to 100% for mobile view */}
               <div className="text-center mb-4">
                 <img src="light.jpg" style={{ width: '100px', height: '100px', borderRadius: '50%' }} alt="logo" />
                 <h4 className="mt-1 mb-4">Tau Gamma Phi Tayhi Chapter</h4>
@@ -112,20 +115,20 @@ const ResetPassword = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
-                <MDBBtn 
-                  type="submit" 
-                  className="mb-4 gradient-custom-2" 
-                  style={{ 
-                    width: '300px', 
-                    height: '50px', 
-                    margin: '0 auto', 
-                    display: 'block', 
+                <MDBBtn
+                  type="submit"
+                  className="mb-4 gradient-custom-2"
+                  style={{
+                    width: '300px',
+                    height: '50px',
+                    margin: '0 auto',
+                    display: 'block',
                     lineHeight: '50px', // Align text vertically
                     padding: '0' // Remove default padding to ensure lineHeight works
-                  }} 
+                  }}
                   disabled={loading} // Disable button when loading
                 >
-                   {loading ? 'Updating...' : 'Reset Password'}
+                  {loading ? 'Updating...' : 'Reset Password'}
                 </MDBBtn>
               </form>
             </div>

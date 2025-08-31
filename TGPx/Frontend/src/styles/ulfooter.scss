@@ -1,0 +1,175 @@
+.developer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-top: 2px solid #dee2e6;
+}
+
+.dev-con {
+    text-align: center;
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+    width: 100%;
+}
+
+.dev-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+    border-bottom: 2px solid #adb5bd;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+}
+
+.dev-info p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    color: #495057;
+}
+
+.dev-info strong {
+    color: #212529;
+}
+
+
+/* Terms and COndtion CSS */
+
+.terms-text-con {
+    align-items: center;
+    /* Corrected property name */
+    text-align: justify;
+    padding: 4rem;
+    margin: 2rem;
+}
+
+.terms-title {
+    padding-bottom: 4rem;
+    text-align: center;
+    color: #FFD700;
+}
+
+
+/* FAQ CSS */
+
+.intro {
+    padding-bottom: 2rem;
+}
+
+.term-h2 {
+    padding-bottom: 1rem;
+}
+
+.term-content {
+    padding-bottom: 1rem;
+    padding-left: 40px;
+}
+
+.dark .term-h2,
+.dark .intro,
+.dark .term-content,
+.dark .terms-content {
+    color: #fff
+}
+
+
+/* FAQ CSS*/
+
+.faq-page {
+    align-items: center;
+    /* Corrected property name */
+    text-align: justify;
+    padding: 4rem;
+    margin: 2rem;
+}
+
+.dark .faq-page {
+    color: #ffff;
+}
+
+.faq-page h1 {
+    text-align: center;
+    color: #FFD700;
+    padding-bottom: 4rem;
+}
+
+.faq-item {
+    padding-bottom: 2rem;
+}
+
+.faq-item h3 {
+    padding-bottom: 2rem;
+}
+
+
+/* Privacy Policy CSS*/
+
+.privacy-page {
+    text-align: center;
+    padding: 4rem;
+}
+
+.privacy-page h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #FFD700;
+}
+
+.privacy-page p {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.6;
+}
+
+.privacy-section {
+    margin-bottom: 20px;
+    padding: 2rem;
+    text-align: justify;
+}
+
+.privacy-section h2 {
+    font-size: 1.75em;
+    margin-bottom: 10px;
+}
+
+.privacy-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.privacy-section ul li {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+}
+
+.dark .privacy-page,
+.dark .privacy-section ul l,
+.dark .privacy-page p {
+    color: #fff;
+}
+
+@media (max-width: 477px) {
+    .privacy-page,
+    .terms-text-con,
+    .faq-page {
+        padding: 2rem;
+        margin: auto;
+        font-size: 1em;
+    }
+    .privacy-section {
+        padding: 0rem;
+    }
+    .privacy-section ul {
+        padding-left: 0;
+    }
+    .privacy-section h2 {
+        font-size: 1.3em;
+    }
+}

@@ -1,0 +1,69 @@
+//Layout 
+// layout.scss
+.layout-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.layout-main {
+    flex: 1;
+    margin-top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.layout-backdrop {
+    position: fixed;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 65px);
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 4;
+}
+
+//Sidebar
+.sidebar {
+    position: fixed;
+    top: 75px;
+    left: 0;
+    width: 250px;
+    height: calc(100% - 75px); // match navbar height
+    background-color: #242424;
+    border-right: 1px solid #242424;
+    z-index: 2;
+    transition: left 0.3s ease;
+    &.hidden {
+        left: -250px;
+    }
+    .menu {
+        color: #fff;
+        padding-top: 5rem; // ✅ Add spacing below navbar
+        .ps-menu-button {
+            transition: background-color 0.2s ease, color 0.2s ease;
+            &:hover {
+                background-color: #333;
+                color: #ffcc00;
+                svg {
+                    color: #ffcc00 !important;
+                }
+            }
+        }
+    }
+    .logout-menu {
+        position: absolute;
+        color: #fff;
+        bottom: 20px;
+        width: 100%;
+    }
+    .sidebar-toggle-icon {
+        cursor: pointer;
+        svg {
+            font-size: 30px;
+            color: white;
+        }
+    }
+}

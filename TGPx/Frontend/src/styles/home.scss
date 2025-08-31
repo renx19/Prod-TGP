@@ -1,457 +1,630 @@
-    // Define color variables
-    $primary-color: #ffd700;
-    $background-color: #fff;
-    $text-color:#242424;
-    // Responsive breakpoints
-    $breakpoint-lg: 1060px;
-    $breakpoint-md: 820px;
-    $breakpoint-sm: 720px;
-    $breakpoint-xs: 610px;
-    .content {
-        display: flex;
+// Define color variables
+$primary-color: #ffd700;
+$background-color: #fff;
+$text-color:#242424;
+// Responsive breakpoints
+$breakpoint-lg: 1060px;
+$breakpoint-md: 820px;
+$breakpoint-sm: 720px;
+$breakpoint-xs: 610px;
+.home-section {
+    background-color: #fcfaf2;
+    padding: 2rem 4rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    min-height: 404px;
+}
+
+
+/* Keep H1 styling exactly as you had it */
+
+.home-header h1 {
+    margin: 0;
+    font-size: 50px;
+    line-height: 60px;
+    color: rgba(225, 225, 225, 0.01);
+    background-image: url("/cover.jpg");
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    animation: animate 15s ease-in-out infinite;
+    text-align: left;
+    /* align h1 to left */
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+@keyframes animate {
+    0%,
+    100% {
+        background-position: left top;
+    }
+    25% {
+        background-position: right bottom;
+    }
+    50% {
+        background-position: left bottom;
+    }
+    75% {
+        background-position: right top;
+    }
+}
+
+
+/* Content: Text (left) + Logos (right) */
+
+.home-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6rem;
+    padding: 3rem 0;
+    width: 100%;
+    max-width: 1200px;
+}
+
+
+/* Text (similar to .text in Figma export) */
+
+.home-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    /* everything starts from the left */
+    text-align: left;
+    /* paragraph and h1 aligned left */
+}
+
+
+/* Paragraph styling, aligned with headline visually */
+
+.home-text p {
+    font-size: 20px;
+    line-height: 1.6;
+    font-weight: 500;
+    font-family: "Open Sans", sans-serif;
+    color: rgba(25, 25, 31, 0.9);
+    max-width: 600px;
+    margin-top: 1rem;
+    text-align: left;
+    /* ensure left alignment */
+}
+
+.home-logos {
+    display: flex;
+    gap: 2rem;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.home-logo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.home-logo:hover {
+    transform: scale(1.05);
+}
+
+.home-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+/* Responsive */
+
+@media screen and (max-width: 768px) {
+    .home-content {
         flex-direction: column;
-        align-items: center;
-    }
-    
-    .home-con {
-        padding-top: 2rem;
-        width: 100%;
         text-align: center;
-        color: $text-color;
-    }
-    
-    .home-image {
-        width: 500px;
-        height: 300px;
-    }
-    
-    .home-image img {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .home-text {
-        display: flex;
-        align-items: center;
-        padding: 3rem;
-    }
-    
-    .text-content {
-        width: 100%;
-        margin: auto;
-        padding: 2rem 0;
-    }
-    
-    .home-image-content {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .tayhi-image-con {
-        width: 300px;
-        height: 300px;
-        margin: 2rem;
-    }
-    
-    .tayhi-image-con img {
-        width: 100%;
-        border-radius: 50%;
-    }
-    
-    .text-org {
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .h1-home-image-content img {
-        max-width: 100%;
-        height: 200px;
-        border-radius: 5%;
-    }
-    
-    .text-content h4 {
-        color: $primary-color;
-    }
-    
-    .h1-title {
-        color: $primary-color;
-    }
-    
-    .text-content h1 {
-        font-size: 2.2em;
-        padding-bottom: 3rem;
-        color: $primary-color;
-    }
-    
-    .text-content h2 {
-        font-size: 1.7em;
-        padding-bottom: 3rem;
-        text-align: justify;
-        margin-right: 5rem;
-        hyphens: auto;
-    }
-    
-    .home-card-con {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-        justify-content: center;
-        padding: 5rem;
         gap: 2rem;
     }
-    
-    .home-card {
-        display: flex;
+    .home-logos {
+        justify-content: center;
+    }
+    .home-text {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+    .home-text p {
+        font-size: 1.1rem;
+    }
+    .home-header h1 {
+        font-size: 45px;
+    }
+}
+
+//home-about
+.home-about-section {
+    width: 80%;
+    max-width: 1280px;
+    margin: 4rem auto;
+    background: #fff;
+    border-radius: 0px;
+    padding: 2rem 3rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; // centers the content horizontally
+}
+
+.home-about-section h2 {
+    font-family: Merriweather, serif;
+    font-size: 36px;
+    line-height: 40px;
+    font-weight: 700;
+    color: #171A1FFF;
+    margin-bottom: 1.5rem;
+    text-align: center; // heading stays centered
+}
+
+.home-about-section p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    line-height: 29px;
+    font-weight: 400;
+    color: rgba(25, 25, 31, 0.9);
+    margin-bottom: 1rem;
+    text-align: justify; // justify all lines
+    text-align-last: center; // last line aligns left (not stretched)
+    max-width: 800px; // keeps paragraphs readable
+    width: 100%; // fills container
+    margin-left: auto; // center block horizontally
+    margin-right: auto; // center block horizontally
+}
+
+
+/* Mobile responsiveness */
+
+@media screen and (max-width: 768px) {
+    .home-about-section {
+        width: 100%;
+        padding: 2rem 1rem;
+    }
+    .home-about-section h2 {
+        font-size: 28px;
+        line-height: 34px;
+    }
+    .home-about-section p {
+        font-size: 16px;
+        line-height: 24px;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: $breakpoint-sm) {
+    .home-text {
         flex-direction: column;
         align-items: center;
-        text-align: center;
-        background: $background-color;
-        color: $text-color;
-        width: 300px;
-        padding: 10px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    .home-image-content img {
-        width: 100%;
-        height: auto;
-        max-height: 150px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-    
-    .home-card h1 {
-        margin: 1rem 0 0.5rem 0;
-    }
-    
-    .home-card p {
-        flex-grow: 1;
-        margin: 0.5rem 0;
-        padding: 0 10px;
-    }
-    
-    .icon {
-        margin: 1rem 0;
-    }
-    
-    .prayer-container {
-        display: flex;
         justify-content: center;
-        align-items: center;
     }
-    
-    .prayer {
-        color: $text-color;
-        background: $background-color;
-        padding: 2rem;
-        margin: 2rem 0;
-        border-radius: 8px;
-        text-align: justify;
-        width: 500px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    .prayer img {
-        float: left;
-        margin: 0 1rem 1rem 0;
-        width: 40px;
-        height: auto;
-    }
-    
-    .prayer h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
+    .text-content,
+    .text-content {
         text-align: center;
-        margin-top: 4rem;
-        color: $primary-color;
     }
-    
-    .prayer p {
-        font-size: 1rem;
-        line-height: 1.5;
-        max-width: 100%;
+    .text-content h1 {
         margin: 0;
     }
-    
-    .tenets-con {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .Text-text-con {
-        margin: 0 auto;
-    }
-    
-    .tenets-con {
-        /* Margin around the entire section */
-        font-family: Arial, sans-serif;
-        /* Font for the section */
-        display: flex;
-        /* Use flexbox to center content */
-        justify-content: center;
-        /* Center horizontally */
-    }
-    
-    .tenets {
-        background-color: #ffffff;
-        /* White background for the tenets section */
-        border-radius: 8px;
-        /* Rounded corners */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        /* Subtle shadow */
-        padding: 20px;
-        /* Padding inside the container */
-    }
-    
-    .tenets-table {
-        width: 100%;
-        /* Full width of the container */
-        max-width: 800px;
-        /* Set a maximum width for the table */
-        border-collapse: collapse;
-        /* Remove space between cells */
-        margin-top: 20px;
-        /* Space above the table */
-    }
-    
-    .tenets-table th,
-    .tenets-table td {
-        padding: 12px;
-        /* Padding for cells */
-        text-align: left;
-        /* Left-align text */
-    }
-    
-    .tenets-table th {
-        background-color: #242424;
-        color: $primary-color;
-        font-weight: bold;
-        /* Bold text for header */
-    }
-    
-    .tenets-table tr:nth-child(even) {
-        background-color: #f2f2f2;
-        /* Light gray for even rows */
-    }
-    
-    .tenets-table tr:hover {
-        background-color: #e9ecef;
-        /* Light gray on hover */
-        transition: background-color 0.3s;
-        /* Smooth transition for hover effect */
-    }
-    
-    .tenet-number,
-    .tenet-description {
-        font-size: 1em;
-        /* Base font size for table text */
-    }
-    
-    .tenet-number {
-        color: $primary-color;
-    }
-    
-    net te .tenets-h1 {
-        color: $primary-color;
-        /* Primary color for the main heading */
-        margin-bottom: 20px;
-        /* Space below the main heading */
-    }
-    
-    .conduct-con {
-        /* Margin around the entire section */
-        font-family: Arial, sans-serif;
-        /* Font for the section */
-        display: flex;
-        /* Use flexbox to center content */
-        justify-content: center;
-        margin-top: 1rem;
-        /* Center horizontally */
-    }
-    
-    .code-of-conduct {
-        background-color: #ffffff;
-        /* White background for the code of conduct section */
-        border-radius: 8px;
-        /* Rounded corners */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        /* Subtle shadow */
-        padding: 20px;
-        /* Padding inside the container */
-    }
-    
-    .conduct-table {
-        width: 100%;
-        /* Full width of the container */
-        max-width: 800px;
-        /* Set a maximum width for the table */
-        border-collapse: collapse;
-        /* Remove space between cells */
-        margin-top: 20px;
-        /* Space above the table */
-    }
-    
-    .conduct-table th,
-    .conduct-table td {
-        padding: 12px;
-        /* Padding for cells */
-        text-align: left;
-        /* Left-align text */
-    }
-    
-    .conduct-table th {
-        background-color: #242424;
-        /* Primary blue for header background */
-        color: $primary-color;
-        /* White text for header */
-        font-weight: bold;
-        /* Bold text for header */
-    }
-    
-    .conduct-table tr:nth-child(even) {
-        background-color: #f2f2f2;
-        /* Light gray for even rows */
-    }
-    
-    .conduct-table tr:hover {
-        background-color: #e9ecef;
-        /* Light gray on hover */
-        transition: background-color 0.3s;
-        /* Smooth transition for hover effect */
-    }
-    
-    .first-letter {
-        font-weight: bold;
-        /* Bold the first letter */
-        font-size: 1.2em;
-        /* Slightly larger size for emphasis */
-        color: $primary-color;
-        /* Use primary color for the first letter */
-    }
-    
-    .conduct-table th,
-    .conduct-table td {
-        border: none;
-        /* Remove borders from table cells */
-    }
-    
-    .tenets h1,
-    .code-of-conduct h1 {
-        text-align: center;
-        color: $primary-color;
-    }
-    
-    .home-con h1 {
-        margin: 0;
-        font-size: 120px;
-        color: rgba(225, 225, 225, 0.01);
-        background-image: url("/cover.jpg");
-        background-repeat: repeat;
-        -webkit-background-clip: text;
-        animation: animate 15s ease-in-out infinite;
-        text-align: center;
-        text-transform: uppercase;
-        font-weight: 900;
-    }
-    
-    @keyframes animate {
-        0%,
-        100% {
-            background-position: left top;
-        }
-        25% {
-            background-position: right bottom;
-        }
-        50% {
-            background-position: left bottom;
-        }
-        75% {
-            background-position: right top;
-        }
-    }
-    
     .text-content h2 {
-        color: $text-color;
+        margin: 0;
+        padding-right: 0;
     }
-    
-    @media screen and (max-width: $breakpoint-lg) {
-        .text-content h1 {
-            font-size: 1.7em;
-            padding-bottom: 3rem;
-        }
-        .text-content h2 {
-            font-size: 1em;
-            padding-bottom: 3rem;
-            text-align: justify;
-            padding-right: 5rem;
-            margin-right: 2rem;
-        }
-        .tenets,
-        .code-of-conduct {
-            width: 100%;
-        }
-        .code-of-conduct p,
-        .tenets p {
-            padding: 0 20px;
-        }
+    .home-image-content {
+        order: -1;
     }
-    
-    @media screen and (max-width: $breakpoint-md) and (min-width: $breakpoint-xs) {
-        .text-content h2 {
-            font-size: 1em;
-            padding-bottom: 2rem;
-            text-align: justify;
-            margin-right: 0;
-        }
-        .text-content h1 {
-            font-size: 1.2em;
-            padding-bottom: 2rem;
-        }
-        .tenets {
-            width: 100%;
-        }
-        .code-of-conduct p,
-        .tenets p {
-            padding: 0 40px;
-        }
+    .home-con h1 {
+        font-size: 60px;
     }
-    
-    @media screen and (max-width: $breakpoint-sm) {
-        .home-text {
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .text-content,
-        .home-image-content {
-            width: 100%;
-            margin-bottom: 2rem;
-            align-items: center;
-            justify-content: center;
-        }
-        .home-card-con {
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .text-content {
-            text-align: center;
-        }
-        .text-content h1 {
-            margin: 0;
-        }
-        .text-content h2 {
-            margin: 0;
-            padding-right: 0;
-        }
-        .home-image-content {
-            order: -1;
-        }
-        .home-con h1 {
-            font-size: 60px;
-        }
+}
+
+.home-about-section {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+    text-align: left;
+}
+
+.home-about-section h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: rgba(25, 25, 31, 0.9);
+}
+
+.home-about-section p {
+    font-size: 20px;
+    line-height: 1.8;
+    font-weight: 400;
+    color: rgba(25, 25, 31, 0.9);
+    margin-bottom: 1.5rem;
+}
+
+//tenets
+
+/* -------------------- TENETS -------------------- */
+
+
+/* -------------------- TENETS -------------------- */
+
+.tenets-container {
+    background: #FAFAFB;
+    padding: 5rem;
+    margin: 5rem;
+}
+
+.tenets-con {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+
+.tenets {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.tenets-h1 {
+    text-align: center;
+    font-family: Merriweather, serif;
+    font-size: 36px;
+    line-height: 40px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 20px;
+}
+
+.tenets-table th,
+.tenets-table td {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 32px;
+    font-weight: 400;
+    color: #171A1F;
+    padding: 12px;
+    text-align: left;
+}
+
+.tenets-table th.tenet-number,
+.tenets-table td.tenet-number {
+    width: 30%;
+}
+
+.tenets-table th.tenet-description,
+.tenets-table td.tenet-description {
+    width: 70%;
+}
+
+.tenets-table th {
+    font-weight: bold;
+    color: #212121;
+    border-bottom: 2px solid #e7e7e7;
+}
+
+.tenets-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.tenets-table tbody tr:hover {
+    background-color: #e6f0ff;
+    transition: 0.3s;
+}
+
+.tenet-number {
+    font-weight: 600;
+    color: #212121;
+}
+
+.tenet-description {
+    font-size: 1em;
+    color: #555555;
+}
+
+
+/* -------------------- TENETS RESPONSIVE -------------------- */
+
+@media screen and (max-width: 1024px) {
+    .tenets-container {
+        padding: 3rem;
+        margin: 3rem auto;
     }
+    .tenets {
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .tenets-container {
+        padding: 2rem 1rem;
+    }
+}
+
+
+/* -------------------- CODE OF CONDUCT -------------------- */
+
+.conduct-container {
+    padding: 5rem;
+    margin: 5rem auto;
+    max-width: 1200px;
+}
+
+.conduct-con {
+    display: flex;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.code-of-conduct-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.conduct-card {
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 132px;
+    border-radius: 4px;
+    border: #f5f5f5 2px solid;
+    /* No background, no box-shadow */
+}
+
+.conduct-card-heading {
+    font-family: Merriweather, serif;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #19191FFF;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* space between circle and text */
+}
+
+.conduct-card-heading .letter-circle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    /* size of the circle */
+    height: 32px;
+    /* size of the circle */
+    border-radius: 50%;
+    /* makes it circular */
+    background-color: #FFD700;
+    /* gold color */
+    color: #000000;
+    /* text color inside circle */
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.conduct-card-text {
+    font-family: Open Sans, sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+    color: #171A1FE6;
+}
+
+
+/* -------------------- RESPONSIVE -------------------- */
+
+@media screen and (max-width: 1024px) {
+    .conduct-container {
+        padding: 3rem;
+        margin: 3rem auto;
+    }
+    .code-of-conduct-cards {
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .conduct-container {
+        padding: 2rem 1rem;
+        margin: 2rem 1rem;
+    }
+    .code-of-conduct-cards {
+        grid-template-columns: 1fr;
+    }
+    .conduct-card {
+        width: 100%;
+        min-height: auto;
+    }
+}
+
+//Prayer 
+
+/* --------------------- PRAYER CONTAINER --------------------- */
+
+.prayer-container {
+    background: #FAFAFB;
+    padding: 5rem 2rem;
+    margin: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.prayer-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 896px;
+}
+
+.prayer {
+    position: relative;
+    /* for absolute icon positioning */
+    background: #F7F7F7;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 672px;
+    height: auto;
+    text-align: center;
+    /* heading remains centered */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Icon at top-left */
+
+.prayer img {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: auto;
+    z-index: 1;
+}
+
+.prayer h1 {
+    font-family: Merriweather, serif;
+    font-size: 2rem;
+    color: #D4AF35FF;
+    margin: 0;
+    z-index: 0;
+    /* behind icon if overlaps slightly */
+}
+
+.prayer p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-top: 2rem;
+}
+
+
+/* --------------------- RESPONSIVE --------------------- */
+
+@media screen and (max-width: 768px) {
+    .prayer-container {
+        margin: 0;
+    }
+    .prayer-wrapper {
+        width: 100%;
+        padding: 0 1rem;
+        height: auto;
+    }
+    .prayer {
+        width: 100%;
+        max-width: 100%;
+        padding: 1.5rem;
+        text-align: center;
+    }
+    .prayer img {
+        position: static;
+        display: block;
+        margin: 0 auto 1rem auto;
+        top: auto;
+        left: auto;
+        z-index: auto;
+    }
+    .prayer h1 {
+        font-size: 1.5rem;
+        margin-top: 0;
+    }
+    .prayer p {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+    }
+}
+
+//mission and vision
+.home-cards-container {
+    display: flex;
+    justify-content: center;
+    padding: 5rem 2rem 8rem 2rem;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.home-cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 496px));
+    /* minmax(0, 496px) ensures each card max 496px but shrinks if needed */
+    gap: 1rem;
+    /* small gap between cards */
+    justify-content: center;
+    /* center the grid */
+    width: 100%;
+}
+
+.home-card {
+    background: #FFFFFF;
+    border-radius: 4px;
+    border: #e4e4e4 2px solid;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    min-height: 246px;
+}
+
+.home-card-icon {
+    font-size: 48px;
+    margin-bottom: 1rem;
+    color: #2e2e2e;
+}
+
+.home-card-title {
+    font-family: Merriweather, serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #19191F;
+    margin-bottom: 8px;
+}
+
+.home-card-text {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    color: #171A1F;
+}
+
+
+/* Responsive */
+
+@media screen and (max-width: 768px) {
+    .home-cards-wrapper {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 1rem;
+        /* small spacing for stacked cards */
+    }
+    .home-card {
+        width: 100%;
+        min-height: auto;
+    }
+}

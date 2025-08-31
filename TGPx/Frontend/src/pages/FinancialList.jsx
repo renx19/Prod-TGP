@@ -1,30 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import FinancialEventForm from './EventFinancialForm';
-import useFinancialEventStore from '../../store/testStore';
-import "../../styles/financial-event.scss"
+
+import useFinancialEventStore from '../store/testStore';
+import "../styles/financial-event.scss"
 import {
-  Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox, Pagination, Paper, Box, InputAdornment, TextField, Dialog,
+  Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Pagination, Paper, Box, InputAdornment, TextField, Dialog,
   DialogTitle,
   DialogContent,
   DialogActions
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import FilterInput from '../../components/filterInput';
+import FilterInput from '../components/filterInput';
 
-// import FinancialEvent from './testList';
-import ConfirmDialog from '../../components/confirmDialog'; const FinancialEventTable = () => {
-  const { financialEvents, fetchFinancialEvents, deleteFinancialEvent, } = useFinancialEventStore();
+const FinancialEventTable = () => {
+  const { financialEvents, fetchFinancialEvents, } = useFinancialEventStore();
 
   //Dialog
   const [open, setOpen] = useState(false);
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
-  const [dialogMode, setDialogMode] = useState('single'); // 'single' | 'bulk'
-  const [targetId, setTargetId] = useState(null);
+
 
   //Filters
   const [searchTerm, setSearchTerm] = useState('');
@@ -35,7 +31,7 @@ import ConfirmDialog from '../../components/confirmDialog'; const FinancialEvent
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const [selectedFinancialEvents, setSelectedFinancialEvents] = useState([]);
+
 
 
   const FinancialEventsPerPage = 5;
@@ -111,27 +107,10 @@ import ConfirmDialog from '../../components/confirmDialog'; const FinancialEvent
   const totalPages = Math.ceil(filteredFinancialEvents.length / FinancialEventsPerPage);
 
 
-  const handleSelect = (id) => {
-    setSelectedFinancialEvents((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
-
-  const handleSelectAll = () => {
-    if (selectedFinancialEvents.length === financialEvents.length) {
-      setSelectedFinancialEvents([]);
-    } else {
-      setSelectedFinancialEvents(financialEvents.map((e) => e._id));
-    }
-  };
-
-
 
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, startDate, endDate, budgetRange, donationsRange]);
-
-
 
 
 
@@ -141,40 +120,15 @@ import ConfirmDialog from '../../components/confirmDialog'; const FinancialEvent
 
 
 
-  const handleDelete = (id) => {
-    setTargetId(id);
-    setDialogMode('single');
-    setConfirmDialogOpen(true);
-  };
-
-  const handleDeleteSelected = () => {
-    setDialogMode('bulk');
-    setConfirmDialogOpen(true);
-  };
-
-
-  const confirmDelete = async () => {
-    if (dialogMode === 'single' && targetId) {
-      await deleteFinancialEvent(targetId);
-    } else if (dialogMode === 'bulk') {
-      await Promise.all(selectedFinancialEvents.map((id) => deleteFinancialEvent(id)));
-      setSelectedFinancialEvents([]);
-    }
-
-    setConfirmDialogOpen(false);
-    setTargetId(null);
-  };
-
-
   return (
 
-    <div className="financial-list-container">
-      <TableContainer component={Paper} className="financial-table">
-        <Table className="financial-table-inner">
-          <TableHead className="financial-th">
+    <div className="financial-view-container">
+      <TableContainer component={Paper} className="financial-view-table" >
+        <Table className="financial-view-table-inner">
+          <TableHead className="financial-view-th">
             <TableRow>
-              <TableCell className="financial-th-cell" colSpan={7}>
-                <Box className="financial-event-toolbar">
+              <TableCell className="financial-view-th-cell" colSpan={7}>
+                <Box className="financial-view-event-toolbar">
                   {/* Search Box */}
                   <Box className="financial-search-box">
                     <TextField
@@ -191,22 +145,7 @@ import ConfirmDialog from '../../components/confirmDialog'; const FinancialEvent
                         ),
                       }}
                     />
-                  </Box>
-
-                  {/* Buttons */}
-                  <Box className="financial-buttons">
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      onClick={handleDeleteSelected}
-                      startIcon={<DeleteIcon />}
-                      className="delete-btn"
-                    >
-                      Delete
-                    </Button>
-                    <FinancialEventForm />
-                  </Box>
+                  </Box> 
 
                   {/* Filters */}
                   <Box className="filter-actions-con">
@@ -245,17 +184,11 @@ import ConfirmDialog from '../../components/confirmDialog'; const FinancialEvent
 
             {/* Table Header */}
             <TableRow>
-              <TableCell padding="checkbox" className="col-checkbox">
-                <Checkbox
-                  checked={selectedFinancialEvents.length === financialEvents.length && financialEvents.length > 0}
-                  onChange={handleSelectAll}
-                />
-              </TableCell>
-              <TableCell className="col-title">Title</TableCell>
-              <TableCell className="col-budget">Budget</TableCell>
-              <TableCell className="col-expenses">Total Expenses</TableCell>
-              <TableCell className="col-donations">Total Donations</TableCell>
-              <TableCell className="col-actions">Actions</TableCell>
+              <TableCell className="view-col-title">Title</TableCell>
+              <TableCell className="view-col-budget">Budget</TableCell>
+              <TableCell className="view-col-expenses">Total Expenses</TableCell>
+              <TableCell className="view-col-donations">Total Donations</TableCell>
+              <TableCell className="view-col-actions">Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -265,38 +198,18 @@ import ConfirmDialog from '../../components/confirmDialog'; const FinancialEvent
               <TableRow
                 key={financialEvent._id}
                 hover
-                selected={selectedFinancialEvents.includes(financialEvent._id)}
               >
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedFinancialEvents.includes(financialEvent._id)}
-                    onChange={() => handleSelect(financialEvent._id)}
-                  />
-                </TableCell>
                 <TableCell>{financialEvent.title}</TableCell>
                 <TableCell>{financialEvent.budget}</TableCell>
                 <TableCell>{financialEvent.totalExpenses}</TableCell>
                 <TableCell>{financialEvent.totalDonations}</TableCell>
                 <TableCell>
                   <div className="button-group">
-                    <Link to={`/financial/${financialEvent._id}`} className="no-link-style">
+                    <Link to={`/financial-List-Details/${financialEvent._id}`} className="no-link-style">
                       <Button variant="contained" color="info" startIcon={<VisibilityIcon />}>
-                        View
+                         Details
                       </Button>
                     </Link>
-                    <Link to={`/financial/${financialEvent._id}`} className="no-link-style">
-                      <Button variant="contained" color="success" startIcon={<EditIcon />}>
-                        Edit
-                      </Button>
-                    </Link>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={() => handleDelete(financialEvent)}
-                      startIcon={<DeleteIcon />}
-                    >
-                      Delete
-                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
@@ -319,19 +232,6 @@ import ConfirmDialog from '../../components/confirmDialog'; const FinancialEvent
       </Box>
 
 
-      {/* Delete Confirmation Dialog */}
-
-      <ConfirmDialog
-        open={confirmDialogOpen}
-        title={dialogMode === 'bulk' ? 'Delete Selected Events' : 'Delete Event'}
-        content={
-          dialogMode === 'bulk'
-            ? `Are you sure you want to delete ${selectedFinancialEvents.length} selected events?`
-            : 'Are you sure you want to delete this event?'
-        }
-        onClose={() => setConfirmDialogOpen(false)}
-        onConfirm={confirmDelete}
-      />
 
     </div>
   );

@@ -57,47 +57,6 @@
     }
 }
 
-// @media screen and (max-width: 768px) and (min-width: 600px) {
-//     .image-container {
-//         height: 500px !important;
-//     }
-// }
-// @media screen and (max-width: 820px) {
-//     .card-con {
-//         min-height: 500px;
-//         /* Adjust for medium screens */
-//     }
-// }
-// @media screen and (max-width: 768px) {
-//     .card-con {
-//         min-height: 750px;
-//         /* Adjust for tablets */
-//     }
-// }
-// @media screen and (max-width: 640px) {
-//     .card-con {
-//         min-height: 650px;
-//         /* Adjust for small tablets */
-//     }
-// }
-// @media screen and (max-width: 570px) {
-//     .card-con {
-//         min-height: 560px;
-//         /* Adjust for large phones */
-//     }
-// }
-// @media screen and (max-width: 500px) {
-//     .card-con {
-//         min-height: 540px;
-//         /* Adjust for medium phones */
-//     }
-// }
-// @media screen and (max-width: 430px) {
-//     .card-con {
-//         min-height: 500px;
-//         /* Adjust for small phones */
-//     }
-// }
 
 /* Image Styles */
 
@@ -293,8 +252,8 @@
         position: relative;
         display: inline-block;
         width: 100%;
-        height: auto;
         padding: 10px;
+        height: 300px;
     }
     .imageDetails-content {
         position: relative;
@@ -315,12 +274,12 @@
     }
     .cardDetails-image {
         width: 100%;
-        height: auto;
+        height: 300px;
         overflow: hidden;
     }
     .cardDetails-img {
         width: 100%;
-        height: auto;
+        height: 100%;
         object-fit: cover;
     }
     .titleDetails-container {
@@ -371,6 +330,73 @@
         }
         .descriptionDetails {
             font-size: 0.9rem;
+        }
+    }
+}
+
+// Event Form //
+//Evemt List//
+.event-container {
+    padding: 5rem;
+    @media (max-width: 768px) {
+        padding: 10px;
+        align-items: center;
+        justify-content: center;
+    }
+    .month-select,
+    .year-select {
+        text-align: center;
+    }
+    .event-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+        }
+        .filter-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: flex-end;
+            align-items: center;
+            .delete-btn,
+            .add-btn .month-select,
+            .year-select,
+            .month-select {
+                min-width: 120px;
+                max-width: 300px;
+            }
+            .delete-btn,
+            .add-btn {
+                padding: 8px 14px;
+            }
+        }
+        @media (max-width: 500px) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            .filter-actions,
+            .search-box {
+                width: 100%;
+                max-width: 285px;
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 3rem;
+            }
+            .add-btn,
+            .delete-btn,
+            .month-select,
+            .year-select,
+            .search-box {
+                width: 100%;
+                max-width: 300px;
+            }
         }
     }
 }

@@ -1,11 +1,21 @@
 import { useEffect, useState } from 'react';
-import Select from 'react-select'; // Import react-select
 import TextField from '@mui/material/TextField'; // Import MUI TextField
 import useMemberStore from '../../store/memberStore';
 import { toast } from 'react-toastify'; // Import toast
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import '../../styles/members.scss'; // Import the SCSS file
 import { StatusOptions, BatchOptions, GenderOptions } from '../../utils/Options';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  IconButton,
+  FormControl, Select, MenuItem
+} from '@mui/material';
+
 
 const CreateMemberForm = () => {
   const {
@@ -17,11 +27,11 @@ const CreateMemberForm = () => {
     availableUsers,
     error,
   } = useMemberStore();
-  const navigate = useNavigate(); // Initialize useNavigate
+
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [isMemberCreated, setIsMemberCreated] = useState(false); // State to track member creation
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     fetchAvailableUsers(); // Fetch available users on component mount
@@ -33,7 +43,6 @@ const CreateMemberForm = () => {
     try {
       await createMember(); // Create member
       toast.success('Member created successfully!'); // Notify user on success
-      setIsMemberCreated(true); // Set member created state to true
 
       // Reset the form data and image upload state after successful creation
       resetForm();
@@ -65,11 +74,9 @@ const CreateMemberForm = () => {
     });
     setImagePreview(null); // Reset image preview
     setIsImageUploaded(false); // Reset image upload state
-    setIsMemberCreated(false); // Reset member created state for the next submission
   };
-
-  const handleUserChange = (selectedOption) => {
-    setFormData({ ...formData, user: selectedOption.value });
+  const handleUserChange = (value) => {
+    setFormData({ ...formData, user: value });
   };
 
   const handleInputChange = (e) => {
@@ -108,148 +115,186 @@ const CreateMemberForm = () => {
     }
   };
 
-  const handleNext = () => {
-    navigate('/success'); // Navigate to the success component or page
-  };
+
 
   return (
-    <form className="create-member-form" onSubmit={handleSubmit}>
-      <div className="cm-title">
-        {error && <div className="error">{error}</div>} {/* Display error if any */}
-      </div>
+    <>
+      <Button
+        variant="outlined"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpenDialog(true);
+        }}
+        title="Add Member"
+        className="memberform-toolbar__add-btn"
+        startIcon={<AddIcon />}
+      >Add
+      </Button>
 
-      <div className="cm-container">
-        <div className="image-section">
-          <div className="member-image-container">
-            {imagePreview ? (
-              <img src={imagePreview} alt="Preview" className="preview-image" />
-            ) : (
-              <div className="placeholder" />
-            )}
-          </div>
-          <div className="input-group">
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
-              required
-              className="input-file"
-            />
-            <button
-              type="button"
-              onClick={handleUploadImage}
-              disabled={loading || isImageUploaded} // Disable if loading or if the image is already uploaded
-              className="upload-button"
-            >
-              {loading ? 'Uploading...' : isImageUploaded ? 'Image Uploaded' : 'Upload Image'}
-            </button>
-          </div>
-        </div>
 
-        <div className="input-section">
-          <div className="input-grid">
-        
-          <Select
-            options={availableUsers.map((user) => ({
-              value: user._id,
-              label: user.username,
-            }))} // Use username for display
-            onChange={handleUserChange}
-            placeholder="Select an Available User"
-            required
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                height: '52px', // Adjust height as needed
-                margin: '0.5em 0 ',
-              }),
+      <Dialog
+        open={openDialog}
+        onClose={() => {
+          resetForm();
+          setOpenDialog(false);
+        }}
+        fullWidth
+        maxWidth="md"
+      >
+        <DialogTitle>
+          Create Member
+          <IconButton
+            edge="end"
+            onClick={() => {
+              resetForm();
+              setOpenDialog(false);
             }}
-          />
-            <Select
-              options={[{ value: '', label: 'Select Status' }, ...StatusOptions]} // Using StatusOptions
-              name="status"
-              onChange={(selectedOption) =>
-                handleInputChange({ target: { name: 'status', value: selectedOption.value } }) // For single select
-              }
-              placeholder="Select Status"
-              required
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  height: '52px', // Adjust height as needed
-                  margin: '0.5em 0 ',
-                  padding: '0.5em', // Add padding to control
-                }),
-              }}
-            />
+            sx={{ position: 'absolute', top: 8, right: 8 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
 
-            {/* Batch Select */}
-            <Select
-              options={[{ value: '', label: 'Select Batch' }, ...BatchOptions]} // Using BatchOptions
-              name="batchName"
-              onChange={(selectedOption) =>
-                handleInputChange({ target: { name: 'batchName', value: selectedOption.value } })
-              }
-              placeholder="Select Batch"
-              required
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  height: '52px', // Adjust height as needed
-                  margin: '0.5em 0 ',
-                }),
-              }}
-            />
+        <DialogContent dividers>
+          <form className="create-member-form" onSubmit={handleSubmit}>
+            <div className="cm-title">
+              {error && <div className="error">{error}</div>} {/* Display error if any */}
+            </div>
 
-            {/* Gender Select */}
-            <Select
-              options={[{ value: '', label: 'Select Gender' }, ...GenderOptions]} // Using GenderOptions
-              name="gender"
-              onChange={(selectedOption) =>
-                handleInputChange({ target: { name: 'gender', value: selectedOption.value } })
-              }
-              placeholder="Select Gender"
-              required
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  height: '52px', // Adjust height as needed
-                  margin: '0.5em 0 ',
-                  padding: '0.5em', // Add padding to control
-                }),
-              }}
-/>
+            <div className="cm-container">
+              <div className="image-section">
+                <div className="member-image-container">
+                  {imagePreview ? (
+                    <img src={imagePreview} alt="Preview" className="preview-image" />
+                  ) : (
+                    <div className="placeholder" />
+                  )}
+                </div>
+                <div className="input-group">
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    required
+                    className="input-file"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleUploadImage}
+                    disabled={loading || isImageUploaded} // Disable if loading or if the image is already uploaded
+                    className="upload-button"
+                  >
+                    {loading ? 'Uploading...' : isImageUploaded ? 'Image Uploaded' : 'Upload Image'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="input-section">
+                <div className="input-grid">
+
+                  <FormControl fullWidth sx={{ my: 1 }}>
+                    <Select
+                      displayEmpty
+                      name="user"
+                      value={formData.user || ""}
+                      onChange={(e) => handleUserChange(e.target.value)}
+                      required
+                      sx={{ height: 52 }}
+                    >
+                      <MenuItem value="">Select an Available User</MenuItem>
+                      {availableUsers.map((user) => (
+                        <MenuItem key={user._id} value={user._id}>
+                          {user.username}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  {/* Status */}
+                  <FormControl fullWidth sx={{ my: 1 }}>
+                    <Select
+                      displayEmpty
+                      name="status"
+                      value={formData.status || ""}
+                      onChange={handleInputChange}
+                      required
+                      sx={{ height: 52 }}
+                    >
+                      <MenuItem value="">Select Status</MenuItem>
+                      {StatusOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  {/* Batch */}
+                  <FormControl fullWidth sx={{ my: 1 }}>
+                    <Select
+                      displayEmpty
+                      name="batchName"
+                      value={formData.batchName || ""}
+                      onChange={handleInputChange}
+                      required
+                      sx={{ height: 52 }}
+                    >
+                      <MenuItem value="">Select Batch</MenuItem>
+                      {BatchOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  {/* Gender */}
+                  <FormControl fullWidth sx={{ my: 1 }}>
+                    <Select
+                      displayEmpty
+                      name="gender"
+                      value={formData.gender || ""}
+                      onChange={handleInputChange}
+                      required
+                      sx={{ height: 52 }}
+                    >
+                      <MenuItem value="">Select Gender</MenuItem>
+                      {GenderOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
 
 
-            {renderTextField('fullName', 'Full Name', true)}
-            {renderTextField('address', 'Address')}
-            {renderTextField('dateOfIR', '', false, 'date')}
-            {renderTextField('birthday', '', false, 'date')}
-            {renderTextField('phoneNumber', 'Phone Number')}
-            {renderTextField('sponsorName', 'Sponsor Name')}
-            {renderTextField('alexisName', ' Alexis Name')}
-            {renderTextField('gt', 'GT')}
-            {renderTextField('mww', 'MWW')}
-            {renderTextField('almaMater', 'Alma Mater')}
-          </div>
-        </div>
-      </div>
+                  {renderTextField('fullName', 'Full Name', true)}
+                  {renderTextField('address', 'Address')}
+                  {renderTextField('dateOfIR', '', false, 'date')}
+                  {renderTextField('birthday', '', false, 'date')}
+                  {renderTextField('phoneNumber', 'Phone Number')}
+                  {renderTextField('sponsorName', 'Sponsor Name')}
+                  {renderTextField('alexisName', ' Alexis Name')}
+                  {renderTextField('gt', 'GT')}
+                  {renderTextField('mww', 'MWW')}
+                  {renderTextField('almaMater', 'Alma Mater')}
+                </div>
+              </div>
+            </div>
 
-      <div className="button-container">
-        <button type="submit" disabled={loading} className="button">
-          {loading ? 'Creating...' : 'Create Member'}
-        </button>
-        <button
-          type="button"
-          onClick={handleNext}
-          disabled={!isMemberCreated} // Enable only if the member has been successfully created
-          className="button next-button" // Added next-button class for styling
-        >
-          Next
-        </button>
-      </div>
-    </form>
+            <div className="button-container">
+              <button type="submit" disabled={loading} className="button">
+                {loading ? 'Creating...' : 'Create Member'}
+              </button>
+
+            </div>
+            <DialogActions>
+
+            </DialogActions>
+          </form>
+        </DialogContent>
+      </Dialog >
+    </>
   );
 
   function renderTextField(name, label, required = false, type = 'text') {

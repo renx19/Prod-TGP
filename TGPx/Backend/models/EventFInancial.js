@@ -2,48 +2,43 @@ const mongoose = require('mongoose');
 
 // Define the FinancialEvent schema
 const financialEventSchema = new mongoose.Schema({
-    title: { type: String, required: true }, // Title of the financial event
-    budget: { type: Number, required: true, default: 0 }, // This will be the balance (budget)
-    totalExpenses: { type: Number, required: true, default: 0 }, // Total expenses
-    totalDonations: { type: Number, required: true, default: 0 }, // Total donations
+    title: { type: String, required: true },
+    budget: { type: Number, default: 0 }, // Auto-calculated
+    totalExpenses: { type: Number, default: 0 },
+    totalDonations: { type: Number, default: 0 },
+
     expenses: [{
-        date: { type: Date, required: true }, // Date of expense
-        store: { type: String, required: true }, // Store name
-        particulars: { type: String, required: true }, // Description of the expense
-        cost: { type: Number, required: true }, // Cost of the expense
-    }], // Array of expense objects
+        date: { type: Date, required: true },
+        store: { type: String, required: true },
+        particulars: { type: String, required: true },
+        cost: { type: Number, required: true },
+    }, ],
+
     donations: [{
-        date: { type: Date, required: true }, // Date of donation
-        receivedFrom: { type: String, required: true }, // Name or organization donating
-        amount: { type: Number, required: true }, // Amount donated
-    }], // Array of donation objects
+        date: { type: Date, required: true },
+        receivedFrom: { type: String, required: true },
+        amount: { type: Number, required: true },
+    }, ],
+
     distributions: [{
-        date: { type: Date, required: true }, // Date of distribution
-        location: { type: String, required: true }, // Location of distribution
-        goodsDistributed: { type: String, required: true }, // Description of goods distributed
-        quantity: { type: Number, required: true }, // Quantity of goods distributed
-    }], // Array of distribution objects
+        date: { type: Date, required: true },
+        location: { type: String, required: true },
+        goodsDistributed: { type: String, required: true },
+        quantity: { type: Number, required: true },
+    }, ],
 }, {
-    timestamps: true, // Automatically manage createdAt and updatedAt timestamps
-    toJSON: { virtuals: true }, // Enable virtual fields for JSON output
-    toObject: { virtuals: true } // Enable virtual fields for plain object output
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
 });
 
-// Add pre-save middleware to update totalExpenses, totalDonations and budget (balance)
+// Automatically calculate totals before saving
 financialEventSchema.pre('save', function(next) {
-    // Sum up the total expenses
-    this.totalExpenses = this.expenses.reduce((sum, expense) => sum + expense.cost, 0);
-
-    // Sum up the total donations
-    this.totalDonations = this.donations.reduce((sum, donation) => sum + donation.amount, 0);
-
-    // Set the budget (balance) to be total donations - total expenses
+    this.totalExpenses = this.expenses.reduce((sum, e) => sum + e.cost, 0);
+    this.totalDonations = this.donations.reduce((sum, d) => sum + d.amount, 0);
     this.budget = this.totalDonations - this.totalExpenses;
-
     next();
 });
 
-// Create the FinancialEvent model
 const FinancialEvent = mongoose.model('FinancialEvent', financialEventSchema);
-
 module.exports = FinancialEvent;

@@ -1,3 +1,5 @@
+import '../styles/sidebar.scss'; // import SCSS file
+
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import PropTypes from 'prop-types';
 import { useAuthStore } from '../store/authStore';
@@ -5,7 +7,7 @@ import { Link } from 'react-router-dom';
 import EventIcon from '@mui/icons-material/Event';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import GroupIcon from '@mui/icons-material/Group';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -13,68 +15,53 @@ const SidebarComponent = ({ toggled, onBackdropClick }) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const role = useAuthStore((state) => state.role);
   const logout = useAuthStore((state) => state.logout);
-  const user = useAuthStore((state) => state.user); // for member ID
+  const user = useAuthStore((state) => state.user);
 
   return (
     <Sidebar
       onBackdropClick={onBackdropClick}
       toggled={toggled}
-      breakPoint="always"
-      style={{
-        position: 'fixed',
-        top: '75px',
-        left: toggled ? '0' : '-250px',
-        width: '250px',
-        height: 'calc(100% - 65px)',
-        transition: 'left 0.3s ease',
-        backgroundColor: '#242424',
-        borderRight: '1px solid #242424',
-        zIndex: 5,
-      }}
+      breakPoint="all"
+      className={`sidebar ${!toggled ? 'hidden' : ''}`}
     >
-      <Menu iconShape="square" style={{ color: '#fff' }}>
+      <Menu iconShape="square" className="menu">
         {isAuthenticated && role === 'admin' && (
           <>
-            <MenuItem
-              icon={<EventIcon style={{ color: 'white' }} />}
-              component={<Link to="/event-list" style={{ color: '#fff' }} />}
-            >
+            <MenuItem icon={<EventIcon />} component={<Link to="/event-list" />}>
               Event List
             </MenuItem>
-            <MenuItem
-              icon={<AttachMoneyIcon style={{ color: 'white' }} />}
-              component={<Link to="/financial-list" style={{ color: '#fff' }} />}
-            >
+            <MenuItem icon={<AttachMoneyIcon />} component={<Link to="/financial-list" />}>
               Financial List
             </MenuItem>
-            <MenuItem
-              icon={<GroupIcon style={{ color: 'white' }} />}
-              component={<Link to="/members" style={{ color: '#fff' }} />}
-            >
+            <MenuItem icon={<GroupIcon />} component={<Link to="/members" />}>
               Members
             </MenuItem>
-            <MenuItem
-              icon={<PersonAddIcon style={{ color: 'white' }} />}
-              component={<Link to="/member-creation" style={{ color: '#fff' }} />}
-            >
-              Member Creation
+            <MenuItem icon={<GroupIcon />} component={<Link to="/signup" />}>
+              Create User
             </MenuItem>
+
           </>
         )}
 
         {isAuthenticated && role === 'member' && user && (
-          <MenuItem
-            icon={<PersonIcon style={{ color: 'white' }} />}
-            component={<Link to={`/member/${user._id}`} style={{ color: '#fff' }} />}
-          >
-            My Profile
-          </MenuItem>
+          <>
+            <MenuItem icon={<PersonIcon />} component={<Link to="/member/${user._id" />}>
+              My Profile
+            </MenuItem>
+
+            <MenuItem icon={<AttachMoneyIcon />} component={<Link to="/financialList" />}>
+              Financial List
+            </MenuItem>
+          </>
+
+
+
         )}
       </Menu>
 
       {isAuthenticated && (
-        <Menu iconShape="square" style={{ position: 'absolute', bottom: '20px', width: '100%' }}>
-          <MenuItem icon={<LogoutIcon style={{ color: 'white' }} />} onClick={logout}>
+        <Menu iconShape="square" className="logout-menu">
+          <MenuItem icon={<LogoutIcon />} onClick={logout}>
             Logout
           </MenuItem>
         </Menu>

@@ -1,0 +1,69 @@
+//action button
+.mui-action-button {
+    height: 40px; // same as h-40
+    min-width: 100px;
+    text-transform: none;
+    margin: 4px; // same as m: 0.5
+    white-space: nowrap; // prevent wrapping
+}
+
+.mui-action-link {
+    text-decoration: none; // remove underline from Link
+}
+
+//Edit Dialog 
+.base-dialog-paper {
+    overflow-x: hidden; // replaces sx overflowX
+}
+
+.base-dialog-title {
+    position: relative;
+    font-weight: 600;
+    padding-right: 40px; // so text doesn't overlap with close button
+}
+
+.base-dialog-close {
+    position: absolute !important;
+    top: 8px;
+    right: 8px;
+}
+
+.base-dialog-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.base-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.base-dialog-cancel {
+    text-transform: none;
+}
+
+.base-dialog-submit {
+    min-width: 100px;
+    text-transform: none;
+}
+
+//Filter-Input
+.filter-input {
+    .MuiInputBase-root {
+        height: 40px; // uniform height
+    }
+    input {
+        padding: 8px 12px;
+    }
+    .MuiInputLabel-root {
+        font-size: 0.9rem;
+    }
+    .MuiSelect-select {
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+//

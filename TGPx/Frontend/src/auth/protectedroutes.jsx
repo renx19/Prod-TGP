@@ -1,4 +1,3 @@
-
 import { Navigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types'; // Import PropTypes
 import useAuthStore from '../store/authStore'; // Adjust the path

@@ -130,80 +130,70 @@ router.delete('/financial-event/:id', async(req, res) => {
 
 
 // POST route to add a new expense
-router.post('/:eventId/expenses', async(req, res) => {
-    const { eventId } = req.params;
+router.post('/:financialEventId/expenses', async(req, res) => {
+    const { financialEventId } = req.params;
     const { date, store, particulars, cost } = req.body;
 
     try {
-        const event = await FinancialEvent.findById(eventId);
-        if (!event) return res.status(404).send('Financial event not found');
+        const financialEvent = await FinancialEvent.findById(financialEventId);
+        if (!financialEvent) return res.status(404).send('Financial event not found');
 
-        // Add the new expense to the array
-        event.expenses.push({ date, store, particulars, cost });
+        financialEvent.expenses.push({ date, store, particulars, cost });
 
-        // Recalculate the total expenses and donations, and update the budget
-        event.totalExpenses = event.expenses.reduce((sum, expense) => sum + expense.cost, 0);
-        event.totalDonations = event.donations.reduce((sum, donation) => sum + donation.amount, 0);
-        event.budget = event.totalDonations - event.totalExpenses;
+        // Recalculate budget
+        financialEvent.totalExpenses = financialEvent.expenses.reduce((sum, e) => sum + e.cost, 0);
+        financialEvent.totalDonations = financialEvent.donations.reduce((sum, d) => sum + d.amount, 0);
+        financialEvent.budget = financialEvent.totalDonations - financialEvent.totalExpenses;
 
-        // Save the updated event
-        await event.save();
+        await financialEvent.save();
 
-        res.status(200).json(event);
+        res.status(200).json(financialEvent);
     } catch (error) {
         res.status(500).send('Error updating financial event');
     }
 });
 
-// POST route to add a new donation
-router.post('/:eventId/donations', async(req, res) => {
-    const { eventId } = req.params;
+// Add new donation
+router.post('/:financialEventId/donations', async(req, res) => {
+    const { financialEventId } = req.params;
     const { date, receivedFrom, amount } = req.body;
 
     try {
-        const event = await FinancialEvent.findById(eventId);
-        if (!event) return res.status(404).send('Financial event not found');
+        const financialEvent = await FinancialEvent.findById(financialEventId);
+        if (!financialEvent) return res.status(404).send('Financial event not found');
 
-        // Add the new donation to the array
-        event.donations.push({ date, receivedFrom, amount });
+        financialEvent.donations.push({ date, receivedFrom, amount });
 
-        // Recalculate the totals
-        event.totalDonations = event.donations.reduce((sum, donation) => sum + donation.amount, 0);
-        event.totalExpenses = event.expenses.reduce((sum, expense) => sum + expense.cost, 0);
-        event.budget = event.totalDonations - event.totalExpenses;
+        financialEvent.totalDonations = financialEvent.donations.reduce((sum, d) => sum + d.amount, 0);
+        financialEvent.totalExpenses = financialEvent.expenses.reduce((sum, e) => sum + e.cost, 0);
+        financialEvent.budget = financialEvent.totalDonations - financialEvent.totalExpenses;
 
-        // Save the updated event
-        await event.save();
+        await financialEvent.save();
 
-        res.status(200).json(event);
+        res.status(200).json(financialEvent);
     } catch (error) {
         res.status(500).send('Error updating financial event');
     }
 });
 
-
-
-// POST route to add a new distribution
-router.post('/:eventId/distributions', async(req, res) => {
-    const { eventId } = req.params;
+// Add new distribution
+router.post('/:financialEventId/distributions', async(req, res) => {
+    const { financialEventId } = req.params;
     const { date, distributedTo, quantity } = req.body;
 
     try {
-        const event = await FinancialEvent.findById(eventId);
-        if (!event) return res.status(404).send('Financial event not found');
+        const financialEvent = await FinancialEvent.findById(financialEventId);
+        if (!financialEvent) return res.status(404).send('Financial event not found');
 
-        // Add the new distribution to the array
-        event.distributions.push({ date, distributedTo, quantity });
+        financialEvent.distributions.push({ date, distributedTo, quantity });
 
-        // Save the updated event
-        await event.save();
+        await financialEvent.save();
 
-        res.status(200).json(event);
+        res.status(200).json(financialEvent);
     } catch (error) {
         res.status(500).send('Error updating financial event');
     }
 });
-
 
 // Update Expenses
 router.put('/financial-event/:id/expenses', async(req, res) => {

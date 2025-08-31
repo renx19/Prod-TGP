@@ -1,17 +1,5 @@
-$first-color: #faf6e9;
-$second-color: #ece8d9;
-$third-color: #fffdf6;
-$fourth-color: #494949;
-$dark-background: #303841;
-$dark-second-color: #3a4750;
-$dark-third-color: #00adb5;
-$dark-fourth-color: #eeeeee;
 .about-con {
     height: 100%;
-    background: $first-color;
-    &.dark {
-        background: $dark-background;
-    }
     .about-content {
         display: flex;
         justify-content: center;
@@ -52,43 +40,14 @@ $dark-fourth-color: #eeeeee;
             }
         }
     }
-    .first-color {
-        background: $first-color;
-    }
-    .second-color {
-        background: $second-color;
-    }
-    .third-color {
-        background: $third-color;
-    }
-    .fourth-color {
-        background: $fourth-color;
-    }
-    .dark {
-        .first-color {
-            background: $dark-background;
-        }
-        .second-color {
-            background: $dark-second-color;
-        }
-        .third-color {
-            background: $dark-third-color;
-        }
-        .fourth-color {
-            background: $dark-fourth-color;
-        }
-        .about-content {
-            color: #fff; // White text on dark background
-        }
-    }
     .about-h1 {
         text-align: center;
         padding-top: 3rem;
-        color: #ffd700;
+        color: #6B4F00FF;
         font-size: 3em;
     }
     #text-org {
-        color: #ffd700;
+        color: #6B4F00FF;
     }
     #text-spacing {
         padding: 2rem;

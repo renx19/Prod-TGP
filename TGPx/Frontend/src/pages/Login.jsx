@@ -32,33 +32,47 @@ const LoginForm = () => {
     }
   }, [isAuthenticated, user, fetchMemberDetails]);
 
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(''); // Reset error state
-
+  
     try {
-      await login(email, password);
-      setEmail(''); // Reset email field after login
-      setPassword(''); // Reset password field after login
-      toast.success('Login successful! Redirecting...'); // Show success toast
+      const result = await login(email, password);
+  
+      if (result?.token) {
+        setEmail('');
+        setPassword('');
+        toast.success('Login successful! Redirecting...');
+        // you may redirect here after a delay
+      } else {
+        const errorMsg = 'Invalid email or password. Please try again.';
+        setError(errorMsg);
+        toast.error(errorMsg);
+      }
     } catch (err) {
       console.error('Login error:', err);
-      setError('Invalid email or password. Please try again.'); // Set error message
-      toast.error('Invalid email or password. Please try again.'); // Show error toast
+  
+      // backend / network error
+      const errorMsg =
+        err.response?.data?.message || 'Something went wrong. Please try again later.';
+      setError(errorMsg);
+      toast.error(errorMsg);
     }
   };
+  
 
   return (
-    <MDBContainer fluid className="py-5 d-flex align-items-center justify-content-center" style={{ minHeight: '100vh',  }}>
+    <MDBContainer fluid className="py-5 d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', }}>
       <MDBRow className="w-100 justify-content-center" >
         <MDBCol xs="12" md="10" lg="8" xl="6">
           <div className="rounded-3 shadow d-flex flex-column flex-md-row overflow-hidden bg-white " >
 
             {/* Left - Promo Section */}
             <div className="gradient-custom-2 d-none d-md-flex flex-column justify-content-center text-white p-4" style={{ flex: 1 }}>
-              <h4 className="mb-4">We are more than just a company</h4>
+            <h4 className="mb-4">We are more than just a fraternity</h4>
               <p className="small mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                A bond of brotherhood that goes beyond time — united by values, loyalty, and lifelong friendship. Together we grow, lead, and support one another.
               </p>
             </div>
 
@@ -113,7 +127,7 @@ const LoginForm = () => {
               </form>
 
               <div>
-                <a href="/forgot-password">Forgot password?</a>
+                <a href="/#forgot-password">Forgot password?</a>
               </div>
             </div>
 

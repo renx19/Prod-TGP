@@ -1,371 +1,307 @@
-    /* contact.css */
-    
-    .contact-wrapper {
-        width: 70%;
-        margin: 0 auto; // Center the whole section
+.contact-wrapper {
+    width: 70%;
+    margin: 0 auto;
+    @media screen and (max-width: 1240px) {
+        width: 80%;
     }
-    
-    .contacts {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 2rem;
-        align-items: center;
-        padding-top: 2rem;
+    @media screen and (max-width: 720px) {
+        width: 100%;
     }
-    
-    .contact-image {
+}
+
+.contacts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+    align-items: center;
+    padding-top: 2rem;
+    @media screen and (max-width: 1240px), screen and (max-width: 720px) {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        padding: 0 2rem;
     }
-    
-    .image-con {
-        width: 100%;
-        max-width: 400px;
-        /* Adjust as needed */
-        height: auto;
-    }
-    
-    .input {
-        width: 100%;
-        padding: 0.625rem;
-        margin-bottom: 0.625rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        height: 3rem;
-        margin-top: 0.625rem;
-    }
-    
-    .textarea {
-        width: 100%;
-        padding: 0.625rem;
-        margin-bottom: 0.625rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        resize: vertical;
-        /* Allow vertical resizing */
-    }
-    
-    .button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        /* Change to your desired color */
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    
-    .button:hover {
-        background-color: #0056b3;
-        /* Change to your desired color on hover */
-    }
-    
-    .text-red {
-        color: red;
-    }
-    
-    .p-contact {
-        padding: 2rem 0 0 0;
-        font-size: 2.5rem;
-    }
-    
-    .iframe-con {
-        width: 100%;
-        /* Set width to 100% to make it responsive */
-        margin-bottom: 3rem;
-        border-left: 1px solid #ccc;
-        /* Add left border */
-        border-right: 1px solid #ccc;
-        /* Add right border */
-        border-radius: 0.625rem;
-    }
-    
-    .form-con {
-        width: 100%;
-        background: #242424;
-        padding: 3rem;
-        border-radius: 0.625rem;
-        height: 450px;
-        margin-bottom: 3rem;
-    }
-    
-    .form-container {
-        width: 700px;
-    }
-    
-    .input-message {
-        border-radius: 5px;
-        height: 8rem;
-        width: 100%;
-        padding: 0.625rem;
-        margin-bottom: 0.625rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        height: 10rem;
-        margin-top: 0.625rem;
-    }
-    
-    .soc-icon {
-        font-size: 28px;
-    }
-    /*  mode */
-    
+}
+
+.contact-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-con {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.input,
+.textarea {
+    width: 100%;
+    padding: 0.625rem;
+    margin: 0.625rem 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input {
+    height: 3rem;
     @media screen and (max-width: 1240px) {
-        .contact-wrapper {
-            width: 80%;
-        }
-        .contacts {
-            display: flex;
-            flex-direction: column;
-            padding: 0 2rem;
-        }
-        .iframe-con {
-            margin: 0 auto;
-            align-items: center;
-            justify-content: center;
-            padding-left: 2.5rem;
-            border-radius: 0.625rem;
-            padding: 0 1rem;
-            width: 70vw;
-            margin-bottom: 2rem;
-        }
-        .p-contact {
-            padding: 2rem 2rem 0 4rem;
-            font-size: 2.5rem;
-        }
-        .contact {
-            padding: 0 2rem;
-        }
-        .form-con {
-            margin-left: 0;
-        }
-        .soc-icon {
-            font-size: 22px;
-        }
-        .ul-con li {
-            font-size: 14px;
-        }
-        .terms-con li a {
-            font-size: 14px;
-        }
-        .input {
-            height: 2.5rem;
-        }
-        .input-message {
-            height: 10rem;
-        }
+        height: 2.5rem;
     }
-    
+}
+
+.textarea {
+    resize: vertical;
+}
+
+.input-message {
+    width: 100%;
+    padding: 0.625rem;
+    margin: 0.625rem 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 10rem;
+    @media screen and (max-width: 1240px) {
+        height: 10rem;
+    }
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+
+.text-red {
+    color: red;
+}
+
+.p-contact {
+    padding: 2rem 0 0 0;
+    font-size: 2.5rem;
+    @media screen and (max-width: 1240px) {
+        padding: 2rem 2rem 0 4rem;
+    }
     @media screen and (max-width: 720px) {
-        .contact-wrapper {
-            width: 100%;
-        }
-        .contacts {
-            display: flex;
-            flex-direction: column;
-            padding: 0 2rem;
-        }
-        .p-contact {
-            font-size: 2rem;
-            margin: 0 auto;
-            text-align: left;
-            padding: 2rem 0 2rem 2rem;
-        }
-        .contact {
-            padding: 0;
-        }
-        .iframe-con {
-            margin: 0 auto;
-            align-items: center;
-            justify-content: center;
-            padding-left: 2.5rem;
-            border-radius: 0.625rem;
-            padding: 0;
-            margin-bottom: 4rem;
-            width: 90vw;
-        }
-        .footer-container {
-            display: grid;
-            grid-auto-flow: row;
-            gap: 1rem;
-            /* Gap between grid items */
-            padding: 2rem;
-            /* Padding around grid items */
-            text-align: center;
-            /* Center-align text */
-            justify-content: center;
-            /* Center-align items horizontally */
-            align-items: center;
-            /* Center-align items vertically */
-            grid-template-columns: 1fr !important;
-            /* Set to a single column layout */
-            margin-right: 1rem;
-        }
-        .ul-container,
-        .terms-container {
-            text-align: center;
-            /* Center-align text */
-            justify-self: center;
-            /* Center-align items horizontally */
-            align-self: center;
-            /* Center-align items vertically */
-            margin-inline: auto;
-        }
-        .ul-con,
-        .terms-con {
-            width: 100%;
-            /* Make elements take full width */
-            margin-top: 1rem;
-            /* Add margin to the top */
-            margin-bottom: 3rem;
-            /* Add margin to the bottom */
-            padding-left: 0;
-            /* Remove left padding */
-            text-align: center;
-            /* Center-align text */
-            justify-self: center;
-            /* Center-align items horizontally */
-            align-self: center;
-        }
-        .terms-con {
-            padding-bottom: 3rem;
-        }
-        .terms-con li a {
-            justify-self: center;
-            /* Center-align items horizontally */
-            align-self: center;
-        }
-        .text-muted {
-            grid-row: 3;
-            /* Place text-muted in the third row */
-            width: 100%;
-            /* Make elements take full width */
-            margin-top: auto;
-            /* Align to the bottom */
-        }
-        .social-con {
-            display: flex;
-            justify-content: center !important;
-            margin-top: 2rem;
-            /* Add margin to the social icons */
-        }
-        .social-con li {
-            margin-right: 0.5rem;
-            /* Adjust spacing between social icons */
-        }
-        .soc-icon {
-            font-size: 20px;
-            /* Adjust size of social icons */
-        }
-        .text-mutd p {
-            font-size: 0.5rem;
-        }
+        font-size: 2rem;
+        margin: 0 auto;
+        text-align: left;
+        padding: 2rem 0 2rem 2rem;
     }
-    
+}
+
+.iframe-con {
+    width: 100%;
+    margin-bottom: 3rem;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-radius: 0.625rem;
+    @media screen and (max-width: 1240px) {
+        width: 70vw;
+        margin: 0 auto 2rem auto;
+        padding: 0 1rem;
+    }
+    @media screen and (max-width: 720px) {
+        width: 90vw;
+        margin-bottom: 4rem;
+        padding: 0;
+    }
+}
+
+.form-con {
+    width: 100%;
+    background: #fff;
+    border: 2px solid #ccc;
+    padding: 3rem;
+    border-radius: 0.625rem;
+    height: 450px;
+    margin-bottom: 3rem;
     @media screen and (max-width: 430px) {
-        .form-con {
-            width: 100%;
-        }
-    }
-    /* Footer Css */
-    
-    .social-con {
-        padding: 0px;
-        color: #fff;
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-    }
-    
-    .terms-text-con {
-        color: #242424;
-    }
-    
-    .footer-container a {
-        color: inherit;
-        /* Inherit color from parent, usually white or specified color */
-        text-decoration: none;
-        /* Remove underline */
-    }
-    
-    .footer-container {
-        align-items: center;
-        text-align: center;
-        background: #242424;
-        color: #fff;
         width: 100%;
-        height: auto;
-        display: grid;
-        grid-template-columns: 1fr auto;
-        /* Divide the grid into two columns, the first takes remaining space, the second takes content width */
+    }
+}
+
+.soc-icon {
+    font-size: 28px;
+    @media screen and (max-width: 1240px) {
+        font-size: 22px;
+    }
+    @media screen and (max-width: 720px) {
+        font-size: 20px;
+    }
+}
+
+//Footer
+.footer-container {
+    align-items: center;
+    text-align: center;
+    background: #242424;
+    color: #fff;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    position: relative;
+    padding: 2rem;
+    @media screen and (max-width: 720px) {
+        grid-auto-flow: row;
         gap: 1rem;
-        /* Add gap between grid items */
-        position: relative;
         padding: 2rem;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        grid-template-columns: 1fr !important;
     }
-    
-    .text-muted {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .text-muted p,
-    li:hover {
+}
+
+.text-muted {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    p {
         color: #ffcc00;
     }
-    
-    .ul-con {
-        width: auto;
-        /* Let the width be determined by content */
-        text-align: start;
+}
+
+.social-con {
+    padding: 0;
+    color: #fff;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    li {
+        margin-right: 0.5rem;
+    }
+}
+
+.terms-text-con {
+    color: #242424;
+}
+
+.footer-container a {
+    color: inherit;
+    text-decoration: none;
+    &:hover {
+        color: #ffcc00;
+    }
+}
+
+.ul-con,
+.terms-con {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        cursor: pointer; // optional, indicates hoverable item
+        * {
+            margin-right: 0.5rem;
+        }
+        a {
+            text-decoration: none;
+            color: inherit; // inherit text color
+        }
+        svg {
+            margin-right: 0.25rem;
+        }
+        &:hover {
+            color: #ffcc00; // highlight the whole li on hover
+        }
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .footer-container {
+        display: grid;
+        grid-auto-flow: row;
+        gap: 1rem;
+        /* Gap between grid items */
+        padding: 2rem;
+        /* Padding around grid items */
+        text-align: center;
         /* Center-align text */
         justify-content: center;
         /* Center-align items horizontally */
-    }
-    
-    .ul-con li {
-        display: flex;
         align-items: center;
-        margin-bottom: 0.5rem;
+        /* Center-align items vertically */
+        grid-template-columns: 1fr !important;
+        /* Set to a single column layout */
+        margin-right: 1rem;
     }
-    
-    .ul-con li>* {
-        margin-right: 0.5rem;
-    }
-    
-    .terms-con {
-        width: auto;
-        /* Let the width be determined by content */
-        text-align: right;
-        /* Align text to the right */
+    .ul-container,
+    .terms-container {
+        text-align: center;
+        /* Center-align text */
+        justify-self: center;
+        /* Center-align items horizontally */
         align-self: center;
-        /* Align the list vertically in the center */
+        /* Center-align items vertically */
+        margin-inline: auto;
     }
-    
-    .terms-con li {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.5rem;
+    .ul-con,
+    .terms-con {
+        width: 100%;
+        /* Make elements take full width */
+        margin-top: 1rem;
+        /* Add margin to the top */
+        margin-bottom: 3rem;
+        /* Add margin to the bottom */
+        padding-left: 0;
+        /* Remove left padding */
+        text-align: center;
+        /* Center-align text */
+        justify-self: center;
+        /* Center-align items horizontally */
+        align-self: center;
     }
-    
-    .terms-con li>* {
-        margin-right: 0.5rem;
+    .terms-con {
+        padding-bottom: 3rem;
     }
-    
     .terms-con li a {
-        text-decoration: none;
+        justify-self: center;
+        /* Center-align items horizontally */
+        align-self: center;
     }
-    
-    .terms-con li a:hover {
-        color: #ffcc00;
+    .text-muted {
+        grid-row: 3;
+        /* Place text-muted in the third row */
+        width: 100%;
+        /* Make elements take full width */
+        margin-top: auto;
+        /* Align to the bottom */
     }
-    
-    .terms-con li svg {
-        margin-right: 0.25rem;
+    .social-con {
+        display: flex;
+        justify-content: center !important;
+        margin-top: 2rem;
+        /* Add margin to the social icons */
     }
-    
-    @media screen and (max-width: 830px) {}
+    .social-con li {
+        margin-right: 0.5rem;
+        /* Adjust spacing between social icons */
+    }
+    .soc-icon {
+        font-size: 20px;
+        /* Adjust size of social icons */
+    }
+    .text-mutd p {
+        font-size: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .form-con {
+        width: 100%;
+    }
+}

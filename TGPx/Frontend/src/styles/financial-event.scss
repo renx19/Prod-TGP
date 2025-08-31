@@ -1,0 +1,255 @@
+        /* financial-view.scss */
+        
+        .financial-view-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .financial-view-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .financial-view-table-inner {
+            width: 100%;
+        }
+        
+        .financial-view-th {
+            background: #f0f2f5;
+        }
+        
+        .financial-view-th-cell {
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            color: #444;
+            padding: 0.75rem;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .financial-view-row:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .financial-view-cell {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+        /* Optional: hover effect */
+        
+        .financial-view-row:hover {
+            background: #f1f7ff;
+            transition: background 0.2s ease-in-out;
+        }
+        
+        .financial-view-event-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; // or flex-start if you prefer
+            gap: 2rem; // gap: 2 in sx = theme spacing(2) => usually 16px, so adjust as needed
+            width: 100%;
+            flex-direction: row;
+        }
+        /* financial-view.scss */
+        
+        .view-col-title {
+            width: 35%;
+            /* titles usually longer */
+        }
+        
+        .view-col-budget,
+        .view-col-expenses,
+        .view-col-donations {
+            width: 15%;
+            /* balance these evenly */
+            text-align: center;
+            /* optional: center numbers */
+        }
+        
+        .view-col-actions {
+            width: 20%;
+            /* reserve enough for button */
+            text-align: center;
+        }
+        
+        //AdminPage List
+        .financial-list-container {
+            padding: 5rem;
+        }
+        
+        .financial-table {
+            margin-top: 20px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 8px;
+            /* or any spacing you prefer */
+        }
+        
+        .button-group a {
+            text-decoration: none !important;
+        }
+        
+        .button-group a:hover {
+            text-decoration: none !important;
+            /* prevents underline on hover */
+        }
+        /* Optional: Add spacing between buttons */
+        
+        .button-group button {
+            margin-right: 8px;
+        }
+        
+        .financial-event-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; // or flex-start if you prefer
+            gap: 2rem; // gap: 2 in sx = theme spacing(2) => usually 16px, so adjust as needed
+            width: 100%;
+            flex-direction: row;
+        }
+        
+        @media (max-width: 768px) {
+            .financial-list-container {
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 1350px) {
+            .financial-list-container {
+                padding: 10px;
+            }
+        }
+        
+        .filter-con {
+            .filter-actions {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 0.5rem;
+                @media (max-width: 500px) {
+                    flex-direction: column;
+                    align-items: center; // keep centered on mobile
+                    padding: 1rem;
+                    gap: 0.5rem;
+                }
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .financial-buttons {
+                display: flex;
+                align-self: start;
+                padding: 0 2rem;
+            }
+            .financial-search-box {
+                display: flex;
+                align-self: start;
+                padding: 0 2rem;
+            }
+            .filter-actions-con {
+                display: flex;
+                align-self: start;
+                padding: 0 2rem;
+            }
+            .financial-event-toolbar {
+                flex-direction: column;
+            }
+        }
+        
+        //Custom Mui-
+        .financial-table {
+            width: 100%;
+        }
+        
+        .financial-table-inner {
+            width: 100%;
+            table-layout: auto;
+        }
+        
+        .financial-th-cell {
+            padding: 0.5rem 0.25rem;
+            border-bottom: none !important;
+        }
+        
+        .financial-event-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .financial-search-box {
+            flex-shrink: 0;
+        }
+        
+        .search-input {
+            .search-icon {
+                color: gray;
+            }
+        }
+        
+        .financial-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+        
+        .filter-actions-con {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .no-link-style {
+            text-decoration: none;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .col-checkbox {
+            width: 5%;
+        }
+        
+        .col-title {
+            width: 25%;
+        }
+        
+        .col-budget,
+        .col-expenses,
+        .col-donations {
+            width: 15%;
+        }
+        
+        .col-actions {
+            width: 25%;
+        }
+        
+        .financial-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+            .custom-pagination {
+                .MuiPaginationItem-root {
+                    font-weight: bold;
+                    border-radius: 8px;
+                }
+            }
+        }

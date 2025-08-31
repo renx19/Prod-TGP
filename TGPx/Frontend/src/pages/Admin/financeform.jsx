@@ -1,191 +1,137 @@
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
-  Button,
-  TextField,
-  Box,
-  Typography,
-  Grid,
-  Stack
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
-import useFinancialEventStore from '../../store/testStore';
-
-import { toast } from 'react-toastify';
-import AddIcon from '@mui/icons-material/Add';
-
-
-const FinancialEventDialog = () => {
-  const { addFinancialEvent } = useFinancialEventStore();
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const sanitizeArray = (items, fields) => {
-    return items
-      .map((item) => {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    IconButton,
+    Button,
+    TextField,
+    Box,
+    Typography,
+    Grid,
+  } from '@mui/material';
+  import CloseIcon from '@mui/icons-material/Close';
+  import { useState } from 'react';
+  import useFinancialEventStore from '../../store/testStore';
+  import PropTypes from 'prop-types';
+  import { toast } from 'react-toastify';
+  
+  const FinancialEventDialog = ({ open, onClose }) => {
+    const { addFinancialEvent } = useFinancialEventStore();
+  
+    const sanitizeArray = (items, fields) => {
+      return items.map((item) => {
         const sanitized = {};
         for (const [key, type] of Object.entries(fields)) {
-          let value = item[key];
-
+          const value = item[key];
+  
           if (type === 'number') {
-            sanitized[key] = value === '' || value === null ? null : Number(value);
+            sanitized[key] = value === '' ? null : Number(value);
           } else if (type === 'string') {
             sanitized[key] = (value || '').trim();
           } else if (type === 'date') {
-            sanitized[key] = value ? new Date(value) : null;
+            sanitized[key] = value || null;
           }
         }
         return sanitized;
-      })
-      .filter((item) => Object.values(item).every((v) => v !== null && v !== ''));
-  };
-
-  const [title, setTitle] = useState('');
-  const [expenses, setExpenses] = useState([{ date: '', store: '', particulars: '', cost: 0 }]);
-  const [donations, setDonations] = useState([{ date: '', receivedFrom: '', amount: 0 }]);
-  const [distributions, setDistributions] = useState([
-    { date: '', location: '', goodsDistributed: '', quantity: 0 },
-  ]);
-
-  const addItem = (typeSetter, defaultItem) => {
-    typeSetter((prev) => [...prev, defaultItem]);
-  };
-
-  const setField = (typeSetter, index, field, value) => {
-    typeSetter((prev) => {
-      const updated = [...prev];
-      updated[index][field] = value;
-      return updated;
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!title.trim()) {
-      toast.error('Title is required.');
-      return;
-    }
-
-    const sanitizedExpenses = sanitizeArray(expenses, {
-      date: 'date',
-      store: 'string',
-      particulars: 'string',
-      cost: 'number',
-    });
-
-    const sanitizedDonations = sanitizeArray(donations, {
-      date: 'date',
-      receivedFrom: 'string',
-      amount: 'number',
-    });
-
-    const sanitizedDistributions = sanitizeArray(distributions, {
-      date: 'date',
-      location: 'string',
-      goodsDistributed: 'string',
-      quantity: 'number',
-    });
-
-    if (
-      sanitizedExpenses.length === 0 &&
-      sanitizedDonations.length === 0 &&
-      sanitizedDistributions.length === 0
-    ) {
-      toast.error('Please fill at least one valid entry.');
-      return;
-    }
-
-    const data = {
-      title: title.trim(),
-      expenses: sanitizedExpenses,
-      donations: sanitizedDonations,
-      distributions: sanitizedDistributions,
+      });
     };
-
-    try {
-      const result = await addFinancialEvent(data);
-
-      if (result?.success) {
-        toast.success('Financial event submitted successfully!');
-        resetForm();
-      } else {
-        toast.error('Submission failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('Submission error:', error);
-      toast.error('An unexpected error occurred.');
-    }
-  };
-
-  const resetForm = () => {
-    setTitle('');
-    setExpenses([{ date: '', store: '', particulars: '', cost: 0 }]);
-    setDonations([{ date: '', receivedFrom: '', amount: 0 }]);
-    setDistributions([{ date: '', location: '', goodsDistributed: '', quantity: 0 }]);
-  };
-
-  const removeLastItem = (typeSetter) => {
-    typeSetter((prev) => (prev.length > 1 ? prev.slice(0, -1) : prev));
-  };
-
-  return (
-    <>
-      <IconButton
-        type="button" // ⬅ prevents form submit
-        color="primary"
-        size="small"
-        onClick={(e) => {
-          e.stopPropagation(); // ⬅ stops click from bubbling to parents
-          setOpenDialog(true);
-        }}
-        title="Add Financial Event"
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          padding: '8px 16px',
-          border: '1px solid',
-          borderColor: 'primary.main',
-          borderRadius: '8px',
-          backgroundColor: '#e3f2fd',
-          transition: '0.3s ease',
-          '&:hover': { backgroundColor: '#bbdefb' }
-        }}
-      >
-        <Stack direction="row" spacing={0.5} alignItems="center">
-          <AddIcon fontSize="small" />
-          <Typography variant="body2" fontWeight={500} color="primary">
-            Add
-          </Typography>
-        </Stack>
-      </IconButton>
-      <Dialog
-        open={openDialog}
-        onClose={() => {
+  
+  
+    // Local form state
+    const [title, setTitle] = useState('');
+    const [expenses, setExpenses] = useState([
+      { date: '', store: '', particulars: '', cost: 0 },
+    ]);
+    const [donations, setDonations] = useState([
+      { date: '', receivedFrom: '', amount: 0 },
+    ]);
+    const [distributions, setDistributions] = useState([
+      { date: '', location: '', goodsDistributed: '', quantity: 0 },
+    ]);
+  
+    const addItem = (typeSetter, defaultItem) => {
+      typeSetter((prev) => [...prev, defaultItem]);
+    };
+  
+    const setField = (typeSetter, index, field, value) => {
+      typeSetter((prev) => {
+        const updated = [...prev];
+        updated[index][field] = value;
+        return updated;
+      });
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      const data = {
+        title: title.trim(),
+        expenses: sanitizeArray(expenses, {
+          date: 'date',
+          store: 'string',
+          particulars: 'string',
+          cost: 'number',
+        }),
+        donations: sanitizeArray(donations, {
+          date: 'date',
+          receivedFrom: 'string',
+          amount: 'number',
+        }),
+        distributions: sanitizeArray(distributions, {
+          date: 'date',
+          location: 'string',
+          goodsDistributed: 'string',
+          quantity: 'number',
+        }),
+      };
+  
+      try {
+        const result = await addFinancialEvent(data);
+  
+        if (result.success) {
+          toast.success('Financial event submitted successfully!');
           resetForm();
-          setOpenDialog(false);
-        }}
-        fullWidth
-        maxWidth="md"
-      >
+          onClose();
+        } else {
+          toast.error('Submission failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        toast.error('An unexpected error occurred.');
+      }
+    };
+  
+    const resetForm = () => {
+      setTitle('');
+      setExpenses([{ date: '', store: '', particulars: '', cost: 0 }]);
+      setDonations([{ date: '', receivedFrom: '', amount: 0 }]);
+      setDistributions([{ date: '', location: '', goodsDistributed: '', quantity: 0 }]);
+    };
+  
+  
+    const removeLastItem = (typeSetter) => {
+      typeSetter((prev) => prev.slice(0, -1));
+  
+    };
+  
+  
+  
+  
+  
+  
+    return (
+      <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
         <DialogTitle>
           Create Financial Event
           <IconButton
-            edge="end"
-            onClick={() => {
-              resetForm();
-              setOpenDialog(false);
-            }}
+            onClick={onClose}
             sx={{ position: 'absolute', top: 8, right: 8 }}
           >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-
+  
         <DialogContent dividers>
           <form onSubmit={handleSubmit}>
             <TextField
@@ -195,7 +141,7 @@ const FinancialEventDialog = () => {
               onChange={(e) => setTitle(e.target.value)}
               margin="normal"
             />
-
+  
             <Box mt={3}>
               <Typography variant="h6">Expenses</Typography>
               {expenses.map((expense, i) => (
@@ -237,17 +183,16 @@ const FinancialEventDialog = () => {
                       label="Cost"
                       type="number"
                       fullWidth
-                      value={expense.cost === null || expense.cost === undefined ? '' : expense.cost}
+                      value={expense.cost}
                       onChange={(e) =>
-                        setField(setExpenses, i, 'cost', e.target.value === '' ? '' : Number(e.target.value))
+                        setField(setExpenses, i, 'cost', e.target.value === '' ? null : Number(e.target.value))
                       }
                     />
-
-
+  
                   </Grid>
                 </Grid>
               ))}
-              <Button onClick={() => addItem(setExpenses, { date: '', store: '', particulars: '', cost: '' })} sx={{ mt: 1 }}>
+              <Button onClick={() => addItem(setExpenses, { date: '', store: '', particulars: '', cost: 0 })} sx={{ mt: 1 }}>
                 Add Expense
               </Button>
               <Button
@@ -258,7 +203,7 @@ const FinancialEventDialog = () => {
                 Delete
               </Button>
             </Box>
-
+  
             {/* Repeat similar for Donations */}
             <Box mt={3}>
               <Typography variant="h6">Donations</Typography>
@@ -281,13 +226,12 @@ const FinancialEventDialog = () => {
                       label="Amount"
                       type="number"
                       fullWidth
-                      value={donation.amount === null || donation.amount === undefined ? '' : donation.amount}
+                      value={donation.amount}
                       onChange={(e) =>
-                        setField(setDonations, i, 'amount', e.target.value === '' ? '' : Number(e.target.value))
+                        setField(setDonations, i, 'amount', e.target.value === '' ? null : Number(e.target.value))
                       }
                     />
-
-
+  
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
@@ -299,10 +243,10 @@ const FinancialEventDialog = () => {
                       }
                     />
                   </Grid>
-
+  
                 </Grid>
               ))}
-              <Button onClick={() => addItem(setDonations, { date: '', receivedFrom: '', amount: '' })} sx={{ mt: 1 }}>
+              <Button onClick={() => addItem(setDonations, { date: '', receivedFrom: '', amount: 0 })} sx={{ mt: 1 }}>
                 Add Donation
               </Button>
               <Button
@@ -313,7 +257,7 @@ const FinancialEventDialog = () => {
                 Delete
               </Button>
             </Box>
-
+  
             {/* Distributions */}
             <Box mt={3}>
               <Typography variant="h6">Distributions</Typography>
@@ -356,17 +300,16 @@ const FinancialEventDialog = () => {
                       label="Qty"
                       type="number"
                       fullWidth
-                      value={dist.quantity === null || dist.quantity === undefined ? '' : dist.quantity}
+                      value={dist.quantity}
                       onChange={(e) =>
-                        setField(setDistributions, i, 'quantity', e.target.value === '' ? '' : Number(e.target.value))
+                        setField(setDistributions, i, 'quantity', e.target.value === '' ? null : Number(e.target.value))
                       }
                     />
-
-
+  
                   </Grid>
                 </Grid>
               ))}
-              <Button onClick={() => addItem(setDistributions, { date: '', location: '', goodsDistributed: '', quantity: '' })} sx={{ mt: 1 }}>
+              <Button onClick={() => addItem(setDistributions, { date: '', location: '', goodsDistributed: '', quantity: 0 })} sx={{ mt: 1 }}>
                 Add Distribution
               </Button>
               <Button
@@ -377,27 +320,22 @@ const FinancialEventDialog = () => {
                 Delete
               </Button>
             </Box>
-
+  
             <DialogActions>
-              <Button
-                onClick={() => {
-                  resetForm();
-                  setOpenDialog(false);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" variant="contained">
-                Submit
-              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+              <Button type="submit" variant="contained">Submit</Button>
             </DialogActions>
           </form>
         </DialogContent>
       </Dialog>
-    </>
-  )
+    )
 };
-
-
-
-export default FinancialEventDialog;
+ 
+  FinancialEventDialog.propTypes = {
+    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+  };
+  
+  
+  export default FinancialEventDialog;
+  

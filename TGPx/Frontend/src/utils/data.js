@@ -12,14 +12,14 @@ export const tenetsData = [
 ];
 
 export const codeOfConductData = [
-    { id: 1, letter: 'T', text: "Treat others as you would have them treat you." },
-    { id: 2, letter: 'R', text: "Rise to defend the name and honor of the Fraternity whenever it is unjustly criticized." },
-    { id: 3, letter: 'I', text: "Inform and orient your fellow brothers on every matter you consider vital to the Fraternity." },
-    { id: 4, letter: 'S', text: "Salute and address your fellow brothers in the proper manner." },
-    { id: 5, letter: 'K', text: "Keep decorum in all fraternity meetings and act accordingly outside the fraternity." },
-    { id: 6, letter: 'E', text: "Excel in your chosen field of interest and endeavor." },
-    { id: 7, letter: 'L', text: "Live a life of moderation, avoid gluttony, vices and drunkenness." },
-    { id: 8, letter: 'I', text: "In your everyday life, take care of what you write, do, of misinterpretation and lasting misunderstanding." },
-    { id: 9, letter: 'O', text: "Obey all fraternity rules and regulations, be guided in your daily ventures by the Tenets of the Fraternity." },
-    { id: 10, letter: 'N', text: "Never reveal to anyone, not to your family, nor to your friends, the concern of the fraternity." },
+    { id: 1, letter: 'T', word: 'Treat', text: "Treat others as you would have them treat you." },
+    { id: 2, letter: 'R', word: 'Respect', text: "Rise to defend the name and honor of the Fraternity whenever it is unjustly criticized." },
+    { id: 3, letter: 'I', word: 'Inform', text: "Inform and orient your fellow brothers on every matter you consider vital to the Fraternity." },
+    { id: 4, letter: 'S', word: 'Salute', text: "Salute and address your fellow brothers in the proper manner." },
+    { id: 5, letter: 'K', word: 'Keep', text: "Keep decorum in all fraternity meetings and act accordingly outside the fraternity." },
+    { id: 6, letter: 'E', word: 'Excel', text: "Excel in your chosen field of interest and endeavor." },
+    { id: 7, letter: 'L', word: 'Live', text: "Live a life of moderation, avoid gluttony, vices and drunkenness." },
+    { id: 8, letter: 'I', word: 'Integrity', text: "In your everyday life, take care of what you write, do, of misinterpretation and lasting misunderstanding." },
+    { id: 9, letter: 'O', word: 'Obey', text: "Obey all fraternity rules and regulations, be guided in your daily ventures by the Tenets of the Fraternity." },
+    { id: 10, letter: 'N', word: 'Never', text: "Never reveal to anyone, not to your family, nor to your friends, the concern of the fraternity." },
 ];

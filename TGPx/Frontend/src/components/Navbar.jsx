@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 
 import { NavLink, } from 'react-router-dom';
-import { MenuOpen, Login } from '@mui/icons-material';
+// import { MenuOpen, Login } from '@mui/icons-material';
+import { MenuOpen,  } from '@mui/icons-material';
 import useAuthStore from '../store/authStore';
-import { useMediaQuery, IconButton } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import BasicMenu from '../utils/Menu';
 import '../styles/navbar.scss';
 
@@ -22,9 +23,10 @@ const Navbar = ({ onToggleSidebar }) => {
       {/* Sidebar Toggle Icon */}
       {isSidebarVisible && (
         <div className="sidebar-toggle-icon" onClick={onToggleSidebar}>
-          <MenuOpen style={{ fontSize: '30px', color: 'white' }} />
+          <MenuOpen />
         </div>
       )}
+
 
       {/* Navigation Links (Mobile: BasicMenu, Desktop: Regular Links) */}
       {isMobile ? (
@@ -39,14 +41,11 @@ const Navbar = ({ onToggleSidebar }) => {
       )}
 
       {/* Floating Login Button wrapped with NavLink */}
-      <NavLink to="/login">
-        <IconButton
-          className="floating-button"
-          style={{ position: 'absolute', right: '20px', color: 'white' }}
-        >
-          <Login style={{ fontSize: '30px' }} />
-        </IconButton>
-      </NavLink>
+      {/* <NavLink to="/login" className="login-icon">
+        <Login />
+      </NavLink> */}
+
+
     </nav>
   );
 };

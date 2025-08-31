@@ -3,112 +3,116 @@ const router = express.Router();
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const Event = require('../models/event'); // Adjust the path to your event model
-const { verifyRole } = require('../middleware/verifyRoleMw'); // Import your verifyRole middleware
+const Event = require('../models/event');
 require('dotenv').config();
 
-// Multer storage configuration for Cloudinary
+// Configure Cloudinary storage for multer
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'event_images', // Use a common folder for event images
-    allowed_formats: ['jpg', 'jpeg', 'png'],
-  },
+    cloudinary,
+    params: {
+        folder: 'event_images',
+        allowed_formats: ['jpg', 'jpeg', 'png'],
+    },
 });
 
-// Multer configuration for multiple image uploads
 const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 4 * 1024 * 1024, // 4 MB limit per file
-  },
-}).array('images'); // Handle multiple images
+    storage,
+    limits: { fileSize: 4 * 1024 * 1024 },
+}).array('images');
 
-// Route for uploading images (protected for admin users)
-router.post('/upload-images', upload, async (req, res) => {
-  try {
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ error: 'At least one image is required.' });
+// CREATE event with images
+router.post('/create-event', upload, async(req, res) => {
+    try {
+        const { title, description, year, month } = req.body;
+        if (!title || !description || !req.files || req.files.length === 0) {
+            return res.status(400).json({ error: 'All fields including at least one image are required.' });
+        }
+
+        const imageUrls = await Promise.all(req.files.map(file => cloudinary.uploader.upload(file.path).then(res => res.secure_url)));
+
+        const newEvent = new Event({ title, description, imageUrls, year, month });
+        await newEvent.save();
+        res.status(201).json(newEvent);
+    } catch (error) {
+        console.error('Error creating event:', error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
-
-    const imageUrls = await Promise.all(req.files.map(async (file) => {
-      const result = await cloudinary.uploader.upload(file.path);
-      return result.secure_url; // Return the secure URL of the uploaded image
-    }));
-
-    // Respond with the image URLs
-    res.status(201).json({ imageUrls });
-  } catch (error) {
-    console.error('Error uploading images:', error);
-    res.status(500).json({ error: 'Internal Server Error', message: error.message });
-  }
 });
 
-// Event creation endpoint (protected for admin users)
-router.post('/create-event', async (req, res) => {
-  try {
-    const { title, description, imageUrls, year, month } = req.body; // Expecting an array of image URLs to be passed in the request body
-
-    if (!title || !description || !imageUrls || !Array.isArray(imageUrls) || imageUrls.length === 0) {
-      return res.status(400).json({ error: 'Title, description, and at least one image URL are required.' });
+// READ: Get all events
+router.get('/events', async(req, res) => {
+    try {
+        const events = await Event.find();
+        res.status(200).json(events);
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
-
-    // Create new event with title, description, and image URLs
-    const newEvent = new Event({
-      title,
-      description,
-      imageUrls, // Store the array of image URLs in the images field
-      year,
-      month
-    });
-
-    await newEvent.save();
-    res.status(201).json(newEvent);
-  } catch (error) {
-    console.error('Error creating event:', error);
-    res.status(500).json({ error: 'Internal Server Error', message: error.message });
-  }
 });
 
-// Fetch all events (can be public or protected based on your requirements)
-router.get('/events', async (req, res) => {
-  try {
-    const events = await Event.find(); // Fetch all events from the database
-    res.status(200).json(events); // Respond with the list of events
-  } catch (error) {
-    console.error('Error fetching events:', error);
-    res.status(500).json({ error: 'Internal Server Error', message: error.message });
-  }
-});
-
-// Route for fetching a specific event by ID (can also be protected if necessary)
-router.get('/events/:id', async (req, res) => {
-  try {
-    const { id } = req.params; // Extract the event ID from the request parameters
-    const event = await Event.findById(id); // Fetch the event by ID
-
-    if (!event) {
-      return res.status(404).json({ error: 'Event not found' }); // Handle case where event does not exist
+// READ: Get single event by ID
+router.get('/events/:id', async(req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+        if (!event) return res.status(404).json({ error: 'Event not found' });
+        res.status(200).json(event);
+    } catch (error) {
+        console.error('Error fetching event:', error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
-
-    res.status(200).json(event); // Respond with the event details
-  } catch (error) {
-    console.error('Error fetching event:', error);
-    res.status(500).json({ error: 'Internal Server Error', message: error.message });
-  }
 });
 
-// Fetch all event titles
-router.get('/event-titles', async (req, res) => {
-  try {
-    const events = await Event.find({}, { title: 1, _id: 0 }); // Fetch only the title field
-    const titles = events.map(event => event.title); // Extract titles from the events
-    res.status(200).json(titles); // Respond with the list of titles
-  } catch (error) {
-    console.error('Error fetching event titles:', error);
-    res.status(500).json({ error: 'Internal Server Error', message: error.message });
-  }
+// UPDATE event by ID (optionally replace images)
+router.put('/events/:id', upload, async(req, res) => {
+    try {
+        const { title, description, year, month } = req.body;
+        const updates = { title, description, year, month };
+
+        const event = await Event.findById(req.params.id);
+        if (!event) return res.status(404).json({ error: 'Event not found' });
+
+        if (req.files && req.files.length > 0) {
+            const imageUrls = await Promise.all(
+                req.files.map(file => cloudinary.uploader.upload(file.path).then(res => res.secure_url))
+            );
+            updates.imageUrls = imageUrls;
+        } else if (req.body.imageUrls) {
+            // Preserve existing imageUrls if no new images uploaded
+            updates.imageUrls = Array.isArray(req.body.imageUrls) ?
+                req.body.imageUrls :
+                [req.body.imageUrls];
+        }
+
+        const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updates, { new: true });
+        res.status(200).json(updatedEvent);
+    } catch (error) {
+        console.error('Error updating event:', error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
 });
 
-// Export the router
+// DELETE event by ID
+router.delete('/events/:id', async(req, res) => {
+    try {
+        const deletedEvent = await Event.findByIdAndDelete(req.params.id);
+        if (!deletedEvent) return res.status(404).json({ error: 'Event not found' });
+        res.status(200).json({ message: 'Event deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting event:', error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+});
+
+// GET only event titles
+router.get('/event-titles', async(req, res) => {
+    try {
+        const events = await Event.find({}, { title: 1, _id: 0 });
+        const titles = events.map(event => event.title);
+        res.status(200).json(titles);
+    } catch (error) {
+        console.error('Error fetching event titles:', error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+});
+
 module.exports = router;

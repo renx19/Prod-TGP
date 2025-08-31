@@ -1,7 +1,7 @@
 // src/App.js
 import { useEffect } from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAuthStore from './store/authStore';
 import routes from './RouteConfig'; // Adjust the import path
@@ -24,7 +24,18 @@ function App() {
 
   return (
     <Router>
- <ToastContainer position="top-right" autoClose={5000} hideProgressBar style={{ zIndex: 9999 }} />
+      {/* <ToastContainer
+        position="top-right"
+        autoClose={3000} // 3 seconds
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      /> */}
       <Routes>
         {routes.map(({ path, element, isProtected }) => (
           <Route
@@ -42,9 +53,8 @@ function App() {
           />
         ))}
       </Routes>
-  
+
     </Router>
   );
 }
-
 export default App;

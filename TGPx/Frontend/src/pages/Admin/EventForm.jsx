@@ -1,95 +1,113 @@
 import { useState } from 'react';
 import {
-  Dialog, DialogActions, DialogContent, DialogTitle, ImageList, ImageListItem, Box, Button, CircularProgress,
-  TextField, FormControl, InputLabel, Select, MenuItem, useMediaQuery, Typography, IconButton
+  Dialog, DialogActions, DialogContent, DialogTitle, ImageList, ImageListItem,
+  Box, Button, CircularProgress, TextField, FormControl, InputLabel, Select,
+  MenuItem, useMediaQuery, Typography, IconButton, 
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';  // Import the close icon
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import useEventStore from '../../store/EventStore';
 import { toast } from 'react-toastify';
 import '../../styles/event.scss';
 
 const EventForm = () => {
-  const {
-    title, description,  isUploading, isCreatingEvent,
-    setTitle, setDescription, setMonth, setYear, handleImageUpload, handleEventSubmit,
-    month, year  // Retrieve the current state of month and year from the store
-  } = useEventStore();
+  const { isLoading, createEvent, resetForm } = useEventStore();
 
-  const [imageFiles, setImageFiles] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [title, setLocalTitle] = useState('');
+  const [description, setLocalDescription] = useState('');
+  const [month, setLocalMonth] = useState('');
+  const [year, setLocalYear] = useState('');
   const isMobile = useMediaQuery('(max-width: 650px)');
 
   const handleImageChange = (e) => setImageFiles(Array.from(e.target.files));
-  
-  // Function to clear the form
+
   const clearForm = () => {
-    setTitle('');
-    setDescription('');
-    setMonth('');
-    setYear('');
-    setImageFiles([]);  // Clear the selected image files
+    setLocalTitle('');
+    setLocalDescription('');
+    setLocalMonth('');
+    setLocalYear('');
+    setImageFiles([]);
+    resetForm();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const result = await createEvent({
+      title,
+      description,
+      month,
+      year,
+      images: imageFiles,
+    });
 
-    // Validate required fields
-    if (!title || !description || !month || !year || imageFiles.length === 0) {
-      toast.error('Please fill all required fields and upload an image.');
-      return;
+    if (result.success) {
+      toast.success('Event created successfully!');
+      clearForm();
+      setOpenDialog(false);
+    } else {
+      toast.error(result.message || 'Failed to create event.');
     }
-
-    await handleEventSubmit(imageFiles);
-    toast.success('Event created successfully!');
-    setOpenDialog(false); // Close dialog after event is created
-    clearForm();  // Clear the form after submission
-  };
-
-  const handleDialogOpen = () => setOpenDialog(true);
-  const handleDialogClose = () => {
-    clearForm();  // Clear the form when dialog is closed
-    setOpenDialog(false);  // Close the dialog
   };
 
   return (
-    <Box className="event-form">
-      {/* Trigger Button to Open Dialog */}
-      <Button variant="contained" color="primary" onClick={handleDialogOpen}>
-        Create Event
+    <>
+      {/* Compact "+" Icon Button */}
+      <Button
+        variant="outlined"
+        color="primary"
+        size="small"
+        startIcon={<AddIcon />}
+        onClick={() => setOpenDialog(true)}
+        className="add-btn"
+      >
+        Add
       </Button>
 
-      {/* Dialog for the event form */}
-      <Dialog open={openDialog} onClose={handleDialogClose} maxWidth="md" fullWidth>
+      {/* Event Dialog */}
+      <Dialog
+        open={openDialog}
+        onClose={() => {
+          clearForm();
+          setOpenDialog(false);
+        }}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{ sx: { overflowX: 'hidden' } }}
+      >
         <DialogTitle>
           Create Event
-          {/* Close button added here */}
           <IconButton
             edge="end"
-            color="inherit"
-            onClick={handleDialogClose}
-            aria-label="close"
+            onClick={() => {
+              clearForm();
+              setOpenDialog(false);
+            }}
             sx={{ position: 'absolute', top: 8, right: 8 }}
           >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
+
         <DialogContent>
-          <Box className="event-form">
-            {/* Image Upload Section */}
-            <Box className="image-preview" sx={{ mb: 2 }}>
-              <ImageList sx={{ width: '100%', height: '340px' }} cols={isMobile ? 2 : 3} rowHeight={164} gap={8}>
+          <Box>
+            {/* Image preview */}
+            <Box sx={{ mb: 2 }}>
+              <ImageList sx={{ width: '100%', height: 340 }} cols={isMobile ? 2 : 3} rowHeight={164} gap={8}>
                 {imageFiles.length === 0 ? (
-                  <ImageListItem sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                    <Typography variant="h6" color="textSecondary">No images uploaded.</Typography>
+                  <ImageListItem>
+                    <Typography variant="h6" color="textSecondary">
+                      No images selected.
+                    </Typography>
                   </ImageListItem>
                 ) : (
-                  imageFiles.map((file, index) => (
-                    <ImageListItem key={index}>
+                  imageFiles.map((file, i) => (
+                    <ImageListItem key={i}>
                       <img
                         src={URL.createObjectURL(file)}
-                        alt={`Uploaded Preview ${index}`}
+                        alt={`Preview ${i}`}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        loading="lazy"
                       />
                     </ImageListItem>
                   ))
@@ -98,62 +116,76 @@ const EventForm = () => {
             </Box>
 
             <input
-              type="file" id="images" accept="image/*" multiple
-              onChange={handleImageChange} className="file-input" disabled={isUploading}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageChange}
+              className="file-input"
+              disabled={isLoading}
             />
-            <Button
-              variant="contained" onClick={() => handleImageUpload(imageFiles)}
-              disabled={!imageFiles.length || isUploading} className="upload-button"
-            >
-              {isUploading ? <CircularProgress size={24} /> : 'Upload Images'}
-            </Button>
 
-            {/* Form Fields */}
             <TextField
-              label="Title" variant="outlined" value={title} onChange={(e) => setTitle(e.target.value)}
-              required fullWidth disabled={isUploading || isCreatingEvent} margin="normal"
+              label="Title"
+              fullWidth
+              margin="normal"
+              required
+              value={title}
+              onChange={(e) => setLocalTitle(e.target.value)}
+              disabled={isLoading}
             />
             <TextField
-              label="Description" variant="outlined" value={description} onChange={(e) => setDescription(e.target.value)}
-              required fullWidth multiline rows={4} margin="normal"
-              disabled={isUploading || isCreatingEvent}
+              label="Description"
+              fullWidth
+              multiline
+              rows={4}
+              margin="normal"
+              required
+              value={description}
+              onChange={(e) => setLocalDescription(e.target.value)}
+              disabled={isLoading}
             />
+
             <FormControl fullWidth margin="normal" required>
-              <InputLabel>Select Event Month</InputLabel>
+              <InputLabel>Month</InputLabel>
               <Select
-                value={month}  // Bind value to the month state
-                onChange={(e) => setMonth(Number(e.target.value))}
-                required
+                value={month}
+                onChange={(e) => setLocalMonth(Number(e.target.value))}
+                disabled={isLoading}
               >
-                {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-                  .map((monthName, index) => <MenuItem key={index} value={index + 1}>{monthName}</MenuItem>)}
+                {[
+                  'January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December'
+                ].map((m, i) => (
+                  <MenuItem key={i} value={i + 1}>{m}</MenuItem>
+                ))}
               </Select>
             </FormControl>
 
             <FormControl fullWidth margin="normal" required>
-              <InputLabel>Select Year</InputLabel>
+              <InputLabel>Year</InputLabel>
               <Select
-                value={year}  // Bind value to the year state
-                onChange={(e) => setYear(Number(e.target.value))}
-                required
+                value={year}
+                onChange={(e) => setLocalYear(Number(e.target.value))}
+                disabled={isLoading}
               >
-                {[2027, 2026, 2025, 2024, 2023, 2022].map(yearOption => (
-                  <MenuItem key={yearOption} value={yearOption}>{yearOption}</MenuItem>
+                {[2030, 2029, 2028, 2027, 2026, 2025, 2024, 2023, 2022, 2021].map((y) => (
+                  <MenuItem key={y} value={y}>{y}</MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Box>
         </DialogContent>
+
         <DialogActions>
-          <Button onClick={handleDialogClose} color="secondary">Cancel</Button>
-          <Button
-            type="submit" variant="contained" onClick={handleSubmit} disabled={isUploading || isCreatingEvent}
-          >
-            {isCreatingEvent ? <CircularProgress size={24} /> : 'Create Event'}
+          <Button onClick={() => { clearForm(); setOpenDialog(false); }} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} variant="contained" disabled={isLoading}>
+            {isLoading ? <CircularProgress size={24} /> : 'Create Event'}
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </>
   );
 };
 

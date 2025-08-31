@@ -1,61 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Slider from 'react-slick';
 import '../styles/event.scss';
 import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
-import useEventStore from '../store/EventStore'; // Adjust path to match your store's location
+import useEventStore from '../store/EventStore';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const EventDetails = () => {
-  const { id } = useParams(); // Get the event ID from URL params
+  const { id } = useParams();
   const { currentEvent, fetchEventById } = useEventStore();
-  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (id) {
-      fetchEventById(id); // Fetch the specific event by ID
-    }
+    if (id) fetchEventById(id);
   }, [id, fetchEventById]);
 
-  // If the event data is not yet available, display a loading message
   if (!currentEvent) {
     return <p>Loading event details...</p>;
   }
 
-  const { id: eventId, title, description, imageUrls, month, year } = currentEvent;
+  const { id: eventId, title, description, imageUrls = [], month, year } = currentEvent;
 
   const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  // Dynamically set settings based on imageUrls length after data is loaded
   const settings = {
     lazyLoad: true,
     dots: true,
-    infinite: imageUrls.length > 5, // Only enable infinite scrolling if there are more than 4 images
+    infinite: false,
     speed: 500,
-    slidesToShow: Math.min(imageUrls.length, 4), // Dynamically adjust the number of slides shown
+    slidesToShow: Math.min(imageUrls.length, 4),
     slidesToScroll: 1,
     arrows: false,
     responsive: [
       {
         breakpoint: 1024,
-        settings: {
-          slidesToShow: Math.min(imageUrls.length, 3),
-        },
+        settings: { slidesToShow: Math.min(imageUrls.length, 3) },
       },
       {
         breakpoint: 768,
-        settings: {
-          slidesToShow: Math.min(imageUrls.length, 1),
-        },
+        settings: { slidesToShow: Math.min(imageUrls.length, 1) },
       },
     ],
-    afterChange: (current) => {
-      setIndex(current);
-    },
   };
 
   return (
@@ -72,7 +60,7 @@ const EventDetails = () => {
           }}
         >
           <Slider {...settings}>
-            {imageUrls && imageUrls.map((url) => (
+            {imageUrls.map((url) => (
               <div key={`${eventId}-${url}`} className="imageDetails-container">
                 <div className="imageDetails-content">
                   <span className="overlayDetails"></span>
@@ -86,7 +74,7 @@ const EventDetails = () => {
         </motion.div>
 
         <div className="titleDetails-container">
-          <h2 className="titleDetails" style={{ color: "#ffd700" }}>{title}</h2>
+          <h2 className="titleDetails">{title}</h2>
         </div>
         <div className="descriptionDetails-container">
           <p className="descriptionDetails">{description}</p>
