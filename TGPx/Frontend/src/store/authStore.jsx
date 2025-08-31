@@ -119,20 +119,19 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+
 export const useAuthStore = create((set) => ({
   isAuthenticated: false,
-  loading: false,
+  loading: null, // null = not yet initialized
   role: null,
   user: null,
   member: null,
   error: null,
 
-  // Initialize auth state using refresh token
- initialize: async () => {
+  initialize: async () => {
     set({ loading: true, error: null });
     try {
       const response = await axios.post(`${API_URL}/refresh-token`, {}, { withCredentials: true });
-
       if (response.data.success) {
         set({
           isAuthenticated: true,
@@ -187,6 +186,7 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
+
   signup: async (username, email, password, role) => {
     set({ loading: true, error: null });
     try {

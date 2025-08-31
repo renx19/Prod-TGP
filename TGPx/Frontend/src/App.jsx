@@ -1,41 +1,14 @@
-// src/App.js
-import { useEffect } from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useAuthStore from './store/authStore';
-import routes from './RouteConfig'; // Adjust the import path
-import Loading from './utils/loading';
-import ProtectedLayout from './auth/protectedLayout';
-import './App.css'
 
+import routes from './RouteConfig';
+import ProtectedLayout from './auth/protectedLayout';
+import NotFound from './pages/NotFound';
+import './App.css';
 
 function App() {
-  const initialize = useAuthStore((state) => state.initialize);
-  const loading = useAuthStore((state) => state.loading);
-
-  useEffect(() => {
-    initialize();
-  }, [initialize]);
-
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <Router>
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={3000} // 3 seconds
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      /> */}
       <Routes>
         {routes.map(({ path, element, isProtected }) => (
           <Route
@@ -43,18 +16,17 @@ function App() {
             path={path}
             element={
               isProtected ? (
-                <ProtectedLayout>
-                  {element}
-                </ProtectedLayout>
+                <ProtectedLayout>{element}</ProtectedLayout>
               ) : (
-                element // Just render the element for unprotected routes
+                element
               )
             }
           />
         ))}
+        <Route path="*" element={<NotFound />} />
       </Routes>
-
     </Router>
   );
 }
+
 export default App;

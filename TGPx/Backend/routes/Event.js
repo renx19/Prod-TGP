@@ -39,6 +39,57 @@ router.post('/create-event', upload, async(req, res) => {
     }
 });
 
+//With Token
+// router.post(
+//     '/create-event',
+//     verifyAccessToken,
+//     upload.array('images', 5), // "images" must match frontend formData field name
+//     async(req, res) => {
+//         try {
+//             const { title, description, year, month } = req.body;
+
+//             if (!title || !description || !req.files || req.files.length === 0) {
+//                 return res.status(400).json({
+//                     error: 'All fields including at least one image are required.',
+//                 });
+//             }
+
+//             // Upload images to Cloudinary
+//             const imageUrls = await Promise.all(
+//                 req.files.map(async(file) => {
+//                     const result = await cloudinary.uploader.upload(file.path, {
+//                         folder: 'events',
+//                     });
+
+//                     // remove temp file
+//                     fs.unlinkSync(file.path);
+
+//                     return result.secure_url;
+//                 })
+//             );
+
+//             // Save to Mongo
+//             const newEvent = new Event({
+//                 title,
+//                 description,
+//                 imageUrls,
+//                 year,
+//                 month,
+//             });
+
+//             await newEvent.save();
+
+//             res.status(201).json(newEvent);
+//         } catch (error) {
+//             console.error('Error creating event:', error);
+//             res.status(500).json({
+//                 error: 'Internal Server Error',
+//                 message: error.message,
+//             });
+//         }
+//     }
+// );
+
 // READ: Get all events
 router.get('/events', async(req, res) => {
     try {
@@ -79,8 +130,7 @@ router.put('/events/:id', upload, async(req, res) => {
         } else if (req.body.imageUrls) {
             // Preserve existing imageUrls if no new images uploaded
             updates.imageUrls = Array.isArray(req.body.imageUrls) ?
-                req.body.imageUrls :
-                [req.body.imageUrls];
+                req.body.imageUrls : [req.body.imageUrls];
         }
 
         const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updates, { new: true });

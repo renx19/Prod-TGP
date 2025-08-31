@@ -4,6 +4,7 @@ import LoginForm from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Unauthorized from './pages/Unauthorized';
+
 import Home from './pages/Home';
 import About from './pages/About';
 
@@ -92,6 +93,8 @@ export const routes = [
     isProtected: true,
   },
   { path: '/unauthorized', element: <Unauthorized />, isProtected: false },
+
+
 ];
 
 export default routes;
