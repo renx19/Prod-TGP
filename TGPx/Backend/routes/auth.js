@@ -123,7 +123,7 @@ router.post('/login', async(req, res) => {
         const match = await bcrypt.compare(password, user.password);
         if (!match) return res.status(400).json({ success: false, message: 'Invalid credentials' });
 
-        // Generate minimal tokens
+
         // Generate tokens
         const accessToken = jwt.sign({ id: user._id, role: user.role },
             JWT_SECRET, { expiresIn: '15m' } // Standard: 15 minutes
@@ -147,6 +147,31 @@ router.post('/login', async(req, res) => {
             sameSite: 'Strict',
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
+
+
+        // // Generate tokens
+        // const accessToken = jwt.sign({ id: user._id, role: user.role },
+        //     JWT_SECRET, { expiresIn: '1m' } // 1 minute for testing
+        // );
+
+        // const refreshToken = jwt.sign({ id: user._id },
+        //     JWT_REFRESH_SECRET, { expiresIn: '2m' } // 2 minutes for testing
+        // );
+
+        // // Set cookies
+        // res.cookie('accessToken', accessToken, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === 'production',
+        //     sameSite: 'Strict',
+        //     maxAge: 1 * 60 * 1000 // 1 minute
+        // });
+
+        // res.cookie('refreshToken', refreshToken, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === 'production',
+        //     sameSite: 'Strict',
+        //     maxAge: 2 * 60 * 1000 // 2 minutes
+        // });
 
         return res.json({ success: true }); // Do not return full user info in cookies
     } catch (err) {

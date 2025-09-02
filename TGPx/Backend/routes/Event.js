@@ -4,6 +4,7 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const Event = require('../models/event');
+const verifyAccessToken = require('../middleware/verifyAccessToken')
 require('dotenv').config();
 
 // Configure Cloudinary storage for multer
@@ -42,8 +43,8 @@ router.post('/create-event', upload, async(req, res) => {
 //With Token
 // router.post(
 //     '/create-event',
-//     verifyAccessToken,
-//     upload.array('images', 5), // "images" must match frontend formData field name
+//     verifyAccessToken, // <-- add your token verification here
+//     upload, // your multer middleware
 //     async(req, res) => {
 //         try {
 //             const { title, description, year, month } = req.body;
@@ -56,39 +57,23 @@ router.post('/create-event', upload, async(req, res) => {
 
 //             // Upload images to Cloudinary
 //             const imageUrls = await Promise.all(
-//                 req.files.map(async(file) => {
-//                     const result = await cloudinary.uploader.upload(file.path, {
-//                         folder: 'events',
-//                     });
-
-//                     // remove temp file
-//                     fs.unlinkSync(file.path);
-
-//                     return result.secure_url;
-//                 })
+//                 req.files.map((file) =>
+//                     cloudinary.uploader.upload(file.path).then((res) => res.secure_url)
+//                 )
 //             );
 
-//             // Save to Mongo
-//             const newEvent = new Event({
-//                 title,
-//                 description,
-//                 imageUrls,
-//                 year,
-//                 month,
-//             });
-
+//             // Save event to MongoDB
+//             const newEvent = new Event({ title, description, imageUrls, year, month });
 //             await newEvent.save();
 
 //             res.status(201).json(newEvent);
 //         } catch (error) {
 //             console.error('Error creating event:', error);
-//             res.status(500).json({
-//                 error: 'Internal Server Error',
-//                 message: error.message,
-//             });
+//             res.status(500).json({ error: 'Internal Server Error', message: error.message });
 //         }
 //     }
 // );
+
 
 // READ: Get all events
 router.get('/events', async(req, res) => {
