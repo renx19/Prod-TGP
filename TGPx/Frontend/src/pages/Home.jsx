@@ -74,60 +74,45 @@ function Home() {
 
 
         <div className='divider-con'>
-
-
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }} // triggers sooner on mobile
             transition={{ delay: 0.2, duration: 0.5 }}
-            variants={{
-              hidden: { opacity: 0, y: 50 },
-              visible: { opacity: 1, y: 0 },
-            }}
-
           >
             <div className='tenets-container'>
               <div className='tenets-con'>
                 <div className='tenets'>
                   <h1 className='tenets-h1'>Tenets</h1>
-                  <table className='tenets-table'>
-                    <thead>
-                      <tr>
-                        <th className='tenet-number'>Tenet</th>
-                        <th className='tenet-description'>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tenetsData.map((tenet) => (
-                        <tr key={tenet.id} className='tenet-row'>
-                          <td className='tenet-number'><span>Tenet {tenet.id}:</span></td>
-                          <td className='tenet-description'>{tenet.description}</td>
+                  <div className="tenets-table-wrapper">
+                    <table className='tenets-table'>
+                      <thead>
+                        <tr>
+                          <th className='tenet-number'>Tenet</th>
+                          <th className='tenet-description'>Description</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {tenetsData.map((tenet) => (
+                          <tr key={tenet.id} className='tenet-row'>
+                            <td className='tenet-number'><span>Tenet {tenet.id}:</span></td>
+                            <td className='tenet-description'>{tenet.description}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-
-
-
           </motion.div>
 
 
-
-
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}   // 👈 triggers sooner on mobile
             transition={{ delay: 0.2, duration: 0.5 }}
-            variants={{
-              hidden: { opacity: 0, y: 50 },
-              visible: { opacity: 1, y: 0 },
-            }}
-
           >
             <div className='conduct-container'>
               <div className="conduct-con">
@@ -138,17 +123,12 @@ function Home() {
                         <span className="letter-circle">{item.letter}</span>
                         {item.word}
                       </h2>
-
                       <p className="conduct-card-text">{item.text}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
-
-
-
-
           </motion.div>
 
         </div>
@@ -195,20 +175,20 @@ function Home() {
           }}
 
         >
-          <div className='home-cards-container'>
-            <div className='home-cards-wrapper'>
-              <div className='home-card'>
-                <TbTargetArrow size={48} className="home-card-icon" />
-                <h3 className="home-card-title">Mission</h3>
-                <p className="home-card-text">
+          <div className='mission-vision-cards-container'>
+            <div className='mission-vision-cards-wrapper'>
+              <div className='mission-vision-card'>
+                <TbTargetArrow size={48} className="mission-vision-card-icon" />
+                <h3 className="mission-vision-card-title">Mission</h3>
+                <p className="mission-vision-card-text">
                   To provide lifelong service to our communities, foster intellectual growth, and cultivate responsible and effective leaders for a better tomorrow.
                 </p>
               </div>
 
-              <div className='home-card'>
-                <IoEyeSharp size={48} className="home-card-icon" />
-                <h3 className="home-card-title">Vision</h3>
-                <p className="home-card-text">
+              <div className='mission-vision-card'>
+                <IoEyeSharp size={48} className="mission-vision-card-icon" />
+                <h3 className="mission-vision-card-title">Vision</h3>
+                <p className="mission-vision-card-text">
                   To be a leading chapter recognized for its unwavering commitment to brotherhood, academic excellence, and positive societal impact.
                 </p>
               </div>
